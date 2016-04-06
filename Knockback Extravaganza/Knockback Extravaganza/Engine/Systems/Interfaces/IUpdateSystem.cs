@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 namespace ECS_Engine.Engine.Systems.Interfaces {
-    interface IUpdateSystem {
+    public interface IUpdateSystem : ISystem{
         void Update(GameTime gametime);
     }
 }

@@ -13,8 +13,7 @@ namespace ECS_Engine {
         [STAThread]
         static void Main()
         {
-            using (var game = new ECSEngine())
-                game.Run();
+           
         }
     }
 #endif

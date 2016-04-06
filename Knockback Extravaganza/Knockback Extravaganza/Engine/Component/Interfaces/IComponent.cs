@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Component.Interfaces {
-    interface IComponent {
+    public interface IComponent {
     }
 }

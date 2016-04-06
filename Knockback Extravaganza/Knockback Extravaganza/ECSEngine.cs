@@ -2,18 +2,23 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
+using ECS_Engine.Engine.Managers;
 
 namespace ECS_Engine {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class ECSEngine : Game {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+    public abstract class ECSEngine : Game {
+        protected GraphicsDeviceManager graphics;
+        protected SpriteBatch spriteBatch;
+        protected SystemManager systemManager;
+        protected ComponentManager componentManager;
 
         public ECSEngine() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            systemManager = new SystemManager();
+            componentManager = new ComponentManager();
         }
 
 
@@ -55,7 +60,7 @@ namespace ECS_Engine {
         protected override void Update(GameTime gameTime) {
 
             // TODO: Add your update logic here
-
+            systemManager.RunUpdateSystem(gameTime);
             base.Update(gameTime);
         }
 
@@ -66,7 +71,7 @@ namespace ECS_Engine {
         protected override void Draw(GameTime gameTime) {
 
             // TODO: Add your drawing code here
-
+            systemManager.RunRenderSystem(gameTime, graphics);
             base.Draw(gameTime);
         }
     }
