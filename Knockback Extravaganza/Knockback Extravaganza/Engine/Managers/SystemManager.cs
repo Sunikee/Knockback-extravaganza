@@ -19,37 +19,37 @@ namespace ECS_Engine.Engine.Managers {
 
         public void AddSystem(ISystem system) {
             Type type = system.GetType();
-            if(type == typeof(IRenderSystem)) {
+            if (system is  IRenderSystem) {
                 AddSystemToList<IRenderSystem>(renderSystems, system);
             }
-            else if(type == typeof(IUpdateSystem)) {
+            else if(system is IUpdateSystem) {
                 AddSystemToList<IUpdateSystem>(updateSystems, system);
             }
         }
 
         public void RemoveSystem(ISystem system) {
             Type type = system.GetType();
-            if (type == typeof(IRenderSystem)) {
+            if (system is IRenderSystem) {
                 RemoveSystemFromList<IRenderSystem>(renderSystems, system);
             }
-            else if (type == typeof(IUpdateSystem)) {
+            else if (system is IUpdateSystem) {
                 RemoveSystemFromList<IUpdateSystem>(updateSystems, system);
             }
 
         }
 
-        public void RunUpdateSystem(GameTime gameTime) {
+        public void RunUpdateSystem(GameTime gameTime, ComponentManager componentManager) {
             if(updateSystems.Count > 0) {
                 foreach(IUpdateSystem system in updateSystems) {
-                    system.Update(gameTime);
+                    system.Update(gameTime, componentManager);
                 }
             }
         }
 
-        public void RunRenderSystem(GameTime gameTime, GraphicsDeviceManager graphics) {
+        public void RunRenderSystem(GameTime gameTime, GraphicsDeviceManager graphics, ComponentManager componentManager) {
             if(renderSystems.Count > 0) {
                 foreach(IRenderSystem system in renderSystems) {
-                    system.Render(gameTime, graphics);
+                    system.Render(gameTime, graphics, componentManager);
                 }
             }
         }

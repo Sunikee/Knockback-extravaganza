@@ -16,6 +16,7 @@ namespace ECS_Engine.Engine.Component {
             }
         }
         public Vector3 Target { get; set; }
+        public Vector3 Up { get; set; }
         public float FieldOfView { get; set; }
         public float AspectRatio { get; set; }
         public float NearPlaneDistace { get; set; }

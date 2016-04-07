@@ -58,9 +58,8 @@ namespace ECS_Engine {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
-
             // TODO: Add your update logic here
-            systemManager.RunUpdateSystem(gameTime);
+            systemManager.RunUpdateSystem(gameTime, componentManager);
             base.Update(gameTime);
         }
 
@@ -69,9 +68,10 @@ namespace ECS_Engine {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
-
+            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
             // TODO: Add your drawing code here
-            systemManager.RunRenderSystem(gameTime, graphics);
+            systemManager.RunRenderSystem(gameTime, graphics, componentManager);
+            
             base.Draw(gameTime);
         }
     }

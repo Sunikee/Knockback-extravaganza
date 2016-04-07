@@ -38,16 +38,20 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\Component\BasicEffectComponent.cs" />
     <Compile Include="Engine\Component\CameraComponent.cs" />
     <Compile Include="Engine\Component\Interfaces\IComponent.cs" />
+    <Compile Include="Engine\Component\VertexPosColorComponent.cs" />
     <Compile Include="Engine\Component\TransformComponent.cs" />
     <Compile Include="Engine\Entity.cs" />
     <Compile Include="Engine\Managers\ComponentManager.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
+    <Compile Include="Engine\Systems\CameraSystem.cs" />
     <Compile Include="Engine\Systems\Interfaces\IRenderSystem.cs" />
     <Compile Include="Engine\Systems\Interfaces\ISystem.cs" />
     <Compile Include="Engine\Systems\Interfaces\IUpdateSystem.cs" />
     <Compile Include="ECSEngine.cs" />
+    <Compile Include="Engine\Systems\RenderVertexSystem.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

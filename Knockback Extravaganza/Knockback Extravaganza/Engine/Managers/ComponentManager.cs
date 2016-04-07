@@ -14,7 +14,7 @@ namespace ECS_Engine.Engine.Managers {
 
         }
 
-        void AddComponent(Entity entity, IComponent component) {
+        public void AddComponent(Entity entity, IComponent component) {
             Type type = component.GetType();
             if (!componentList.ContainsKey(type)){
                 componentList[type] = new Dictionary<Entity, IComponent>();
@@ -22,7 +22,7 @@ namespace ECS_Engine.Engine.Managers {
             componentList[type][entity] = component;
         }
 
-        void RemoveComponent<T>(Entity entity) where T : IComponent {
+        public void RemoveComponent<T>(Entity entity) where T : IComponent {
             Type type = typeof(T);
             if (componentList.ContainsKey(type)) {
                 if (componentList[type].ContainsKey(entity)) {
@@ -32,7 +32,7 @@ namespace ECS_Engine.Engine.Managers {
 
         }
 
-        T GetComponent<T>(Entity entity) where T : IComponent {
+        public T GetComponent<T>(Entity entity) where T : IComponent {
             Type type = typeof(T);
             if (componentList.ContainsKey(type)) {
                 if (componentList[type].ContainsKey(entity)) {
@@ -42,7 +42,7 @@ namespace ECS_Engine.Engine.Managers {
             return default(T);
         }
 
-        Entity GetEntity<T>(IComponent component) {
+        public Entity GetEntity<T>(IComponent component) {
             Type type = typeof(T);
             if (componentList.ContainsKey(type)) {
                 if (componentList[type].ContainsValue(component)) {
@@ -56,7 +56,7 @@ namespace ECS_Engine.Engine.Managers {
             return null;
         }
 
-        Dictionary<Entity, IComponent> GetComponents<T>(){
+        public Dictionary<Entity, IComponent> GetComponents<T>(){
             Type type = typeof(T);
             if (componentList.ContainsKey(type)) {
                 return componentList[type];

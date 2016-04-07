@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Component {
     public class TransformComponent : IComponent{
-        Vector3 Position { get; set; }
-        Vector3 Scale { get; set; }
-        Vector3 Rotation { get; set; }
+        public Vector3 Position { get; set; }
+        public Vector3 Scale { get; set; }
+        public Vector3 Rotation { get; set; }
 
         public Matrix World() {
             return Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(Rotation.X, Rotation.Y, Rotation.Z)) * Matrix.CreateTranslation(Position);
