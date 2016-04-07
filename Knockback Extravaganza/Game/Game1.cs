@@ -72,11 +72,7 @@ namespace Game {
             //systemManager.AddSystem(new RenderVertexSystem());
             systemManager.AddSystem(new ModelRenderSystem());
 
-            TransformComponent t = new TransformComponent();
-            t.Position = Vector3.Zero;
-            t.Rotation = Vector3.Zero;
-            t.Scale = Vector3.One;
-            componentManager.AddComponent(mesh, t);
+            
 
             base.Initialize();
         }
@@ -90,6 +86,8 @@ namespace Game {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ModelComponent m = new ModelComponent();
             m.Model = Content.Load<Model>("Chopper");
+            ModelTransformComponent t = new ModelTransformComponent(m.Model);
+            componentManager.AddComponent(mesh, t);
             componentManager.AddComponent(mesh, m);
             // TODO: use this.Content to load your game content here
         }

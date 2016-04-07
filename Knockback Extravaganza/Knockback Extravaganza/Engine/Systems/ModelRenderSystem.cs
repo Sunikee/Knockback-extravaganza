@@ -20,18 +20,24 @@ namespace ECS_Engine.Engine.Systems {
             Dictionary<Entity, IComponent> components = componentManager.GetComponents<ModelComponent>();
             foreach (KeyValuePair<Entity, IComponent> component in components) {
                 ModelComponent model = (ModelComponent)component.Value;
-                TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
-                if (transform != default(TransformComponent)) {
+                ModelTransformComponent transform = componentManager.GetComponent<ModelTransformComponent>(component.Key);
+                if (transform != default(ModelTransformComponent)) {
 
                     Matrix[] transforms = new Matrix[model.Model.Bones.Count()];
                     model.Model.CopyAbsoluteBoneTransformsTo(transforms);
                     foreach (ModelMesh mesh in model.Model.Meshes) {
-                        System.Console.WriteLine(mesh.Name);
+                        //System.Console.WriteLine(mesh.Name);
+                        if(mesh.Name == "Main_Rotor") {
+                            transform.GetTranform(mesh.Name).Rotation += new Vector3(0, 20f * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                        }
+                        else if(mesh.Name == "Bakc_Rotor_transform") {
+                            transform.GetTranform(mesh.Name).Rotation += new Vector3(0, 100f * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
+                        }
                         foreach (BasicEffect effect in mesh.Effects) {
                             effect.EnableDefaultLighting();
                             effect.View = camera.View;
                             effect.Projection = camera.Projection;
-                            effect.World = transforms[mesh.ParentBone.Index] * transform.World();
+                            effect.World = transform.GetTranform(mesh.Name).World * transforms[mesh.ParentBone.Index];
                         }
                         mesh.Draw();
                     }

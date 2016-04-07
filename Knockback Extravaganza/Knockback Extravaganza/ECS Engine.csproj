@@ -42,6 +42,7 @@
     <Compile Include="Engine\Component\CameraComponent.cs" />
     <Compile Include="Engine\Component\Interfaces\IComponent.cs" />
     <Compile Include="Engine\Component\ModelComponent.cs" />
+    <Compile Include="Engine\Component\ModelTransformComponent.cs" />
     <Compile Include="Engine\Component\VertexPosColorComponent.cs" />
     <Compile Include="Engine\Component\TransformComponent.cs" />
     <Compile Include="Engine\Entity.cs" />
