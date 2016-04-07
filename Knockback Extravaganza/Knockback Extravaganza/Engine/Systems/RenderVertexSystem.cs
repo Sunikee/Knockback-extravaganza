@@ -24,6 +24,7 @@ namespace ECS_Engine.Engine.Systems {
                     BasicEffect effect = componentManager.GetComponent<BasicEffectComponent>(cam.First().Key).Effect;
                     effect.World = transform.World();
                     effect.View = camera.View;
+                    effect.Projection = camera.Projection;
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) {
                         pass.Apply();
                         graphicsDevice.GraphicsDevice.DrawUserPrimitives(model.Type, model.Vertices, 0, model.Count());

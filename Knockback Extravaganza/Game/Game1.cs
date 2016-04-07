@@ -18,6 +18,8 @@ namespace Game {
             
         }
 
+        Entity mesh = new Entity("mesh");
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -35,7 +37,7 @@ namespace Game {
             cameraC.Target = Vector3.Zero;
             cameraC.Up = Vector3.Up;
             TransformComponent tranformC = new TransformComponent();
-            tranformC.Position = new Vector3(0, 0, 5f);
+            tranformC.Position = new Vector3(25, 0, 0f);
             tranformC.Rotation = Vector3.Zero;
             tranformC.Scale = Vector3.One;
             BasicEffectComponent basic = new BasicEffectComponent();
@@ -67,7 +69,14 @@ namespace Game {
             componentManager.AddComponent(model, tranformV);
 
             systemManager.AddSystem(new CameraSystem());
-            systemManager.AddSystem(new RenderVertexSystem());
+            //systemManager.AddSystem(new RenderVertexSystem());
+            systemManager.AddSystem(new ModelRenderSystem());
+
+            TransformComponent t = new TransformComponent();
+            t.Position = Vector3.Zero;
+            t.Rotation = Vector3.Zero;
+            t.Scale = Vector3.One;
+            componentManager.AddComponent(mesh, t);
 
             base.Initialize();
         }
@@ -79,8 +88,9 @@ namespace Game {
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-
+            ModelComponent m = new ModelComponent();
+            m.Model = Content.Load<Model>("Chopper");
+            componentManager.AddComponent(mesh, m);
             // TODO: use this.Content to load your game content here
         }
 
