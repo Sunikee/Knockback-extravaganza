@@ -38,13 +38,13 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Engine\Component\BasicEffectComponent.cs" />
     <Compile Include="Engine\Component\CameraComponent.cs" />
     <Compile Include="Engine\Component\Interfaces\IComponent.cs" />
     <Compile Include="Engine\Component\ModelComponent.cs" />
     <Compile Include="Engine\Component\ModelTransformComponent.cs" />
-    <Compile Include="Engine\Component\VertexPosColorComponent.cs" />
+    <Compile Include="Engine\Component\VertexComponent.cs" />
     <Compile Include="Engine\Component\TransformComponent.cs" />
+    <Compile Include="Engine\Component\VertexIndexComponent.cs" />
     <Compile Include="Engine\Entity.cs" />
     <Compile Include="Engine\Managers\ComponentManager.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
@@ -54,7 +54,9 @@
     <Compile Include="Engine\Systems\Interfaces\IUpdateSystem.cs" />
     <Compile Include="ECSEngine.cs" />
     <Compile Include="Engine\Systems\ModelRenderSystem.cs" />
-    <Compile Include="Engine\Systems\RenderVertexSystem.cs" />
+    <Compile Include="Engine\Systems\VertexIndexRenderSystem.cs" />
+    <Compile Include="Engine\Systems\VertexRenderSystem.cs" />
+    <Compile Include="Engine\VertexPositionColorNormal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

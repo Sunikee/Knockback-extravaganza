@@ -37,42 +37,51 @@ namespace Game {
             cameraC.Target = Vector3.Zero;
             cameraC.Up = Vector3.Up;
             TransformComponent tranformC = new TransformComponent();
-            tranformC.Position = new Vector3(25, 0, 0f);
-            tranformC.Rotation = Vector3.Zero;
-            tranformC.Scale = Vector3.One;
-            BasicEffectComponent basic = new BasicEffectComponent();
-            basic.Effect = new BasicEffect(graphics.GraphicsDevice);
-            basic.Effect.VertexColorEnabled = true;
-            basic.Effect.Projection = cameraC.Projection;
+            tranformC.Position = new Vector3(0f, 0, 25f);
+
+            
 
             componentManager.AddComponent(camera, cameraC);
             componentManager.AddComponent(camera, tranformC);
-            componentManager.AddComponent(camera, basic);
+
 
             Entity model = new Entity("plane");
-            VertexPosColorComponent vert = new VertexPosColorComponent();
-            VertexPositionColor[] v = new VertexPositionColor[6];
-            v[0] = new VertexPositionColor(new Vector3(-1, 1 ,0), Color.Green);
-            v[1] = new VertexPositionColor(new Vector3(1, -1, 0), Color.Green);
-            v[2] = new VertexPositionColor(new Vector3(-1, -1, 0), Color.Green);
 
-            v[3] = new VertexPositionColor(new Vector3(-1, 1, 0), Color.Red);
-            v[4] = new VertexPositionColor(new Vector3(1, 1, 0), Color.Red);
-            v[5] = new VertexPositionColor(new Vector3(1, -1, 0), Color.Red);
+            VertexIndexComponent<VertexPositionColor> vert = new VertexIndexComponent<VertexPositionColor>();
+            VertexPositionColor[] v = new VertexPositionColor[4];
+            v[0] = new VertexPositionColor(new Vector3(-1, 1 ,0), Color.Red);
+            v[1] = new VertexPositionColor(new Vector3(1, 1, 0), Color.Blue);
+            v[2] = new VertexPositionColor(new Vector3(-1, -1, 0), Color.Green);
+            v[3] = new VertexPositionColor(new Vector3(1, -1, 0), Color.Yellow);
             vert.Vertices = v;
+            int[] i = new int[6];
+            i[0] = 0;
+            i[1] = 1;
+            i[2] = 3;
+
+            i[3] = 0;
+            i[4] = 3;
+            i[5] = 2;
+            vert.Indices = i;
+
             vert.Type = PrimitiveType.TriangleList;
+
+            vert.Effect = new BasicEffect(graphics.GraphicsDevice);
+            vert.Effect.VertexColorEnabled = true;
+            vert.Effect.Projection = cameraC.Projection;
+
             TransformComponent tranformV = new TransformComponent();
-            tranformV.Position = Vector3.Zero;
-            tranformV.Rotation = new Vector3(0, 0, 0);
-            tranformV.Scale = new Vector3(2,2,2);
+            tranformV.Scale *= 3;
             componentManager.AddComponent(model, vert);
             componentManager.AddComponent(model, tranformV);
 
             systemManager.AddSystem(new CameraSystem());
-            //systemManager.AddSystem(new RenderVertexSystem());
+            systemManager.AddSystem(new VertexIndexRenderSystem<VertexPositionColor>());
             systemManager.AddSystem(new ModelRenderSystem());
 
-            
+            TransformComponent tra = new TransformComponent();
+            componentManager.AddComponent(mesh, tra);
+
 
             base.Initialize();
         }

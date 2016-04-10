@@ -12,8 +12,16 @@ namespace ECS_Engine.Engine.Component {
         public Vector3 Scale { get; set; }
         public Vector3 Rotation { get; set; }
 
-        public Matrix World() {
-            return Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z)) * Matrix.CreateTranslation(Position);
+        public TransformComponent() {
+            Position = Vector3.Zero;
+            Rotation = Vector3.Zero;
+            Scale = Vector3.One;
+        }
+
+        public Matrix World {
+            get {
+                return Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z)) * Matrix.CreateTranslation(Position);
+            }
         }
     }
 }
