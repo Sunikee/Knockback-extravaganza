@@ -47,7 +47,6 @@ namespace Game {
 
             Entity model = new Entity();
 
-            
             VertexPositionColor[] v = new VertexPositionColor[4];
             v[0] = new VertexPositionColor(new Vector3(-1, 1 ,0), Color.Red);
             v[1] = new VertexPositionColor(new Vector3(1, 1, 0), Color.Blue);
