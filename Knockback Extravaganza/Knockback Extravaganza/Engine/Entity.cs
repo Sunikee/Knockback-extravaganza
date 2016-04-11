@@ -9,6 +9,10 @@ namespace ECS_Engine.Engine {
         public string Tag { get; set; }
         public bool Active { get; set; }
 
+
+        public Entity() {
+            Active = true;
+        }
         public Entity(string tag) {
             Tag = tag;
             Active = true;

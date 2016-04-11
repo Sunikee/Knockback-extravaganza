@@ -18,7 +18,7 @@ namespace Game {
             
         }
 
-        Entity mesh = new Entity("mesh");
+        Entity mesh = new Entity();
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -28,7 +28,7 @@ namespace Game {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-            Entity camera = new Entity("camera");
+            Entity camera = new Entity();
             CameraComponent cameraC = new CameraComponent();
             cameraC.FieldOfView = MathHelper.PiOver4;
             cameraC.AspectRatio = graphics.GraphicsDevice.DisplayMode.AspectRatio;
@@ -45,15 +45,15 @@ namespace Game {
             componentManager.AddComponent(camera, tranformC);
 
 
-            Entity model = new Entity("plane");
+            Entity model = new Entity();
 
-            VertexIndexComponent<VertexPositionColor> vert = new VertexIndexComponent<VertexPositionColor>();
+            
             VertexPositionColor[] v = new VertexPositionColor[4];
             v[0] = new VertexPositionColor(new Vector3(-1, 1 ,0), Color.Red);
             v[1] = new VertexPositionColor(new Vector3(1, 1, 0), Color.Blue);
             v[2] = new VertexPositionColor(new Vector3(-1, -1, 0), Color.Green);
             v[3] = new VertexPositionColor(new Vector3(1, -1, 0), Color.Yellow);
-            vert.Vertices = v;
+
             int[] i = new int[6];
             i[0] = 0;
             i[1] = 1;
@@ -62,8 +62,8 @@ namespace Game {
             i[3] = 0;
             i[4] = 3;
             i[5] = 2;
-            vert.Indices = i;
 
+            VertexIndexBufferComponent<VertexPositionColor> vert = new VertexIndexBufferComponent<VertexPositionColor>(v, i, graphics.GraphicsDevice);
             vert.Type = PrimitiveType.TriangleList;
 
             vert.Effect = new BasicEffect(graphics.GraphicsDevice);
@@ -76,7 +76,7 @@ namespace Game {
             componentManager.AddComponent(model, tranformV);
 
             systemManager.AddSystem(new CameraSystem());
-            systemManager.AddSystem(new VertexIndexRenderSystem<VertexPositionColor>());
+            systemManager.AddSystem(new VertexIndexBufferRenderSystem<VertexPositionColor>());
             systemManager.AddSystem(new ModelRenderSystem());
 
             TransformComponent tra = new TransformComponent();
