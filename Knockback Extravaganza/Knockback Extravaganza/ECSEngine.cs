@@ -14,11 +14,13 @@ namespace ECS_Engine {
         protected SystemManager systemManager;
         protected ComponentManager componentManager;
 
+
         public ECSEngine() {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             systemManager = new SystemManager();
             componentManager = new ComponentManager();
+
         }
 
 
@@ -59,6 +61,7 @@ namespace ECS_Engine {
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
             // TODO: Add your update logic here
+            systemManager.RunInputSystem(gameTime, componentManager);
             systemManager.RunUpdateSystem(gameTime, componentManager);
             base.Update(gameTime);
         }

@@ -13,11 +13,13 @@ namespace ECS_Engine.Engine.Systems {
     public class CameraSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager) {
             Dictionary<Entity, IComponent> components = componentManager.GetComponents<CameraComponent>();
-            foreach(KeyValuePair<Entity, IComponent> cam in components) {
-                TransformComponent transform = componentManager.GetComponent<TransformComponent>(cam.Key);
-                if(transform != default(TransformComponent)) {
-                    CameraComponent camera = (CameraComponent)cam.Value;
-                    camera.View = Matrix.CreateLookAt(transform.Position, camera.Target, camera.Up);
+            if (components != null) {
+                foreach (KeyValuePair<Entity, IComponent> cam in components) {
+                    TransformComponent transform = componentManager.GetComponent<TransformComponent>(cam.Key);
+                    if (transform != default(TransformComponent)) {
+                        CameraComponent camera = (CameraComponent)cam.Value;
+                        camera.View = Matrix.CreateLookAt(transform.Position, camera.Target, camera.Up);
+                    }
                 }
             }
         }

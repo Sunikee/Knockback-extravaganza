@@ -12,6 +12,7 @@ namespace ECS_Engine.Engine.Managers {
 
         List<IRenderSystem> renderSystems = new List<IRenderSystem>();
         List<IUpdateSystem> updateSystems = new List<IUpdateSystem>();
+        List<IInputSystem> inputSystems = new List<IInputSystem>();
 
         public SystemManager() {
 
@@ -25,6 +26,9 @@ namespace ECS_Engine.Engine.Managers {
             else if(system is IUpdateSystem) {
                 AddSystemToList<IUpdateSystem>(updateSystems, system);
             }
+            else if(system is IInputSystem) {
+                AddSystemToList<IInputSystem>(inputSystems, system);
+            }
         }
 
         public void RemoveSystem(ISystem system) {
@@ -34,6 +38,9 @@ namespace ECS_Engine.Engine.Managers {
             }
             else if (system is IUpdateSystem) {
                 RemoveSystemFromList<IUpdateSystem>(updateSystems, system);
+            }
+            else if (system is IInputSystem) {
+                RemoveSystemFromList<IInputSystem>(inputSystems, system);
             }
 
         }
@@ -50,6 +57,14 @@ namespace ECS_Engine.Engine.Managers {
             if(renderSystems.Count > 0) {
                 foreach(IRenderSystem system in renderSystems) {
                     system.Render(gameTime, graphics, componentManager);
+                }
+            }
+        }
+
+        public void RunInputSystem(GameTime gameTime, ComponentManager componentManager) {
+            if (inputSystems.Count > 0) {
+                foreach (IInputSystem system in inputSystems) {
+                    system.Update(gameTime, componentManager);
                 }
             }
         }

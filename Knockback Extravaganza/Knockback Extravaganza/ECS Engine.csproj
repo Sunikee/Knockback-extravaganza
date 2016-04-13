@@ -39,9 +39,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\Component\CameraComponent.cs" />
+    <Compile Include="Engine\Component\GamePadComponent.cs" />
+    <Compile Include="Engine\Component\InputDefines.cs" />
     <Compile Include="Engine\Component\Interfaces\IComponent.cs" />
+    <Compile Include="Engine\Component\KeyBoardComponent.cs" />
     <Compile Include="Engine\Component\ModelComponent.cs" />
     <Compile Include="Engine\Component\ModelTransformComponent.cs" />
+    <Compile Include="Engine\Component\MouseComponent.cs" />
     <Compile Include="Engine\Component\VertexBufferComponent.cs" />
     <Compile Include="Engine\Component\VertexComponent.cs" />
     <Compile Include="Engine\Component\TransformComponent.cs" />
@@ -51,11 +55,16 @@
     <Compile Include="Engine\Managers\ComponentManager.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
     <Compile Include="Engine\Systems\CameraSystem.cs" />
+    <Compile Include="Engine\Systems\GamePadSystem.cs" />
+    <Compile Include="Engine\Systems\Interfaces\IInputSystem.cs" />
     <Compile Include="Engine\Systems\Interfaces\IRenderSystem.cs" />
     <Compile Include="Engine\Systems\Interfaces\ISystem.cs" />
     <Compile Include="Engine\Systems\Interfaces\IUpdateSystem.cs" />
     <Compile Include="ECSEngine.cs" />
+    <Compile Include="Engine\Systems\KeyBoardSystem.cs" />
     <Compile Include="Engine\Systems\ModelRenderSystem.cs" />
+    <Compile Include="Engine\Systems\MouseSystem.cs" />
+    <Compile Include="Engine\Systems\TransformSystem.cs" />
     <Compile Include="Engine\Systems\VertexBufferRenderSystem.cs" />
     <Compile Include="Engine\Systems\VertexIndexBufferRenderSystem.cs" />
     <Compile Include="Engine\Systems\VertexIndexRenderSystem.cs" />

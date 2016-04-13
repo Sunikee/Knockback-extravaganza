@@ -22,6 +22,5 @@ namespace ECS_Engine.Engine.Component {
         public float NearPlaneDistace { get; set; }
         public float FarPlaneDistace { get; set; }
 
-
     }
 }
