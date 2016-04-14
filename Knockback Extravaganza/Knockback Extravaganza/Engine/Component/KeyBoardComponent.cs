@@ -9,8 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Component.Interfaces;
 
-namespace GameEngine
-{
+namespace ECS_Engine.Engine.Component {
     public class KeyBoardComponent : IComponent
     {
         public Dictionary<string, List<Keys>> Actions { get; set; }

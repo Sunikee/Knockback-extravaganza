@@ -38,9 +38,11 @@ namespace Game {
             cameraC.Up = Vector3.Up;
             TransformComponent tranformC = new TransformComponent();
             tranformC.Position = new Vector3(0f, 0, 25f);
+            ChaseCameraComponent chase = new ChaseCameraComponent();
+            chase.Target = mesh;
+            chase.Offset = new Vector3(0, 25, 25f);
 
-            
-
+            componentManager.AddComponent(camera, chase);
             componentManager.AddComponent(camera, cameraC);
             componentManager.AddComponent(camera, tranformC);
 
@@ -74,12 +76,17 @@ namespace Game {
             componentManager.AddComponent(model, vert);
             componentManager.AddComponent(model, tranformV);
 
+            TransformComponent tra = new TransformComponent();
+            tra.Position = Vector3.Zero;
+            componentManager.AddComponent(mesh, tra);
+
+            systemManager.AddSystem(new TransformSystem());
             systemManager.AddSystem(new CameraSystem());
             systemManager.AddSystem(new VertexIndexBufferRenderSystem<VertexPositionColor>());
             systemManager.AddSystem(new ModelRenderSystem());
+            systemManager.AddSystem(new ChaseCameraSystem());
 
-            TransformComponent tra = new TransformComponent();
-            componentManager.AddComponent(mesh, tra);
+            
 
 
             base.Initialize();
