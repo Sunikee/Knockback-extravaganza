@@ -13,7 +13,7 @@ namespace ECS_Engine.Engine.Systems {
     public class TransformSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager) {
             Dictionary<Entity, IComponent> components = componentManager.GetComponents<TransformComponent>();
-            if(components != null) {
+            if(components != null){
                 foreach(KeyValuePair<Entity, IComponent> component in components) {
                     TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                     Quaternion rotation = Quaternion.CreateFromYawPitchRoll(transform.Rotation.Y, transform.Rotation.X, transform.Rotation.Z);

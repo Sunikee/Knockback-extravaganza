@@ -9,9 +9,7 @@ using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Systems;
 
 namespace Game {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
+
     public class Game1 : ECSEngine {
 
         public Game1() : base(){
@@ -20,12 +18,6 @@ namespace Game {
 
         Entity mesh = new Entity();
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
             Entity camera = new Entity();
@@ -86,16 +78,9 @@ namespace Game {
             systemManager.AddSystem(new ModelRenderSystem());
             systemManager.AddSystem(new ChaseCameraSystem());
 
-            
-
-
             base.Initialize();
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -104,15 +89,10 @@ namespace Game {
             ModelTransformComponent t = new ModelTransformComponent(m.Model);
             componentManager.AddComponent(mesh, t);
             componentManager.AddComponent(mesh, m);
-            // TODO: use this.Content to load your game content here
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
         protected override void UnloadContent() {
-            // TODO: Unload any non ContentManager content here
+            
         }
 
 
