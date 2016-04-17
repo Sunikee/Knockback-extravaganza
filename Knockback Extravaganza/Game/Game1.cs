@@ -7,6 +7,10 @@ using ECS_Engine.Engine.Systems.Interfaces;
 using ECS_Engine.Engine;
 using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Systems;
+using System.Collections.Generic;
+using ECS_Engine.Engine.Component.Interfaces;
+using System;
+using GameEngine;
 
 namespace Game {
     /// <summary>
@@ -46,11 +50,32 @@ namespace Game {
             componentManager.AddComponent(camera, cameraC);
             componentManager.AddComponent(camera, tranformC);
 
+            //Entity chopper = new Entity();
+            //ModelComponent mc = new ModelComponent
+            //{
+            //    Model = Content.Load<Model>("chopper")
+            //};
+            //TransformComponent tc = new TransformComponent
+            //{
+            //    Position = new Vector3(0,0,0),
+            //    Rotation = new Vector3(0,0,0),
+            //    Scale = new Vector3(1,1,1)
+            //};
+
+            //KeyBoardComponent kbc = new KeyBoardComponent();
+            //kbc.AddKeyToAction("Down", Keys.W);
+            //kbc.AddKeyToAction("Up", Keys.S);
+            //kbc.AddKeyToAction("Right", Keys.D);
+            //kbc.AddKeyToAction("Left", Keys.A);
+
+            //componentManager.AddComponent(chopper, kbc);
+            //componentManager.AddComponent(chopper, mc);
+            //componentManager.AddComponent(chopper, tc);
 
             Entity model = new Entity();
 
             VertexPositionColor[] v = new VertexPositionColor[4];
-            v[0] = new VertexPositionColor(new Vector3(-1, 1 ,0), Color.Red);
+            v[0] = new VertexPositionColor(new Vector3(-1, 1, 0), Color.Red);
             v[1] = new VertexPositionColor(new Vector3(1, 1, 0), Color.Blue);
             v[2] = new VertexPositionColor(new Vector3(-1, -1, 0), Color.Green);
             v[3] = new VertexPositionColor(new Vector3(1, -1, 0), Color.Yellow);
@@ -84,7 +109,9 @@ namespace Game {
             systemManager.AddSystem(new CameraSystem());
             systemManager.AddSystem(new VertexIndexBufferRenderSystem<VertexPositionColor>());
             systemManager.AddSystem(new ModelRenderSystem());
-            systemManager.AddSystem(new ChaseCameraSystem());
+            //systemManager.AddSystem(new MovementSystem());
+            //systemManager.AddSystem(new KeyBoardSystem());
+            //systemManager.AddSystem(new ChaseCameraSystem());
 
             
 
@@ -114,7 +141,5 @@ namespace Game {
         protected override void UnloadContent() {
             // TODO: Unload any non ContentManager content here
         }
-
-
     }
 }

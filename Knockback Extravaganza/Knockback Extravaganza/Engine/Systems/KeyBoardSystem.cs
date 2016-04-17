@@ -12,7 +12,7 @@ using ECS_Engine.Engine;
 using ECS_Engine.Engine.Managers;
 using ECS_Engine.Engine.Component.Interfaces;
 
-namespace GameEngine
+namespace ECS_Engine.Engine.Systems
 {
     public class KeyBoardSystem : IInputSystem
     {

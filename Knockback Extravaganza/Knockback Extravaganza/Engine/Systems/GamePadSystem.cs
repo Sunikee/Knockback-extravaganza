@@ -11,8 +11,9 @@ using ECS_Engine.Engine.Systems.Interfaces;
 using ECS_Engine.Engine.Managers;
 using ECS_Engine.Engine;
 using ECS_Engine.Engine.Component.Interfaces;
+using GameEngine;
 
-namespace GameEngine
+namespace ECS_Engine.Engine.Systems
 {
     public class GamePadSystem : IInputSystem
     {

@@ -55,6 +55,7 @@
     <Compile Include="Engine\Entity.cs" />
     <Compile Include="Engine\Managers\ComponentManager.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
+    <Compile Include="Engine\MovementComponent.cs" />
     <Compile Include="Engine\Systems\CameraSystem.cs" />
     <Compile Include="Engine\Systems\ChaseCameraSystem.cs" />
     <Compile Include="Engine\Systems\GamePadSystem.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Engine\Systems\KeyBoardSystem.cs" />
     <Compile Include="Engine\Systems\ModelRenderSystem.cs" />
     <Compile Include="Engine\Systems\MouseSystem.cs" />
+    <Compile Include="Engine\Systems\MovementSystem.cs" />
     <Compile Include="Engine\Systems\TransformSystem.cs" />
     <Compile Include="Engine\Systems\VertexBufferRenderSystem.cs" />
     <Compile Include="Engine\Systems\VertexIndexBufferRenderSystem.cs" />
