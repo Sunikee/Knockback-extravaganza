@@ -27,7 +27,7 @@ namespace ECS_Engine.Engine.Systems
 
                     if (pc.InAir == true)
                     {
-                        tc.Position -= tc.Up * pc.Gravity * pc.GravityStrength * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        tc.Position -= Vector3.Up * pc.Gravity * pc.GravityStrength * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                     }
 
