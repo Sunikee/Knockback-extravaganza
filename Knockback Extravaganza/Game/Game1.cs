@@ -12,17 +12,21 @@ using ECS_Engine.Engine.Component.Interfaces;
 using System;
 using GameEngine;
 
-namespace Game {
+namespace Game
+{
 
-    public class Game1 : ECSEngine {
+    public class Game1 : ECSEngine
+    {
 
-        public Game1() : base(){
-            
+        public Game1() : base()
+        {
+
         }
 
         Entity mesh = new Entity();
 
-        protected override void Initialize() {
+        protected override void Initialize()
+        {
             // TODO: Add your initialization logic here
             Entity camera = new Entity();
             CameraComponent cameraC = new CameraComponent();
@@ -42,27 +46,34 @@ namespace Game {
             componentManager.AddComponent(camera, cameraC);
             componentManager.AddComponent(camera, tranformC);
 
-            //Entity chopper = new Entity();
-            //ModelComponent mc = new ModelComponent
-            //{
-            //    Model = Content.Load<Model>("chopper")
-            //};
-            //TransformComponent tc = new TransformComponent
-            //{
-            //    Position = new Vector3(0,0,0),
-            //    Rotation = new Vector3(0,0,0),
-            //    Scale = new Vector3(1,1,1)
-            //};
+            Entity chopper = new Entity();
+            ModelComponent mc = new ModelComponent
+            {
+                Model = Content.Load<Model>("chopper")
+            };
+            TransformComponent tc = new TransformComponent
+            {
+                Position = new Vector3(0, 0, 0),
+                Rotation = new Vector3(0, 0, 0),
+                Scale = new Vector3(1, 1, 1)
+            };
 
-            //KeyBoardComponent kbc = new KeyBoardComponent();
-            //kbc.AddKeyToAction("Down", Keys.W);
-            //kbc.AddKeyToAction("Up", Keys.S);
-            //kbc.AddKeyToAction("Right", Keys.D);
-            //kbc.AddKeyToAction("Left", Keys.A);
+            KeyBoardComponent kbc = new KeyBoardComponent();
+            kbc.AddKeyToAction("Down", Keys.W);
+            kbc.AddKeyToAction("Up", Keys.S);
+            kbc.AddKeyToAction("Right", Keys.D);
+            kbc.AddKeyToAction("Left", Keys.A);
 
-            //componentManager.AddComponent(chopper, kbc);
-            //componentManager.AddComponent(chopper, mc);
-            //componentManager.AddComponent(chopper, tc);
+            PhysicsComponent pc = new PhysicsComponent
+            {
+                InAir = false,
+                GravityStrength = 1
+            };
+
+            componentManager.AddComponent(chopper, pc);
+            componentManager.AddComponent(chopper, kbc);
+            componentManager.AddComponent(chopper, mc);
+            componentManager.AddComponent(chopper, tc);
 
             Entity model = new Entity();
 
@@ -97,18 +108,21 @@ namespace Game {
             tra.Position = Vector3.Zero;
             componentManager.AddComponent(mesh, tra);
 
+        
+
             systemManager.AddSystem(new TransformSystem());
             systemManager.AddSystem(new CameraSystem());
             systemManager.AddSystem(new VertexIndexBufferRenderSystem<VertexPositionColor>());
             systemManager.AddSystem(new ModelRenderSystem());
-            //systemManager.AddSystem(new MovementSystem());
-            //systemManager.AddSystem(new KeyBoardSystem());
-            //systemManager.AddSystem(new ChaseCameraSystem());
+            systemManager.AddSystem(new MovementSystem());
+            systemManager.AddSystem(new KeyBoardSystem());
+            systemManager.AddSystem(new ChaseCameraSystem());
 
             base.Initialize();
         }
 
-        protected override void LoadContent() {
+        protected override void LoadContent()
+        {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             ModelComponent m = new ModelComponent();
@@ -118,8 +132,9 @@ namespace Game {
             componentManager.AddComponent(mesh, m);
         }
 
-        protected override void UnloadContent() {
-            
+        protected override void UnloadContent()
+        {
+
         }
     }
 }

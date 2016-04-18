@@ -45,6 +45,7 @@ namespace ECS_Engine.Engine.Systems
                                     {
                                         //Kollision mellan två modeller med collisionscomponenter har skett.
                                         //Hantering av collision
+                                        continue;
                                     }
 
                                 }
