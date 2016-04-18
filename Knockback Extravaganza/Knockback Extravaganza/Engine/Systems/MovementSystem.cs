@@ -54,7 +54,7 @@ namespace ECS_Engine.Engine.Systems
                     if ((actionState.Key.Equals("Move") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) || (actionState.Key.Equals("Move") && actionState.Value.Equals(BUTTON_STATE.HELD)))
                     {
                         //Console.WriteLine("Trycker på Space");
-                        tc.Position += tc.Forward * (float)gametime.ElapsedGameTime.TotalSeconds * 10;
+                        tc.Position += tc.Forward * (float)gametime.ElapsedGameTime.TotalSeconds * 30;
                     }
                 }
             }
