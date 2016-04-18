@@ -49,9 +49,9 @@ namespace Game {
             //};
             //TransformComponent tc = new TransformComponent
             //{
-            //    Position = new Vector3(0,0,0),
-            //    Rotation = new Vector3(0,0,0),
-            //    Scale = new Vector3(1,1,1)
+            //    Position = new Vector3(0, 0, 0),
+            //    Rotation = new Vector3(0, 0, 0),
+            //    Scale = new Vector3(1, 1, 1)
             //};
 
             //KeyBoardComponent kbc = new KeyBoardComponent();
@@ -59,6 +59,7 @@ namespace Game {
             //kbc.AddKeyToAction("Up", Keys.S);
             //kbc.AddKeyToAction("Right", Keys.D);
             //kbc.AddKeyToAction("Left", Keys.A);
+            //kbc.AddKeyToAction("Move", Keys.Space);
 
             //componentManager.AddComponent(chopper, kbc);
             //componentManager.AddComponent(chopper, mc);
