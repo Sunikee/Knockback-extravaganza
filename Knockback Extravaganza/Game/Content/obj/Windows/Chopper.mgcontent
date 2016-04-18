@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/oskar/Source/Repos/Knockback-extravaganza/Knockback Extravaganza/Game/Content/Chopper.fbx</SourceFile>
-  <SourceTime>2016-04-18T12:33:36.4637221+02:00</SourceTime>
-  <DestFile>C:/Users/oskar/Source/Repos/Knockback-extravaganza/Knockback Extravaganza/Game/Content/bin/Windows/Chopper.xnb</DestFile>
-  <DestTime>2016-04-18T12:48:46.3824888+02:00</DestTime>
+  <SourceFile>C:/Users/balbo/Source/Repos/Knockback-extravaganza/Knockback Extravaganza/Game/Content/Chopper.fbx</SourceFile>
+  <SourceTime>2016-04-18T09:17:24.4314942+02:00</SourceTime>
+  <DestFile>C:/Users/balbo/Source/Repos/Knockback-extravaganza/Knockback Extravaganza/Game/Content/bin/Windows/Chopper.xnb</DestFile>
+  <DestTime>2016-04-18T10:07:30.6311233+02:00</DestTime>
   <Importer>FbxImporter</Importer>
   <ImporterTime>2016-03-30T08:36:08+02:00</ImporterTime>
   <Processor>ModelProcessor</Processor>

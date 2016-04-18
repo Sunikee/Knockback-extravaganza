@@ -23,7 +23,7 @@ namespace ECS_Engine.Engine.Systems
             foreach (KeyValuePair<Entity, IComponent> component in kComponents)
             {
                 //foreach (KeyValuePair<Entity, IComponent> tranformComp in tComponents)
-                KeyBoardComponent keyboardComp = (KeyBoardComponent)component.Value;
+                KeyBoardComponent keyboardComp = (KeyBoardComponent)component.Value;             
                 TransformComponent tc = componentManager.GetComponent<TransformComponent>(component.Key);          
                 foreach (KeyValuePair<string, BUTTON_STATE> actionState in keyboardComp.ActionStates)
                 {

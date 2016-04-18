@@ -48,6 +48,7 @@
     <Compile Include="Engine\Component\ModelComponent.cs" />
     <Compile Include="Engine\Component\ModelTransformComponent.cs" />
     <Compile Include="Engine\Component\MouseComponent.cs" />
+    <Compile Include="Engine\Component\PhysicsComponent.cs" />
     <Compile Include="Engine\Component\VertexBufferComponent.cs" />
     <Compile Include="Engine\Component\VertexComponent.cs" />
     <Compile Include="Engine\Component\TransformComponent.cs" />
@@ -56,7 +57,7 @@
     <Compile Include="Engine\Entity.cs" />
     <Compile Include="Engine\Managers\ComponentManager.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
-    <Compile Include="Engine\MovementComponent.cs" />
+    <Compile Include="Engine\Component\MovementComponent.cs" />
     <Compile Include="Engine\Systems\CameraSystem.cs" />
     <Compile Include="Engine\Systems\ChaseCameraSystem.cs" />
     <Compile Include="Engine\Systems\CollisionSystem.cs" />

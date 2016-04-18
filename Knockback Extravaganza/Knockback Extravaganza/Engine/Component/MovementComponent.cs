@@ -10,8 +10,8 @@ namespace ECS_Engine.Engine
     class MovementComponent
     {
         public Vector3 Velocity {get; set;}
-        public float Gravity { get; set; }
-        public float Friction { get; set; }
+        public float Acceleration { get; set; }
+        public float Speed { get; set; }
 
     }
 }
