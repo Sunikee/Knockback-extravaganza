@@ -32,7 +32,7 @@ namespace ECS_Engine.Engine.Systems {
                             effect.EnableDefaultLighting();
                             effect.View = camera.View;
                             effect.Projection = camera.Projection;
-                            effect.World = MeshTransform.GetTranform(mesh.Name).World * transforms[mesh.ParentBone.Index] * transform.World;
+                            effect.World = MeshTransform.GetTranform(mesh.Name).World * transforms[mesh.ParentBone.Index]*  transform.World;
                         }
                         mesh.Draw();
                     }

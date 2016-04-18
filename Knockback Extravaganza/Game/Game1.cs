@@ -134,11 +134,11 @@ namespace Game
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            //ModelComponent m = new ModelComponent();
-            //m.Model = Content.Load<Model>("Chopper");
-            //ModelTransformComponent t = new ModelTransformComponent(m.Model);
-            //componentManager.AddComponent(mesh, t);
-            //componentManager.AddComponent(mesh, m);
+            ModelComponent m = new ModelComponent();
+            m.Model = Content.Load<Model>("Player");
+            ModelTransformComponent t = new ModelTransformComponent(m.Model);
+            componentManager.AddComponent(mesh, t);
+            componentManager.AddComponent(mesh, m);
         }
 
         protected override void UnloadContent()

@@ -21,10 +21,6 @@ namespace ECS_Engine.Engine.Component {
             Scale = Vector3.One;
         }
 
-        public Matrix World {
-            get {
-                return Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(Rotation.Y, Rotation.X, Rotation.Z)) * Matrix.CreateTranslation(Position);
-            }
-        }
+        public Matrix World { get; set; }
     }
 }
