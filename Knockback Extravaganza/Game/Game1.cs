@@ -65,11 +65,11 @@ namespace Game
             //kbc.AddKeyToAction("Left", Keys.A);
             //kbc.AddKeyToAction("Move", Keys.Space);
 
-            componentManager.AddComponent(chopper, pc);
-            componentManager.AddComponent(chopper, kbc);
-            componentManager.AddComponent(chopper, mc);
-            componentManager.AddComponent(chopper, tc);
-
+            //componentManager.AddComponent(chopper, pc);
+            //componentManager.AddComponent(chopper, kbc);
+            //componentManager.AddComponent(chopper, mc);
+            //componentManager.AddComponent(chopper, tc);
+            
             Entity model = new Entity();
 
             VertexPositionColor[] v = new VertexPositionColor[4];
