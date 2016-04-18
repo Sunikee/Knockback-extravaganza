@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 namespace ECS_Engine.Engine.Component {
     public class ChaseCameraComponent : IComponent{
         public Entity Target { get; set; }
+        public Vector3 TargetOffSet { get; set; }
         public Vector3 Offset { get; set; }
     }
 }

@@ -46,30 +46,28 @@ namespace Game
             componentManager.AddComponent(camera, cameraC);
             componentManager.AddComponent(camera, tranformC);
 
-            //Entity chopper = new Entity();
-            //ModelComponent mc = new ModelComponent
-            //{
-            //    Model = Content.Load<Model>("chopper")
-            //};
-            //TransformComponent tc = new TransformComponent
-            //{
-            //    Position = new Vector3(0, 0, 0),
-            //    Rotation = new Vector3(0, 0, 0),
-            //    Scale = new Vector3(1, 1, 1)
-            //};
+            Entity chopper = new Entity();
+            ModelComponent mc = new ModelComponent {
+                Model = Content.Load<Model>("chopper")
+            };
+            TransformComponent tc = new TransformComponent {
+                Position = new Vector3(0, 0, 0),
+                Rotation = new Vector3(0, 0, 0),
+                Scale = new Vector3(1, 1, 1)
+            };
 
-            //KeyBoardComponent kbc = new KeyBoardComponent();
-            //kbc.AddKeyToAction("Down", Keys.W);
-            //kbc.AddKeyToAction("Up", Keys.S);
-            //kbc.AddKeyToAction("Right", Keys.D);
-            //kbc.AddKeyToAction("Left", Keys.A);
-            //kbc.AddKeyToAction("Move", Keys.Space);
+            KeyBoardComponent kbc = new KeyBoardComponent();
+            kbc.AddKeyToAction("Down", Keys.W);
+            kbc.AddKeyToAction("Up", Keys.S);
+            kbc.AddKeyToAction("Right", Keys.D);
+            kbc.AddKeyToAction("Left", Keys.A);
+            kbc.AddKeyToAction("Move", Keys.Space);
 
             //componentManager.AddComponent(chopper, pc);
-            //componentManager.AddComponent(chopper, kbc);
-            //componentManager.AddComponent(chopper, mc);
-            //componentManager.AddComponent(chopper, tc);
-            
+            componentManager.AddComponent(chopper, kbc);
+            componentManager.AddComponent(chopper, mc);
+            componentManager.AddComponent(chopper, tc);
+
             Entity model = new Entity();
 
             VertexPositionColor[] v = new VertexPositionColor[4];
@@ -120,11 +118,11 @@ namespace Game
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            ModelComponent m = new ModelComponent();
-            m.Model = Content.Load<Model>("Chopper");
-            ModelTransformComponent t = new ModelTransformComponent(m.Model);
-            componentManager.AddComponent(mesh, t);
-            componentManager.AddComponent(mesh, m);
+            //ModelComponent m = new ModelComponent();
+            //m.Model = Content.Load<Model>("Chopper");
+            //ModelTransformComponent t = new ModelTransformComponent(m.Model);
+            //componentManager.AddComponent(mesh, t);
+            //componentManager.AddComponent(mesh, m);
         }
 
         protected override void UnloadContent()

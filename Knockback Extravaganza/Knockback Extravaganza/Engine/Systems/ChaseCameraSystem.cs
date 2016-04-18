@@ -20,7 +20,7 @@ namespace ECS_Engine.Engine.Systems {
                         CameraComponent camera = (CameraComponent)component.Value;
                         TransformComponent cameraTransform = componentManager.GetComponent<TransformComponent>(component.Key);
                         TransformComponent targetTransform = componentManager.GetComponent<TransformComponent>(chase.Target);
-                        camera.Target = targetTransform.Position;
+                        camera.Target = targetTransform.Position + chase.TargetOffSet;
                         Vector3 offZ = -targetTransform.Forward * chase.Offset.Z;
                         Vector3 offX = targetTransform.Right * chase.Offset.X;
                         Vector3 offY = targetTransform.Up * chase.Offset.Y;
