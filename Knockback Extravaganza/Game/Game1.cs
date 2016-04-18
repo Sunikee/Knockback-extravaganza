@@ -63,6 +63,22 @@ namespace Game
             kbc.AddKeyToAction("Left", Keys.A);
             kbc.AddKeyToAction("Move", Keys.Space);
 
+            PhysicsComponent pc = new PhysicsComponent
+            {
+                InAir = true,
+                GravityStrength = 5
+            };
+
+            MovementComponent mmc = new MovementComponent
+            {
+                Acceleration = 0,
+                Speed = 1,
+                Velocity = Vector3.Zero
+            };
+
+
+            componentManager.AddComponent(chopper, mmc);
+            componentManager.AddComponent(chopper, pc);
             //componentManager.AddComponent(chopper, pc);
             componentManager.AddComponent(chopper, kbc);
             componentManager.AddComponent(chopper, mc);
