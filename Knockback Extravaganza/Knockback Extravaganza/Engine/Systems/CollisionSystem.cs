@@ -47,7 +47,6 @@ namespace ECS_Engine.Engine.Systems
                                         //Hantering av collision
                                         Dictionary<Entity, IComponent> playercomponents = componentManager.GetComponents<PlayerComponent>();
 
-
                                         var playercomp1 = componentManager.GetComponent<PlayerComponent>(comp1.Key);
                                         var playercomp2 = componentManager.GetComponent <PlayerComponent>(comp2.Key);    
 

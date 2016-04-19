@@ -34,5 +34,7 @@ namespace ECS_Engine.Engine.Systems
         {
             tc.Position -= Vector3.Up * pc.Gravity * pc.GravityStrength * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
+
+        
     }
 }
