@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Systems {
     public class ModelRenderSystem : IRenderSystem{
-
+        public static float r = 0.1f;
         public void Render(GameTime gameTime, GraphicsDeviceManager graphicsDevice, ComponentManager componentManager) {
             Dictionary<Entity, IComponent> cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
@@ -23,16 +23,13 @@ namespace ECS_Engine.Engine.Systems {
                 ModelTransformComponent MeshTransform = componentManager.GetComponent<ModelTransformComponent>(component.Key);
                 TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                 if (MeshTransform != default(ModelTransformComponent) && transform != default(TransformComponent)) {
-
-                    Matrix[] transforms = new Matrix[model.Model.Bones.Count()];
-                    model.Model.CopyAbsoluteBoneTransformsTo(transforms);
                     foreach (ModelMesh mesh in model.Model.Meshes) {                        
                         foreach (BasicEffect effect in mesh.Effects) {
                             CheckForTexture(model, effect);
                             effect.EnableDefaultLighting();
                             effect.View = camera.View;
                             effect.Projection = camera.Projection;
-                            effect.World = MeshTransform.GetTranform(mesh.Name).World * transforms[mesh.ParentBone.Index]*  transform.World;
+                            effect.World = MeshTransform.GetTranform(mesh.Name).ParentBone * MeshTransform.GetTranform(mesh.Name).World *  transform.World;
                         }
                         mesh.Draw();
                     }

@@ -31,9 +31,13 @@ namespace ECS_Engine.Engine.Systems {
                 foreach (KeyValuePair<Entity, IComponent> component in ModelComponents) {
                     ModelTransformComponent transform = componentManager.GetComponent<ModelTransformComponent>(component.Key);
                     foreach (MeshTransform mesh in transform.GetTransforms().Values) {
-                        Quaternion rotation = Quaternion.CreateFromYawPitchRoll(mesh.Rotation.Y, mesh.Rotation.X, mesh.Rotation.Z);
+                        Quaternion rotation = Quaternion.CreateFromAxisAngle(mesh.Right, mesh.Rotation.X) * 
+                            Quaternion.CreateFromAxisAngle(mesh.Up, mesh.Rotation.Y) * 
+                            Quaternion.CreateFromAxisAngle(mesh.Forward, mesh.Rotation.Z);
 
-                        mesh.World = Matrix.CreateScale(mesh.Scale) * Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(mesh.Position);
+                        Matrix rot = Matrix.CreateTranslation(-mesh.ParentBone.Translation) * Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(mesh.ParentBone.Translation);
+
+                        mesh.World = Matrix.CreateScale(mesh.Scale) * rot * Matrix.CreateTranslation(mesh.Position);
   
                         mesh.Forward = GetLocalDir(Vector3.Forward, rotation);
                         mesh.Right = GetLocalDir(Vector3.Right, rotation);
