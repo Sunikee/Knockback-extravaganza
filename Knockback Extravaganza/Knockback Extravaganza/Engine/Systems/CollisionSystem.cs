@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ECS_Engine.Engine.Component;
@@ -8,6 +9,7 @@ using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Managers;
 using ECS_Engine.Engine.Systems.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS_Engine.Engine.Systems
 {
@@ -15,55 +17,104 @@ namespace ECS_Engine.Engine.Systems
     {
         public void Update(GameTime gametime, ComponentManager componentManager)
         {
-            Dictionary<Entity, IComponent> components = componentManager.GetComponents<CollisionComponent>();
-            if (components != null)
+            Dictionary<Entity, IComponent> activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();
+            Dictionary<Entity, IComponent> passiveComponents = componentManager.GetComponents<PassiveCollisionComponent>();
+            
+            if (activeComponents != null && passiveComponents != null)
             {
-                foreach (KeyValuePair<Entity, IComponent> comp1 in components)
+                
+                foreach (KeyValuePair<Entity, IComponent> activeComp1 in activeComponents)
                 {
-                    ModelComponent model1 = componentManager.GetComponent<ModelComponent>(comp1.Key);
-                    TransformComponent world1 = componentManager.GetComponent<TransformComponent>(comp1.Key);
-                    PhysicsComponent pc1 = componentManager.GetComponent<PhysicsComponent>(comp1.Key);
+                    ModelComponent activeModel1 = componentManager.GetComponent<ModelComponent>(activeComp1.Key);
+                    ModelTransformComponent activeModelTrans1 = componentManager.GetComponent<ModelTransformComponent>(activeComp1.Key);
+                    TransformComponent activeTrans1 = componentManager.GetComponent<TransformComponent>(activeComp1.Key);
+                    PhysicsComponent activePC1 = componentManager.GetComponent<PhysicsComponent>(activeComp1.Key);
 
-                    foreach (KeyValuePair<Entity, IComponent> comp2 in components)
+                    foreach (KeyValuePair<Entity, IComponent> activeComp2 in activeComponents)
                     {
-                        ModelComponent model2 = componentManager.GetComponent<ModelComponent>(comp2.Key);
-                        TransformComponent world2 = componentManager.GetComponent<TransformComponent>(comp2.Key);
-                        PhysicsComponent pc2 = componentManager.GetComponent<PhysicsComponent>(comp2.Key);
-                        if (model1 != model2)
+                        ModelComponent activeModel2 = componentManager.GetComponent<ModelComponent>(activeComp2.Key);
+                        ModelTransformComponent activeModelTrans2 = componentManager.GetComponent<ModelTransformComponent>(activeComp1.Key);
+                        TransformComponent activeTrans2 = componentManager.GetComponent<TransformComponent>(activeComp1.Key);
+                        PhysicsComponent activePC2 = componentManager.GetComponent<PhysicsComponent>(activeComp1.Key);
+
+                        if (activeModel1 != activeModel2)
                         {
-                            for (int meshIndex1 = 0; meshIndex1 < model1.Model.Meshes.Count; meshIndex1++)
+                            for (int i = 0; i < activeModel1.Model.Meshes.Count; i++)
                             {
-                                BoundingSphere sphere1 = model1.Model.Meshes[meshIndex1].BoundingSphere;
-                                sphere1 = sphere1.Transform(world1.World);
-                                for (int meshIndex2 = 0; meshIndex2 < model2.Model.Meshes.Count; meshIndex2++)
+                                BoundingSphere sphere1 = activeModel1.Model.Meshes[i].BoundingSphere;
+                                sphere1 = sphere1.Transform(activeTrans1.World);
+
+                                for (int y = 0; y < activeModel2.Model.Meshes.Count; y++)
                                 {
-                                    BoundingSphere sphere2 = model2.Model.Meshes[meshIndex2].BoundingSphere;
-                                    sphere2 = sphere2.Transform(world2.World);
+                                    BoundingSphere sphere2 = activeModel2.Model.Meshes[y].BoundingSphere;
+                                    sphere2 = sphere2.Transform(activeTrans2.World);
 
                                     if (sphere1.Intersects(sphere2))
                                     {
                                         Console.WriteLine("intersects");
-                                        //Kollision mellan två modeller med collisionscomponenter har skett.
-                                        //Hantering av collision
+                                        activeTrans1.Position = new Vector3(0, 0, 0);
                                         Dictionary<Entity, IComponent> playercomponents = componentManager.GetComponents<PlayerComponent>();
 
-                                        var playercomp1 = componentManager.GetComponent<PlayerComponent>(comp1.Key);
-                                        var playercomp2 = componentManager.GetComponent <PlayerComponent>(comp2.Key);    
+                                        var playercomp1 = componentManager.GetComponent<PlayerComponent>(activeComp1.Key);
+                                        var playercomp2 = componentManager.GetComponent<PlayerComponent>(activeComp2.Key);
 
-                                        if( playercomp1 != null && pc1.InJump == false)
+                                        if (playercomp1 != null && activePC1.InJump == false)
                                         {
-                                            world1.Position = new Vector3(world1.Position.X, 0, world1.Position.Z);
+                                            activeTrans1.Position = new Vector3(activeTrans1.Position.X, 0, activeTrans1.Position.Z);
+                                        }
+
+                                        if (playercomp2 != null && activePC2.InJump == false)
+                                        {
+                                            activeTrans1.Position = new Vector3(activeTrans1.Position.X, 0, activeTrans1.Position.Z);
+                                        }
+                                        // continue;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    foreach (KeyValuePair<Entity, IComponent> passiveComp in passiveComponents)
+                    {
+                        ModelComponent model2 = componentManager.GetComponent<ModelComponent>(passiveComp.Key);
+                        ModelTransformComponent modelTrans2 = componentManager.GetComponent<ModelTransformComponent>(passiveComp.Key);
+                        TransformComponent trans2 = componentManager.GetComponent<TransformComponent>(passiveComp.Key);
+                        PhysicsComponent pc2 = componentManager.GetComponent<PhysicsComponent>(passiveComp.Key);
+
+
+                        {
+                            for (int i = 0; i < activeModel1.Model.Meshes.Count; i++)
+                            {
+                                BoundingSphere sphere1 = activeModel1.Model.Meshes[i].BoundingSphere;
+                                sphere1 = sphere1.Transform(activeTrans1.World);
+
+                                for (int y = 0; y < model2.Model.Meshes.Count; y++)
+                                {
+                                    BoundingSphere sphere2 = model2.Model.Meshes[y].BoundingSphere;
+                                    sphere2 = sphere2.Transform(trans2.World);
+
+                                    if (sphere1.Intersects(sphere2))
+                                    {
+                                        Console.WriteLine("intersects");
+                                        activeTrans1.Position = new Vector3(activeTrans1.Position.X , trans2.Position.Y + 10,activeTrans1.Position.Z);
+                                        Dictionary<Entity, IComponent> playercomponents = componentManager.GetComponents<PlayerComponent>();
+
+                                        var playercomp1 = componentManager.GetComponent<PlayerComponent>(activeComp1.Key);
+                                        var playercomp2 = componentManager.GetComponent <PlayerComponent>(activeComp1.Key);    
+
+                                        if( playercomp1 != null && activePC1.InJump == false)
+                                        {
+                                            activeTrans1.Position = new Vector3(activeTrans1.Position.X, 0, activeTrans1.Position.Z);
                                         }
 
                                         if (playercomp2 != null && pc2.InJump == false)
                                         {
-                                            world2.Position = new Vector3(world2.Position.X, 0, world2.Position.Z);
+                                            trans2.Position = new Vector3(trans2.Position.X, 0, trans2.Position.Z);
                                         }
                                         // continue;
                                     }
-
                                 }
-                            }   
+                            }
                         }
                     }
                 }

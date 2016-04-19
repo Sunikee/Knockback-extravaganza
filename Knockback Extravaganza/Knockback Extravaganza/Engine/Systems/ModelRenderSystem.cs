@@ -29,7 +29,7 @@ namespace ECS_Engine.Engine.Systems {
                             effect.EnableDefaultLighting();
                             effect.View = camera.View;
                             effect.Projection = camera.Projection;
-                            effect.World = MeshTransform.GetTranform(mesh.Name).ParentBone * MeshTransform.GetTranform(mesh.Name).World *  transform.World;
+                            effect.World = MeshTransform.GetTransform(mesh.Name).ParentBone * MeshTransform.GetTransform(mesh.Name).World *  transform.World;
                         }
                         mesh.Draw();
                     }

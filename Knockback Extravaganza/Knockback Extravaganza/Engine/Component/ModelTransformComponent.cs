@@ -44,7 +44,7 @@ namespace ECS_Engine.Engine.Component {
             }
         }
 
-        public MeshTransform GetTranform(string name) {
+        public MeshTransform GetTransform(string name) {
             if (meshTransformations.Keys.Contains(name)) {
                 return meshTransformations[name];
             }
