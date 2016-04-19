@@ -76,14 +76,15 @@ namespace ECS_Engine.Engine.Systems
 
                     foreach (KeyValuePair<Entity, IComponent> passiveComp in passiveComponents)
                     {
+                        //Måste göra om plattformars kollision så de inte omfattas av boudingspheres. Spheren vi har ligger bara i mitten av vår platform.
+                        //Därför man faller igenom.
                         ModelComponent model2 = componentManager.GetComponent<ModelComponent>(passiveComp.Key);
                         ModelTransformComponent modelTrans2 = componentManager.GetComponent<ModelTransformComponent>(passiveComp.Key);
                         TransformComponent trans2 = componentManager.GetComponent<TransformComponent>(passiveComp.Key);
                         PhysicsComponent pc2 = componentManager.GetComponent<PhysicsComponent>(passiveComp.Key);
 
 
-                        {
-                            for (int i = 0; i < activeModel1.Model.Meshes.Count; i++)
+                        for (int i = 0; i < activeModel1.Model.Meshes.Count; i++)
                             {
                                 BoundingSphere sphere1 = activeModel1.Model.Meshes[i].BoundingSphere;
                                 sphere1 = sphere1.Transform(activeTrans1.World);
@@ -96,7 +97,7 @@ namespace ECS_Engine.Engine.Systems
                                     if (sphere1.Intersects(sphere2))
                                     {
                                         Console.WriteLine("intersects");
-                                        activeTrans1.Position = new Vector3(activeTrans1.Position.X , trans2.Position.Y + 10,activeTrans1.Position.Z);
+                                        activeTrans1.Position = new Vector3(activeTrans1.Position.X , sphere2.Center.Y + sphere2.Radius, activeTrans1.Position.Z);
                                         Dictionary<Entity, IComponent> playercomponents = componentManager.GetComponents<PlayerComponent>();
 
                                         var playercomp1 = componentManager.GetComponent<PlayerComponent>(activeComp1.Key);
@@ -119,6 +120,6 @@ namespace ECS_Engine.Engine.Systems
                     }
                 }
             }
-        }
-    }
+      }
 }
+
