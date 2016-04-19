@@ -11,6 +11,8 @@ namespace ECS_Engine.Engine.Component
 {
     public class CollisionComponent: IComponent
     {
-        Dictionary<Entity, Boolean> CollidedWith { get; set; }
+        public Dictionary<Entity, Boolean> CollidedWith { get; set; }
+
+        public BoundingSphere BoundingSphere { get; set; }
     }
 }

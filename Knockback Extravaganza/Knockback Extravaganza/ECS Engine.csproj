@@ -49,6 +49,7 @@
     <Compile Include="Engine\Component\ModelTransformComponent.cs" />
     <Compile Include="Engine\Component\MouseComponent.cs" />
     <Compile Include="Engine\Component\PhysicsComponent.cs" />
+    <Compile Include="Engine\Component\PlayerComponent.cs" />
     <Compile Include="Engine\Component\VertexBufferComponent.cs" />
     <Compile Include="Engine\Component\VertexComponent.cs" />
     <Compile Include="Engine\Component\TransformComponent.cs" />

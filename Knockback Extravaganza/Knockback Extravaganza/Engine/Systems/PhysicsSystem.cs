@@ -19,13 +19,13 @@ namespace ECS_Engine.Engine.Systems
                     PhysicsComponent pc = componentManager.GetComponent<PhysicsComponent>(comp.Key);
                     TransformComponent tc = componentManager.GetComponent<TransformComponent>(comp.Key);
                     MovementComponent mc = componentManager.GetComponent<MovementComponent>(comp.Key);
+                    PlayerComponent playC = componentManager.GetComponent<PlayerComponent>(comp.Key);
 
-                    if (pc.InAir == true)
+                    ApplyGravity(gameTime, pc, tc);
+                    if (tc.Position.Y == 0 && playC != null)
                     {
-                        ApplyGravity(gameTime, pc, tc);
+                        pc.InJump = false;
                     }
-                    else
-                        ApplyFriction(gameTime, mc, tc, pc);
                 }
             }
         }
@@ -33,10 +33,6 @@ namespace ECS_Engine.Engine.Systems
         private void ApplyGravity(GameTime gameTime, PhysicsComponent pc, TransformComponent tc)
         {
             tc.Position -= Vector3.Up * pc.Gravity * pc.GravityStrength * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        }
-        private void ApplyFriction(GameTime gameTime, MovementComponent mc, TransformComponent tc, PhysicsComponent pc)
-        {
-            tc.Position += tc.Forward * pc.Friction * mc.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
     }
 }

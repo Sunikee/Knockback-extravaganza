@@ -20,18 +20,17 @@ namespace ECS_Engine.Engine.Systems
             {
                 foreach (KeyValuePair<Entity, IComponent> comp1 in components)
                 {
-                    ModelComponent model1 =
-                         componentManager.GetComponent<ModelComponent>(comp1.Key);
+                    ModelComponent model1 = componentManager.GetComponent<ModelComponent>(comp1.Key);
                     TransformComponent world1 = componentManager.GetComponent<TransformComponent>(comp1.Key);
+                    PhysicsComponent pc1 = componentManager.GetComponent<PhysicsComponent>(comp1.Key);
 
                     foreach (KeyValuePair<Entity, IComponent> comp2 in components)
                     {
-                        ModelComponent model2 =
-                             componentManager.GetComponent<ModelComponent>(comp2.Key);
+                        ModelComponent model2 = componentManager.GetComponent<ModelComponent>(comp2.Key);
                         TransformComponent world2 = componentManager.GetComponent<TransformComponent>(comp2.Key);
+                        PhysicsComponent pc2 = componentManager.GetComponent<PhysicsComponent>(comp2.Key);
                         if (model1 != model2)
                         {
-                            
                             for (int meshIndex1 = 0; meshIndex1 < model1.Model.Meshes.Count; meshIndex1++)
                             {
                                 BoundingSphere sphere1 = model1.Model.Meshes[meshIndex1].BoundingSphere;
@@ -43,9 +42,25 @@ namespace ECS_Engine.Engine.Systems
 
                                     if (sphere1.Intersects(sphere2))
                                     {
+                                        Console.WriteLine("intersects");
                                         //Kollision mellan två modeller med collisionscomponenter har skett.
                                         //Hantering av collision
-                                        continue;
+                                        Dictionary<Entity, IComponent> playercomponents = componentManager.GetComponents<PlayerComponent>();
+
+
+                                        var playercomp1 = componentManager.GetComponent<PlayerComponent>(comp1.Key);
+                                        var playercomp2 = componentManager.GetComponent <PlayerComponent>(comp2.Key);    
+
+                                        if( playercomp1 != null && pc1.InJump == false)
+                                        {
+                                            world1.Position = new Vector3(world1.Position.X, 0, world1.Position.Z);
+                                        }
+
+                                        if (playercomp2 != null && pc2.InJump == false)
+                                        {
+                                            world2.Position = new Vector3(world2.Position.X, 0, world2.Position.Z);
+                                        }
+                                        // continue;
                                     }
 
                                 }

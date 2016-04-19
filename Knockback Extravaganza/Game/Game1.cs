@@ -65,7 +65,7 @@ namespace Game
 
             PhysicsComponent pc = new PhysicsComponent
             {
-                InAir = true,
+                InJump = true,
                 GravityStrength = 5
             };
 
