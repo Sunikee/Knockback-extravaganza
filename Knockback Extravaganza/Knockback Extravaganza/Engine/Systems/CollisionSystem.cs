@@ -108,12 +108,12 @@ namespace ECS_Engine.Engine.Systems
                                             activeTrans1.Position = new Vector3(activeTrans1.Position.X, 0, activeTrans1.Position.Z);
                                         }
 
-                                        if (playercomp2 != null && pc2.InJump == false)
-                                        {
-                                            trans2.Position = new Vector3(trans2.Position.X, 0, trans2.Position.Z);
-                                        }
-                                        // continue;
-                                    }
+                                    //if (playercomp2 != null && pc2.InJump == false)
+                                    //{
+                                    //    trans2.Position = new Vector3(trans2.Position.X, 0, trans2.Position.Z);
+                                    //}
+                                    //// continue;
+                                }
                                 }
                             }
                         }

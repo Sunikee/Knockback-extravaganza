@@ -13,7 +13,7 @@ namespace Game {
         [STAThread]
         static void Main()
         {
-            using (Game1 game = new Game1())
+            using (Albin_local game = new Albin_local())
                 game.Run();
         }
     }

@@ -31,26 +31,48 @@ namespace ECS_Engine.Engine.Systems
                 TransformComponent tc = componentManager.GetComponent<TransformComponent>(component.Key);
                 MovementComponent mc = componentManager.GetComponent<MovementComponent>(component.Key);
                 PhysicsComponent pc = componentManager.GetComponent<PhysicsComponent>(component.Key);
+
                 foreach (KeyValuePair<string, BUTTON_STATE> actionState in keyboardComp.ActionStates)
                 {
-                    if ((actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) || (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                    if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.PRESSED))
                     {
-
-                        tc.Position += tc.Forward * (float)gametime.ElapsedGameTime.TotalSeconds * mc.Speed * mc.Acceleration;
+                        tc.Position += tc.Forward * mc.Speed;
                     }
-                    if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                    if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.HELD))
                     {
+                        mc.Speed += (float)gametime.ElapsedGameTime.TotalSeconds * mc.Speed * mc.Acceleration;
+                        if (mc.Speed > 3)
+                            mc.Speed = 3;
+                        tc.Position += tc.Forward * mc.Speed;
+                    }
 
-                        tc.Position += tc.Forward * (float)gametime.ElapsedGameTime.TotalSeconds * -mc.Speed/2 * mc.Acceleration/2;
+                    if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.RELEASED))
+                    {
+                        mc.Speed = 1;
+                        //tc.Position += tc.Forward * mc.Speed;
+                    }
+
+                    if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.PRESSED))
+                    {
+                        tc.Position += tc.Forward *-mc.Speed;
+                    }
+                    if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.HELD))
+                    {
+                        mc.Speed += (float)gametime.ElapsedGameTime.TotalSeconds * mc.Speed * mc.Acceleration;
+                        if (mc.Speed > 1.5f)
+                            mc.Speed = 1.5f;
+                        tc.Position += tc.Forward * -mc.Speed * 0.5f;
+                    }
+                    if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.RELEASED))
+                    {
+                        mc.Speed = 2;
                     }
                     if (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.HELD)))
                     {
-             
                         tc.Rotation += new Vector3(0, -.1f, 0);
                     }
                     if (actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.HELD)))
                     {
-               
                         tc.Rotation += new Vector3(0, .1f, 0);
                     }
                     if ((actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) || (actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.HELD)))
@@ -60,6 +82,36 @@ namespace ECS_Engine.Engine.Systems
 
                     }
                 }
+
+                //foreach (KeyValuePair<string, BUTTON_STATE> actionState in keyboardComp.ActionStates)
+                //{
+                //    if ((actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) || (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                //    {
+
+                //        tc.Position += tc.Forward * (float)gametime.ElapsedGameTime.TotalSeconds * mc.Speed * mc.Acceleration;
+                //    }
+                //    if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                //    {
+
+                //        tc.Position += tc.Forward * (float)gametime.ElapsedGameTime.TotalSeconds * -mc.Speed/2 * mc.Acceleration/2;
+                //    }
+                //    if (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                //    {
+
+                //        tc.Rotation += new Vector3(0, -.1f, 0);
+                //    }
+                //    if (actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                //    {
+
+                //        tc.Rotation += new Vector3(0, .1f, 0);
+                //    }
+                //    if ((actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) || (actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                //    {
+                //        pc.InJump = true;
+                //        tc.Position += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 100;
+
+                //    }
+                //}
             }
         }
     }
