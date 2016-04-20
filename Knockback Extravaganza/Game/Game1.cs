@@ -52,8 +52,6 @@ namespace Game
             componentManager.AddComponent(playerEntity, t);
             componentManager.AddComponent(playerEntity, player);
 
-            ActiveCollisionComponent actColl = new ActiveCollisionComponent();
-
             TransformComponent tc = new TransformComponent()
             {
                 Position = new Vector3(0, 0, 0),
@@ -80,6 +78,9 @@ namespace Game
                 Speed = 10,
             };
 
+            ActiveCollisionComponent actColl = new ActiveCollisionComponent(player.Model, tc.World);
+
+
             componentManager.AddComponent(playerEntity, moveC);
             componentManager.AddComponent(playerEntity, pc);
             componentManager.AddComponent(playerEntity, kbc);
@@ -87,8 +88,6 @@ namespace Game
             componentManager.AddComponent(playerEntity, actColl);
 
             Entity platformEntity = new Entity();
-
-            PassiveCollisionComponent passColl = new PassiveCollisionComponent();
 
             ModelComponent platformModelC = new ModelComponent
             {
@@ -99,6 +98,8 @@ namespace Game
                 Position = Vector3.Zero,
                 Scale = Vector3.One
             };
+
+            PassiveCollisionComponent passColl = new PassiveCollisionComponent(platformModelC.Model, platformTransformC.World);
 
             componentManager.AddComponent(platformEntity, platformModelC);
             componentManager.AddComponent(platformEntity, platformTransformC);

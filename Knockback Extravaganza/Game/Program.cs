@@ -13,7 +13,7 @@ namespace Game {
         [STAThread]
         static void Main()
         {
-            using (Albin_local game = new Albin_local())
+            using (Microsoft.Xna.Framework.Game game = new Game1())
                 game.Run();
         }
     }
