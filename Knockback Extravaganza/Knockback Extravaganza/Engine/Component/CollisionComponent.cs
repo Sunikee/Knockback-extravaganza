@@ -36,12 +36,10 @@ namespace ECS_Engine.Engine.Component
 
                         min = Vector3.Min(min, transformedPosition);
                         max = Vector3.Max(max, transformedPosition);
-
                     }
                 }
             }
             this.boundingBox = new BoundingBox(min, max);
-
         }
     }
 }

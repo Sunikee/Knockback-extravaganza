@@ -41,7 +41,7 @@ namespace ECS_Engine.Engine.Systems
 
                         if (activeModel1 != activeModel2)
                         {
-                            aColl1.boundingBox.Intersects(aColl2.boundingBox);
+                            
                         }
                     }
                     foreach (KeyValuePair<Entity, IComponent> passiveComp in passiveComponents)
@@ -56,9 +56,11 @@ namespace ECS_Engine.Engine.Systems
 
                         Console.WriteLine(passColl.boundingBox.Max);
                         Console.WriteLine(aColl1.boundingBox.Max);
+
                         if (aColl1.boundingBox.Intersects(passColl.boundingBox))
                         {
                             Console.WriteLine("INterSECTS with pass");
+                            
                         }
 
                     }
