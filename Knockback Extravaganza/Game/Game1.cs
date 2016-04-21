@@ -32,15 +32,15 @@ namespace Game
             CameraComponent cameraC = new CameraComponent();
             cameraC.FieldOfView = MathHelper.PiOver4;
             cameraC.AspectRatio = graphics.GraphicsDevice.DisplayMode.AspectRatio;
-            cameraC.FarPlaneDistace = 100f;
-            cameraC.NearPlaneDistace = 1f;
+            cameraC.FarPlaneDistace = 10000f;
+            cameraC.NearPlaneDistace = .1f;
             cameraC.Target = Vector3.Zero;
             cameraC.Up = Vector3.Up;
             TransformComponent tranformC = new TransformComponent();
             tranformC.Position = new Vector3(0f, 0, 25f);
             ChaseCameraComponent chase = new ChaseCameraComponent();
             chase.Target = playerEntity;
-            chase.Offset = new Vector3(0, 20, 50);
+            chase.Offset = new Vector3(0, 20, 75);
 
             componentManager.AddComponent(camera, chase);
             componentManager.AddComponent(camera, cameraC);
@@ -49,14 +49,12 @@ namespace Game
             ModelComponent player = new ModelComponent();
             player.Model = Content.Load<Model>("Player");
             ModelTransformComponent t = new ModelTransformComponent(player.Model);
-            componentManager.AddComponent(playerEntity, t);
-            componentManager.AddComponent(playerEntity, player);
 
             TransformComponent tc = new TransformComponent()
             {
                 Position = new Vector3(0, 0, 0),
                 Rotation = new Vector3(0, 0, 0),
-                Scale = new Vector3(.2f, .2f, .2f)
+                Scale = Vector3.One
             };
 
             KeyBoardComponent kbc = new KeyBoardComponent();
@@ -78,7 +76,7 @@ namespace Game
                 Speed = 10,
             };
 
-            ActiveCollisionComponent actColl = new ActiveCollisionComponent(player.Model, tc.World);
+            ActiveCollisionComponent actColl = new ActiveCollisionComponent();
 
 
             componentManager.AddComponent(playerEntity, moveC);
@@ -86,6 +84,9 @@ namespace Game
             componentManager.AddComponent(playerEntity, kbc);
             componentManager.AddComponent(playerEntity, tc);
             componentManager.AddComponent(playerEntity, actColl);
+            componentManager.AddComponent(playerEntity, t);
+            componentManager.AddComponent(playerEntity, player);
+
 
             Entity platformEntity = new Entity();
 
@@ -93,18 +94,21 @@ namespace Game
             {
                 Model = Content.Load<Model>("platform"),
             };
+
             TransformComponent platformTransformC = new TransformComponent
             {
                 Position = Vector3.Zero,
                 Scale = Vector3.One
             };
 
-            PassiveCollisionComponent passColl = new PassiveCollisionComponent(platformModelC.Model, platformTransformC.World);
+            ModelTransformComponent platforModelTransformC = new ModelTransformComponent(platformModelC.Model);
+
+            PassiveCollisionComponent passColl = new PassiveCollisionComponent();
 
             componentManager.AddComponent(platformEntity, platformModelC);
             componentManager.AddComponent(platformEntity, platformTransformC);
             componentManager.AddComponent(platformEntity, passColl);
-
+            componentManager.AddComponent(platformEntity, platforModelTransformC);
 
             systemManager.AddSystem(new TransformSystem());
             systemManager.AddSystem(new CameraSystem());

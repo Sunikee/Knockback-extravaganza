@@ -10,8 +10,5 @@ namespace ECS_Engine.Engine.Component
 {
     public class ActiveCollisionComponent : CollisionComponent
     {
-        public ActiveCollisionComponent(Model model, Matrix worldTransform) : base(model, worldTransform)
-        {
-        }
     }
 }
