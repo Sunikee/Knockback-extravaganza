@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine {
     public class Entity {
+        public int ID { get; }
         public string Tag { get; set; }
         public bool Active { get; set; }
 
-
         public Entity() {
-            Active = true;
+
         }
-        public Entity(string tag) {
-            Tag = tag;
+        public Entity(int id) {
+            ID = id;
             Active = true;
         }
     }

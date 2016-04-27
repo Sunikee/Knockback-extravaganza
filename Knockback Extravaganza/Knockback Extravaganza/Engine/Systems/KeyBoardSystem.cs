@@ -14,7 +14,7 @@ using ECS_Engine.Engine.Component.Interfaces;
 
 namespace ECS_Engine.Engine.Systems
 {
-    public class KeyBoardSystem : IInputSystem
+    public class KeyBoardSystem : IUpdateSystem
     {
         public void Update(GameTime gameTime, ComponentManager componentManager)
         {

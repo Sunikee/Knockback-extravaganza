@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Graphics;
 //TODO: HANDLES TEXTURES DAMN IT!
 namespace ECS_Engine.Engine.Systems {
     public class VertexRenderSystem<T> : IRenderSystem where T : struct, IVertexType{
-        public void Render(GameTime gameTime, GraphicsDeviceManager graphicsDevice, ComponentManager componentManager) {
+        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager) {
             Dictionary<Entity, IComponent> cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
 
@@ -30,7 +30,7 @@ namespace ECS_Engine.Engine.Systems {
                     
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) {
                         pass.Apply();
-                        graphicsDevice.GraphicsDevice.DrawUserPrimitives(model.Type, model.Vertices, 0, model.Count);
+                        graphicsDevice.DrawUserPrimitives(model.Type, model.Vertices, 0, model.Count);
                     }
                 }
             }

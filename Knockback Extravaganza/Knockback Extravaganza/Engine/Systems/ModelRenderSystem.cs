@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace ECS_Engine.Engine.Systems {
     public class ModelRenderSystem : IRenderSystem{
         public static float r = 0.1f;
-        public void Render(GameTime gameTime, GraphicsDeviceManager graphicsDevice, ComponentManager componentManager) {
+        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager) {
             Dictionary<Entity, IComponent> cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
 

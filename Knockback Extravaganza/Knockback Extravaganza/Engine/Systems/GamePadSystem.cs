@@ -15,7 +15,7 @@ using GameEngine;
 
 namespace ECS_Engine.Engine.Systems
 {
-    public class GamePadSystem : IInputSystem
+    public class GamePadSystem : IUpdateSystem
     {
         
 

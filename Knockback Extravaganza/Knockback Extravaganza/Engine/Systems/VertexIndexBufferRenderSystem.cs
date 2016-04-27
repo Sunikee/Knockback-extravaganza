@@ -12,7 +12,7 @@ using ECS_Engine.Engine.Component;
 
 namespace ECS_Engine.Engine.Systems {
     public class VertexIndexBufferRenderSystem<T> : IRenderSystem where T : struct, IVertexType {
-        public void Render(GameTime gameTime, GraphicsDeviceManager graphicsDevice, ComponentManager componentManager) {
+        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager) {
             Dictionary<Entity, IComponent> cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
 
@@ -27,9 +27,9 @@ namespace ECS_Engine.Engine.Systems {
                     effect.Projection = camera.Projection;
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) {
                         pass.Apply();
-                        graphicsDevice.GraphicsDevice.Indices = model.IndexBuffer;
-                        graphicsDevice.GraphicsDevice.SetVertexBuffer(model.VertexBuffer);
-                        graphicsDevice.GraphicsDevice.DrawIndexedPrimitives(model.Type, 0, 0, model.Count);
+                        graphicsDevice.Indices = model.IndexBuffer;
+                        graphicsDevice.SetVertexBuffer(model.VertexBuffer);
+                        graphicsDevice.DrawIndexedPrimitives(model.Type, 0, 0, model.Count);
                     }
                 }
             }

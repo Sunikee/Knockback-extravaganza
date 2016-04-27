@@ -12,13 +12,13 @@ using ECS_Engine.Engine.Component;
 
 namespace ECS_Engine.Engine.Systems {
     public class VertexBufferRenderSystem<T> : IRenderSystem where T : struct, IVertexType{
-        public void Render(GameTime gameTime, GraphicsDeviceManager graphicsDevice, ComponentManager componentManager) {
-            Dictionary<Entity, IComponent> cam = componentManager.GetComponents<CameraComponent>();
+        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager) {
+            var cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
 
-            Dictionary<Entity, IComponent> components = componentManager.GetComponents<VertexBufferComponent<T>>();
+            var components = componentManager.GetComponents<VertexBufferComponent<T>>();
             foreach (KeyValuePair<Entity, IComponent> component in components) {
-                VertexBufferComponent<T> model = (VertexBufferComponent<T>)component.Value;
+                VertexBufferComponent<T> model = component.Value as VertexBufferComponent<T>;
                 TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                 if (transform != default(TransformComponent)) {
                     BasicEffect effect = model.Effect;
@@ -27,8 +27,8 @@ namespace ECS_Engine.Engine.Systems {
                     effect.Projection = camera.Projection;
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) {
                         pass.Apply();
-                        graphicsDevice.GraphicsDevice.SetVertexBuffer(model.VertexBuffer);
-                        graphicsDevice.GraphicsDevice.DrawPrimitives(model.Type, 0, model.Count);
+                        graphicsDevice.SetVertexBuffer(model.VertexBuffer);
+                        graphicsDevice.DrawPrimitives(model.Type, 0, model.Count);
                     }
                 }
             }

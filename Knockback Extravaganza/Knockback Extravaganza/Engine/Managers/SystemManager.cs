@@ -10,9 +10,20 @@ using Microsoft.Xna.Framework.Graphics;
 namespace ECS_Engine.Engine.Managers {
     public class SystemManager {
 
+        public ComponentManager ComponentManager { get; set; }
+        public GameTime GameTime { get; set; }
+        public GraphicsDevice GraphicsDevice { get; set; }
+        private int bufferOne = 0;
+        private int bufferTwo = 1;
+
+        public void flipBuffer() {
+            int s = bufferOne;
+            bufferOne = bufferTwo;
+            bufferTwo = s;
+        }
+
         List<IRenderSystem> renderSystems = new List<IRenderSystem>();
         List<IUpdateSystem> updateSystems = new List<IUpdateSystem>();
-        List<IInputSystem> inputSystems = new List<IInputSystem>();
 
         public SystemManager() {
 
@@ -26,9 +37,6 @@ namespace ECS_Engine.Engine.Managers {
             else if(system is IUpdateSystem) {
                 AddSystemToList<IUpdateSystem>(updateSystems, system);
             }
-            else if(system is IInputSystem) {
-                AddSystemToList<IInputSystem>(inputSystems, system);
-            }
         }
 
         public void RemoveSystem(ISystem system) {
@@ -39,36 +47,25 @@ namespace ECS_Engine.Engine.Managers {
             else if (system is IUpdateSystem) {
                 RemoveSystemFromList<IUpdateSystem>(updateSystems, system);
             }
-            else if (system is IInputSystem) {
-                RemoveSystemFromList<IInputSystem>(inputSystems, system);
-            }
 
         }
 
-        public void RunUpdateSystem(GameTime gameTime, ComponentManager componentManager) {
+        public void RunUpdateSystem() {
             if(updateSystems.Count > 0) {
                 foreach(IUpdateSystem system in updateSystems) {
-                    system.Update(gameTime, componentManager);
+                    system.Update(GameTime, ComponentManager);
                 }
             }
         }
 
-        public void RunRenderSystem(GameTime gameTime, GraphicsDeviceManager graphics, ComponentManager componentManager) {
+        public void RunRenderSystem() {
             if(renderSystems.Count > 0) {
                 foreach(IRenderSystem system in renderSystems) {
-                    system.Render(gameTime, graphics, componentManager);
+                    system.Render(GameTime, GraphicsDevice, ComponentManager);
                 }
             }
         }
-
-        public void RunInputSystem(GameTime gameTime, ComponentManager componentManager) {
-            if (inputSystems.Count > 0) {
-                foreach (IInputSystem system in inputSystems) {
-                    system.Update(gameTime, componentManager);
-                }
-            }
-        }
-
+        
 
         private void AddSystemToList<T>(List<T> list, ISystem system) {
             if (!list.Contains((T)system)) {

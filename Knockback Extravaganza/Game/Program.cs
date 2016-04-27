@@ -13,7 +13,7 @@ namespace Game {
         [STAThread]
         static void Main()
         {
-            using (Microsoft.Xna.Framework.Game game = new Game1())
+            using (var game = new Game1())
                 game.Run();
         }
     }

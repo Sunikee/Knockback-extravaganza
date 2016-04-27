@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using ECS_Engine.Engine.Managers;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ECS_Engine {
     /// <summary>
@@ -14,6 +16,8 @@ namespace ECS_Engine {
         protected SystemManager systemManager;
         protected ComponentManager componentManager;
 
+        Task[] tasks = new Task[2];
+        
 
         public ECSEngine() {
             graphics = new GraphicsDeviceManager(this);
@@ -32,6 +36,10 @@ namespace ECS_Engine {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
+            
+            
+            systemManager.GraphicsDevice = GraphicsDevice;
+            systemManager.ComponentManager = componentManager;
             base.Initialize();
         }
 
@@ -61,8 +69,21 @@ namespace ECS_Engine {
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime) {
             // TODO: Add your update logic here
-            systemManager.RunInputSystem(gameTime, componentManager);
-            systemManager.RunUpdateSystem(gameTime, componentManager);
+            systemManager.GameTime = gameTime;
+
+
+            systemManager.RunUpdateSystem();
+
+            /*
+            tasks[0] = Task.Factory.StartNew(systemManager.RunUpdateSystem);
+            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            tasks[1] = Task.Factory.StartNew(systemManager.RunRenderSystem);
+            
+
+            Task.WaitAll(tasks);
+
+            systemManager.flipBuffer();
+            */
             base.Update(gameTime);
         }
 
@@ -71,10 +92,12 @@ namespace ECS_Engine {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
-            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            //graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
             // TODO: Add your drawing code here
-            systemManager.RunRenderSystem(gameTime, graphics, componentManager);
-            
+
+            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            systemManager.RunRenderSystem();
+
             base.Draw(gameTime);
         }
     }

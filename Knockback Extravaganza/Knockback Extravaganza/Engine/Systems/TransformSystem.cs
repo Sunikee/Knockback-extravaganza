@@ -12,9 +12,9 @@ using ECS_Engine.Engine.Component;
 namespace ECS_Engine.Engine.Systems {
     public class TransformSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager) {
-            Dictionary<Entity, IComponent> components = componentManager.GetComponents<TransformComponent>();
+           var components = componentManager.GetComponents<TransformComponent>();
             if(components != null){
-                foreach(KeyValuePair<Entity, IComponent> component in components) {
+                foreach(var component in components) {
                     TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                     Quaternion rotation = Quaternion.CreateFromYawPitchRoll(transform.Rotation.Y, transform.Rotation.X, transform.Rotation.Z);
 
@@ -26,9 +26,9 @@ namespace ECS_Engine.Engine.Systems {
                 }
             }
 
-            Dictionary<Entity, IComponent> ModelComponents = componentManager.GetComponents<ModelTransformComponent>();
+            var ModelComponents = componentManager.GetComponents<ModelTransformComponent>();
             if (components != null) {
-                foreach (KeyValuePair<Entity, IComponent> component in ModelComponents) {
+                foreach (var component in ModelComponents) {
                     ModelTransformComponent transform = componentManager.GetComponent<ModelTransformComponent>(component.Key);
                     foreach (MeshTransform mesh in transform.GetTransforms().Values) {
                         Quaternion rotation = Quaternion.CreateFromAxisAngle(mesh.Right, mesh.Rotation.X) * 
