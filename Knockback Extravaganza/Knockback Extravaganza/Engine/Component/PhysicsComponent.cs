@@ -7,6 +7,7 @@ namespace ECS_Engine.Engine.Component
         public float Gravity = 9.82f;
         public float GravityStrength { get; set; }
         public float Friction { get; set; }
+        public float Mass { get; set; }
         public bool InJump { get; set; }
         
     }

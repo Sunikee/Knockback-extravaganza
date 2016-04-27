@@ -81,7 +81,7 @@ namespace ECS_Engine.Engine.Systems
                     if ((actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) && !pc.InJump/* || (actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.HELD))*/)
                     {
                         pc.InJump = true;
-                        tc.Position += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 10000;
+                        tc.Position += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 1000;
                     }
                 }
 

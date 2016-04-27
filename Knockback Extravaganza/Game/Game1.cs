@@ -24,6 +24,7 @@ namespace Game
         }
 
         Entity playerEntity = new Entity();
+        Entity playerEntity2 = new Entity();
 
         protected override void Initialize()
         {
@@ -50,9 +51,19 @@ namespace Game
             player.Model = Content.Load<Model>("Player");
             ModelTransformComponent t = new ModelTransformComponent(player.Model);
 
+            ModelComponent player2 = new ModelComponent();
+            player2.Model = Content.Load<Model>("Player");
+            ModelTransformComponent t2 = new ModelTransformComponent(player2.Model);
+
             TransformComponent tc = new TransformComponent()
             {
                 Position = new Vector3(0, 0, 0),
+                Rotation = new Vector3(0, 0, 0),
+                Scale = Vector3.One
+            };
+
+            TransformComponent tc2 = new TransformComponent() {
+                Position = new Vector3(10, 0, -50),
                 Rotation = new Vector3(0, 0, 0),
                 Scale = Vector3.One
             };
@@ -64,10 +75,10 @@ namespace Game
             kbc.AddKeyToAction("Left", Keys.A);
             kbc.AddKeyToAction("Jump", Keys.Space);
 
-            PhysicsComponent pc = new PhysicsComponent
-            {
+            PhysicsComponent pc = new PhysicsComponent {
                 InJump = false,
-                GravityStrength = 2
+                GravityStrength = 2,
+                Mass = 5
             };
 
             MovementComponent moveC = new MovementComponent
@@ -78,6 +89,7 @@ namespace Game
             };
 
             ActiveCollisionComponent actColl = new ActiveCollisionComponent();
+            ActiveCollisionComponent actColl2 = new ActiveCollisionComponent();
 
             componentManager.AddComponent(playerEntity, moveC);
             componentManager.AddComponent(playerEntity, pc);
@@ -87,10 +99,16 @@ namespace Game
             componentManager.AddComponent(playerEntity, t);
             componentManager.AddComponent(playerEntity, player);
 
+            componentManager.AddComponent(playerEntity2, moveC);
+            componentManager.AddComponent(playerEntity2, pc);
+            componentManager.AddComponent(playerEntity2, tc2);
+            componentManager.AddComponent(playerEntity2, actColl2);
+            componentManager.AddComponent(playerEntity2, t2);
+            componentManager.AddComponent(playerEntity2, player2);
+
             Entity platformEntity = new Entity();
 
-            ModelComponent platformModelC = new ModelComponent
-            {
+            ModelComponent platformModelC = new ModelComponent {
                 Model = Content.Load<Model>("platform"),
             };
 

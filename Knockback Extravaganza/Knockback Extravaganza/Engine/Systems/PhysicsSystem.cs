@@ -31,6 +31,10 @@ namespace ECS_Engine.Engine.Systems
             tc.Position -= Vector3.Up * pc.Gravity * pc.GravityStrength * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
-        
+        private void ApplyKnockback(PhysicsComponent pc1, PhysicsComponent pc2, MovementComponent mc1, MovementComponent mc2) {
+            mc1.Velocity = (mc1.Velocity * (pc1.Mass - pc2.Mass) + 2 * pc2.Mass * mc2.Velocity) / (pc1.Mass + pc2.Mass);
+            mc2.Velocity = (mc2.Velocity * (pc2.Mass - pc1.Mass) + 2 * pc1.Mass * mc1.Velocity) / (pc1.Mass + pc2.Mass);
+        }
+
     }
 }

@@ -44,6 +44,7 @@ namespace ECS_Engine.Engine.Systems
                         
                         if (activeModel1 != activeModel2)
                         {
+                            //Console.WriteLine("Active collision!");
                         }
                     }
                     foreach (KeyValuePair<Entity, IComponent> passiveComp in passiveComponents)
@@ -93,5 +94,7 @@ namespace ECS_Engine.Engine.Systems
             }
             collisionComponent.BoundingBox = new BoundingBox(collisionComponent.Minimum, collisionComponent.Maximum); 
         }
+
+        
     }
 }
