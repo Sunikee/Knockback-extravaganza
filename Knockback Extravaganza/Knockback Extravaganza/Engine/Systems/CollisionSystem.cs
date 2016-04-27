@@ -16,7 +16,6 @@ namespace ECS_Engine.Engine.Systems
 {
     public class CollisionDetectionSystem : IUpdateSystem
     {
-        public int counter = 0;
         public void Update(GameTime gametime, ComponentManager componentManager)
         {
             Dictionary<Entity, IComponent> activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();
@@ -33,41 +32,34 @@ namespace ECS_Engine.Engine.Systems
                     TransformComponent activeTrans1 = componentManager.GetComponent<TransformComponent>(activeComp1.Key);
                     PhysicsComponent activePC1 = componentManager.GetComponent<PhysicsComponent>(activeComp1.Key);
                     ActiveCollisionComponent aColl1 = componentManager.GetComponent<ActiveCollisionComponent>(activeComp1.Key);
-
                     UpdateCollisionComponent(activeModel1.Model, aColl1, activeTrans1.World);
 
                     foreach (KeyValuePair<Entity, IComponent> activeComp2 in activeComponents)
                     {
                         ModelComponent activeModel2 = componentManager.GetComponent<ModelComponent>(activeComp2.Key);
-                        ModelTransformComponent activeModelTrans2 = componentManager.GetComponent<ModelTransformComponent>(activeComp1.Key);
-                        TransformComponent activeTrans2 = componentManager.GetComponent<TransformComponent>(activeComp1.Key);
-                        PhysicsComponent activePC2 = componentManager.GetComponent<PhysicsComponent>(activeComp1.Key);
+                        ModelTransformComponent activeModelTrans2 = componentManager.GetComponent<ModelTransformComponent>(activeComp2.Key);
+                        TransformComponent activeTrans2 = componentManager.GetComponent<TransformComponent>(activeComp2.Key);
+                        PhysicsComponent activePC2 = componentManager.GetComponent<PhysicsComponent>(activeComp2.Key);
                         ActiveCollisionComponent aColl2 = componentManager.GetComponent<ActiveCollisionComponent>(activeComp2.Key);
-
+                        
                         if (activeModel1 != activeModel2)
                         {
-                            
                         }
                     }
                     foreach (KeyValuePair<Entity, IComponent> passiveComp in passiveComponents)
                     {
-                        ModelComponent model2 = componentManager.GetComponent<ModelComponent>(passiveComp.Key);
-                        ModelTransformComponent modelTrans2 = componentManager.GetComponent<ModelTransformComponent>(passiveComp.Key);
-                        TransformComponent trans2 = componentManager.GetComponent<TransformComponent>(passiveComp.Key);
-                        PhysicsComponent pc2 = componentManager.GetComponent<PhysicsComponent>(passiveComp.Key);
+                        ModelComponent passModel = componentManager.GetComponent<ModelComponent>(passiveComp.Key);
+                        ModelTransformComponent passModelTrans = componentManager.GetComponent<ModelTransformComponent>(passiveComp.Key);
+                        TransformComponent passTrans = componentManager.GetComponent<TransformComponent>(passiveComp.Key);
+                        PhysicsComponent passPC = componentManager.GetComponent<PhysicsComponent>(passiveComp.Key);
                         PassiveCollisionComponent passColl = componentManager.GetComponent<PassiveCollisionComponent>(passiveComp.Key);
-
-
-                        UpdateCollisionComponent(model2.Model, passColl, trans2.World);
-
-                        Console.WriteLine(aColl1.BoundingBox);
-
+                        UpdateCollisionComponent(passModel.Model, passColl, passTrans.World);
                         if (aColl1.BoundingBox.Intersects(passColl.BoundingBox))
                         {
-                            counter += 1;
-                            Console.WriteLine(counter);
+                            //HandleCollision(activeModelTrans1, passTrans)
+                            activePC1.InJump = false;
+                            activeTrans1.Position += new Vector3(0, 9.82f * 2 * (float)gametime.ElapsedGameTime.TotalSeconds, 0);
                         }
-
                     }
                 }
             }
@@ -77,9 +69,11 @@ namespace ECS_Engine.Engine.Systems
         {
             collisionComponent.Minimum = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
             collisionComponent.Maximum = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-
+            Matrix[] transforms = new Matrix[model.Bones.Count()];
+            model.CopyAbsoluteBoneTransformsTo(transforms);
             foreach (ModelMesh mesh in model.Meshes)
             {
+                
                 foreach (ModelMeshPart meshPart in mesh.MeshParts)
                 {
                     int vertexStride = meshPart.VertexBuffer.VertexDeclaration.VertexStride;
@@ -90,7 +84,7 @@ namespace ECS_Engine.Engine.Systems
 
                     for (int i = 0; i < vertexBufferSize / sizeof(float); i += vertexStride / sizeof(float))
                     {
-                        Vector3 transformedPosition = Vector3.Transform(new Vector3(vertexData[i], vertexData[i + 1], vertexData[i + 2]), world);
+                        Vector3 transformedPosition = Vector3.Transform(new Vector3(vertexData[i], vertexData[i + 1], vertexData[i + 2]), transforms[mesh.ParentBone.Index] * world);
 
                         collisionComponent.Minimum = Vector3.Min(collisionComponent.Minimum, transformedPosition);
                         collisionComponent.Maximum = Vector3.Max(collisionComponent.Maximum, transformedPosition);

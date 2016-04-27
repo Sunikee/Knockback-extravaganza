@@ -9,7 +9,8 @@ namespace ECS_Engine.Engine.Component
 {
     public class PlayerComponent : IComponent
     {
-        public int Health { get; set; }
-        public float KnockbackResistance { get; set; }
+        public float Health { get; set; }
+        public float knockBackResistance { get; set; }
+        //public PowerUpComponent powerUpComponent {get; set; }
     }
 }

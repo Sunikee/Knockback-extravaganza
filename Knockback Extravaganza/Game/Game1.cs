@@ -66,7 +66,7 @@ namespace Game
 
             PhysicsComponent pc = new PhysicsComponent
             {
-                InJump = true,
+                InJump = false,
                 GravityStrength = 2
             };
 
@@ -74,10 +74,10 @@ namespace Game
             {
                 Acceleration = 1.2f,
                 Speed = 10,
+                Velocity = Vector3.Zero
             };
 
             ActiveCollisionComponent actColl = new ActiveCollisionComponent();
-
 
             componentManager.AddComponent(playerEntity, moveC);
             componentManager.AddComponent(playerEntity, pc);
@@ -86,7 +86,6 @@ namespace Game
             componentManager.AddComponent(playerEntity, actColl);
             componentManager.AddComponent(playerEntity, t);
             componentManager.AddComponent(playerEntity, player);
-
 
             Entity platformEntity = new Entity();
 
@@ -101,14 +100,11 @@ namespace Game
                 Scale = Vector3.One
             };
 
-            ModelTransformComponent platforModelTransformC = new ModelTransformComponent(platformModelC.Model);
-
             PassiveCollisionComponent passColl = new PassiveCollisionComponent();
 
             componentManager.AddComponent(platformEntity, platformModelC);
             componentManager.AddComponent(platformEntity, platformTransformC);
             componentManager.AddComponent(platformEntity, passColl);
-            componentManager.AddComponent(platformEntity, platforModelTransformC);
 
             systemManager.AddSystem(new TransformSystem());
             systemManager.AddSystem(new CameraSystem());

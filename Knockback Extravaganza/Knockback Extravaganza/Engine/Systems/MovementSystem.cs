@@ -23,7 +23,6 @@ namespace ECS_Engine.Engine.Systems
         public void HandleInput(GameTime gametime, ComponentManager componentManager)
         {
             Dictionary<Entity, IComponent> kComponents = componentManager.GetComponents<KeyBoardComponent>();
-            Vector3 changeRotation = new Vector3(0, 0, 0);
 
             foreach (KeyValuePair<Entity, IComponent> component in kComponents)
             {
@@ -36,6 +35,8 @@ namespace ECS_Engine.Engine.Systems
                 {
                     if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.PRESSED))
                     {
+                        //mc.Velocity += tc.Forward * mc.Speed;
+                        //tc.Position = mc.Velocity;
                         tc.Position += tc.Forward * mc.Speed;
                     }
                     if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.HELD))
@@ -43,6 +44,8 @@ namespace ECS_Engine.Engine.Systems
                         mc.Speed += (float)gametime.ElapsedGameTime.TotalSeconds * mc.Speed * mc.Acceleration;
                         if (mc.Speed > 3)
                             mc.Speed = 3;
+                        //mc.Velocity += tc.Forward * mc.Speed;
+                        //tc.Position = mc.Velocity;
                         tc.Position += tc.Forward * mc.Speed;
                     }
 
@@ -75,11 +78,10 @@ namespace ECS_Engine.Engine.Systems
                     {
                         tc.Rotation += new Vector3(0, .1f, 0);
                     }
-                    if ((actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) || (actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                    if ((actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) && !pc.InJump/* || (actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.HELD))*/)
                     {
                         pc.InJump = true;
-                        tc.Position += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 100;
-
+                        tc.Position += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 10000;
                     }
                 }
 

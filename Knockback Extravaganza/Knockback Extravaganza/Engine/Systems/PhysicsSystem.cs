@@ -22,10 +22,6 @@ namespace ECS_Engine.Engine.Systems
                     PlayerComponent playC = componentManager.GetComponent<PlayerComponent>(comp.Key);
 
                     ApplyGravity(gameTime, pc, tc);
-                    if (tc.Position.Y == 0 && playC != null)
-                    {
-                        pc.InJump = false;
-                    }
                 }
             }
         }

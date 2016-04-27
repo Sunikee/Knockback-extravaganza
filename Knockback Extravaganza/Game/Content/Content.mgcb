@@ -63,8 +63,8 @@
 /processorParam:TextureFormat=Color
 /build:dirt_texture.jpg
 
-#begin platform.x
-/importer:OpenAssetImporter
+#begin platform.fbx
+/importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
 /processorParam:ColorKeyEnabled=True
@@ -80,5 +80,5 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=DxtCompressed
-/build:platform.x
+/build:platform.fbx
 
