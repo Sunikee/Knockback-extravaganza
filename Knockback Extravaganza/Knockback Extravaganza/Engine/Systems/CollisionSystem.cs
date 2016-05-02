@@ -59,7 +59,7 @@ namespace ECS_Engine.Engine.Systems
                         {
                             //HandleCollision(activeModelTrans1, passTrans)
                             activePC1.InJump = false;
-                            activeTrans1.Position += new Vector3(0, 9.82f * 2 * (float)gametime.ElapsedGameTime.TotalSeconds, 0);
+                            activeTrans1.Position += new Vector3(0, 9.82f * 5 * (float)gametime.ElapsedGameTime.TotalSeconds, 0);
                         }
                     }
                 }

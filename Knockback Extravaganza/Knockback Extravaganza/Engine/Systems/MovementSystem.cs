@@ -78,7 +78,7 @@ namespace ECS_Engine.Engine.Systems
                     {
                         tc.Rotation += new Vector3(0, .1f, 0);
                     }
-                    if ((actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) && !pc.InJump/* || (actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.HELD))*/)
+                    if ((actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) && tc.Position.Y <= 0.25/* || (actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.HELD))*/)
                     {
                         pc.InJump = true;
                         tc.Position += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 1000;

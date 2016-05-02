@@ -77,7 +77,7 @@ namespace Game
 
             PhysicsComponent pc = new PhysicsComponent {
                 InJump = false,
-                GravityStrength = 2,
+                GravityStrength = 5,
                 Mass = 5
             };
 
