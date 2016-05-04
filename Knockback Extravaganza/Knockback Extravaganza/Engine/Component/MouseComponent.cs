@@ -9,8 +9,7 @@ using Microsoft.Xna.Framework;
 using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Component.Interfaces;
 
-namespace GameEngine
-{
+namespace ECS_Engine.Engine.Component {
     public class MouseComponent : IComponent
     {
         public MouseState NewState { get; set; }
