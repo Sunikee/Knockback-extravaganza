@@ -21,17 +21,22 @@ namespace ECS_Engine.Engine.Systems {
                         CameraComponent camera = (CameraComponent)component.Value;
                         TransformComponent cameraTransform = componentManager.GetComponent<TransformComponent>(component.Key);
                         camera.Up = cameraTransform.Up;
-                        camera.Target = cameraTransform.Position + cameraTransform.Position;
+                        camera.Target = cameraTransform.Position + cameraTransform.Forward;
                         MouseComponent mouse = componentManager.GetComponent<MouseComponent>(component.Key);
                         float timeDifference = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        ProcessInput(timeDifference, mouse);
+                        ProcessInput(timeDifference, mouse, free);
                     } 
                 }
             }
         }
 
-        private void ProcessInput(float amount, MouseComponent mouse) {
-            
+        private void ProcessInput(float amount, MouseComponent mouse, FreeCameraComponent free) {
+            if (mouse.NewState != mouse.OldState)
+            {
+                free.leftRightRot -= free.rotationSpeed * mouse.GetDeltaX() * amount;
+                free.upDownRot -= free.rotationSpeed * mouse.GetDeltaY() * amount;
+                //Mouse.SetPosition(device.Viewport.Width / 2, device.Viewport.Height / 2);
+            }
         }
     }
 }
