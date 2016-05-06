@@ -28,8 +28,8 @@ namespace Game
 
         protected override void Initialize()
         {
-            
             Entity camera = new Entity();
+            MouseComponent mouse = new MouseComponent();
             CameraComponent cameraC = new CameraComponent();
             cameraC.FieldOfView = MathHelper.PiOver4;
             cameraC.AspectRatio = graphics.GraphicsDevice.DisplayMode.AspectRatio;
@@ -38,14 +38,22 @@ namespace Game
             cameraC.Target = Vector3.Zero;
             cameraC.Up = Vector3.Up;
             TransformComponent tranformC = new TransformComponent();
+            //tranformC.Position = new Vector3(0f, 20, -10f);
             tranformC.Position = new Vector3(0f, 0, 25f);
             ChaseCameraComponent chase = new ChaseCameraComponent();
             chase.Target = playerEntity;
             chase.Offset = new Vector3(0, 20, 75);
+            FreeCameraComponent free = new FreeCameraComponent();
+            free.GraphicsDevice = graphics.GraphicsDevice;
+            free.Game = this;
 
             componentManager.AddComponent(camera, chase);
             componentManager.AddComponent(camera, cameraC);
             componentManager.AddComponent(camera, tranformC);
+            componentManager.AddComponent(camera, mouse);
+
+            
+            Mouse.SetPosition(free.GraphicsDevice.Viewport.Width / 2, free.GraphicsDevice.Viewport.Height / 2);
 
             ModelComponent player = new ModelComponent();
             player.Model = Content.Load<Model>("Player");
@@ -106,6 +114,10 @@ namespace Game
             componentManager.AddComponent(playerEntity2, t2);
             componentManager.AddComponent(playerEntity2, player2);
 
+
+            componentManager.AddComponent(camera, moveC);
+            componentManager.AddComponent(camera, kbc);
+
             Entity platformEntity = new Entity();
 
             ModelComponent platformModelC = new ModelComponent {
@@ -132,6 +144,8 @@ namespace Game
             systemManager.AddSystem(new ChaseCameraSystem());
             systemManager.AddSystem(new CollisionDetectionSystem());
             systemManager.AddSystem(new PhysicsSystem());
+            systemManager.AddSystem(new MouseSystem());
+            systemManager.AddSystem(new FreeCameraSystem());
 
             base.Initialize();
         }
