@@ -10,16 +10,54 @@ namespace ECS_Engine.Engine.Managers {
  
     public class ComponentManager {
 
-        int nextEntityId = 0;
-        Entity[] entities = new Entity[500];
+        Entity[] entities = new Entity[10];
         Dictionary<Type, Dictionary<Entity, IComponent>> componentList = new Dictionary<Type, Dictionary<Entity, IComponent>>();
 
-        public Entity MakeEntity() {
-            if(nextEntityId >= entities.Length) {
 
+        public Entity MakeEntity() {
+            int index = 0;
+            for(int i = 0; i <= entities.Length; ++i) {
+                if(i == entities.Length) {
+                    Entity[] newEntities = new Entity[entities.Length * 2];
+                    for(int j = 0; j < entities.Length; j++) {
+                        newEntities[j] = entities[j];
+                    }
+                    entities = newEntities;
+                    i = 0;
+                }
+                if(entities[i] == null) {
+                    index = i;
+                    break;
+                }
             }
-            entities[nextEntityId] = new Entity(nextEntityId);
-            return entities[nextEntityId++];
+            int id = 0;
+            for(int i = 0; i < entities.Length; i++) {
+                if(entities[i] != null) {
+                    id = Math.Min(id, entities[i].ID);
+                }
+            }
+            for(int i = 0; i < entities.Length; i++) {
+                if (entities[i] != null) {
+                    if (id == entities[i].ID) {
+                        id++;
+                    }
+                }
+            }
+            entities[index] = new Entity(id);
+            return entities[index];
+        }
+
+        public Entity GetEntity(int id) {
+            Entity entity = null;
+            for(int i = 0; i < entities.Length; ++i) {
+                if(entities[i] != null) {
+                    if(entities[i].ID == id) {
+                        entity = entities[i];
+                        break;
+                    }
+                }
+            }
+            return entity;
         }
 
         public void AddComponent(Entity entity, IComponent component) {
@@ -50,6 +88,17 @@ namespace ECS_Engine.Engine.Managers {
                     if(value.Key == entity) {
                         dict.Value.Remove(entity);
                         break;
+                    }
+                }
+            }
+        }
+
+        public void RemoveEntity(Entity entity) {
+            if (entities.Contains(entity)) {
+                RemoveAllComponents(entity);
+                for(int i = 0; i < entities.Length; ++i ) {
+                    if(entities[i] == entity) {
+                        entities[i] = null;
                     }
                 }
             }

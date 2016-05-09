@@ -28,6 +28,13 @@ namespace Game
 
         protected override void Initialize()
         {
+            for (int i = 0; i < 100; i++) {
+                componentManager.MakeEntity();
+            }
+            componentManager.RemoveEntity(componentManager.GetEntity(10));
+            componentManager.RemoveEntity(componentManager.GetEntity(20));
+            componentManager.RemoveEntity(componentManager.GetEntity(50));
+            componentManager.MakeEntity();
             Entity camera = new Entity();
             MouseComponent mouse = new MouseComponent();
             CameraComponent cameraC = new CameraComponent();
