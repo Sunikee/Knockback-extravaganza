@@ -153,6 +153,7 @@ namespace Game
             systemManager.AddSystem(new PhysicsSystem());
             systemManager.AddSystem(new MouseSystem());
             systemManager.AddSystem(new FreeCameraSystem());
+            systemManager.AddSystem(new CollisionHandleSystem());
 
             base.Initialize();
         }

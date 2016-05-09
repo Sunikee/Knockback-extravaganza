@@ -28,11 +28,13 @@ namespace ECS_Engine.Engine.Systems
                 {
 
                     ModelComponent activeModel1 = componentManager.GetComponent<ModelComponent>(activeComp1.Key);
+                    MovementComponent activeCompMovement = componentManager.GetComponent<MovementComponent>(activeComp1.Key);
                     ModelTransformComponent activeModelTrans1 = componentManager.GetComponent<ModelTransformComponent>(activeComp1.Key);
                     TransformComponent activeTrans1 = componentManager.GetComponent<TransformComponent>(activeComp1.Key);
                     PhysicsComponent activePC1 = componentManager.GetComponent<PhysicsComponent>(activeComp1.Key);
                     ActiveCollisionComponent aColl1 = componentManager.GetComponent<ActiveCollisionComponent>(activeComp1.Key);
-                    UpdateCollisionComponent(activeModel1.Model, aColl1, activeTrans1.World);
+
+                   
 
                     foreach (KeyValuePair<Entity, IComponent> activeComp2 in activeComponents)
                     {
@@ -41,10 +43,19 @@ namespace ECS_Engine.Engine.Systems
                         TransformComponent activeTrans2 = componentManager.GetComponent<TransformComponent>(activeComp2.Key);
                         PhysicsComponent activePC2 = componentManager.GetComponent<PhysicsComponent>(activeComp2.Key);
                         ActiveCollisionComponent aColl2 = componentManager.GetComponent<ActiveCollisionComponent>(activeComp2.Key);
-                        
+                        UpdateCollisionComponent(activeModel2.Model, aColl2, activeTrans2.World);
+                        UpdateCollisionComponent(activeModel1.Model, aColl1, activeTrans1.World);
+
                         if (activeModel1 != activeModel2)
                         {
-                            //Console.WriteLine("Active collision!");
+                            if (aColl1.BoundingBox.Intersects(aColl2.BoundingBox))
+                            {
+                                aColl1.RegCollision(activeComp2.Key, true);
+                            }
+                            else
+                            {
+                                aColl1.RegCollision(activeComp2.Key, false);
+                            }
                         }
                     }
                     foreach (KeyValuePair<Entity, IComponent> passiveComp in passiveComponents)
@@ -55,11 +66,16 @@ namespace ECS_Engine.Engine.Systems
                         PhysicsComponent passPC = componentManager.GetComponent<PhysicsComponent>(passiveComp.Key);
                         PassiveCollisionComponent passColl = componentManager.GetComponent<PassiveCollisionComponent>(passiveComp.Key);
                         UpdateCollisionComponent(passModel.Model, passColl, passTrans.World);
+                        UpdateCollisionComponent(activeModel1.Model, aColl1, activeTrans1.World);
+
                         if (aColl1.BoundingBox.Intersects(passColl.BoundingBox))
                         {
-                            //HandleCollision(activeModelTrans1, passTrans)
-                            activePC1.InJump = false;
-                            activeTrans1.Position += new Vector3(0, 9.82f * 5 * (float)gametime.ElapsedGameTime.TotalSeconds, 0);
+                            Console.WriteLine(aColl1.BoundingBox.Max);
+                            aColl1.RegCollision(passiveComp.Key, true);
+                        }
+                        else
+                        {
+                            aColl1.RegCollision(passiveComp.Key, false);
                         }
                     }
                 }
