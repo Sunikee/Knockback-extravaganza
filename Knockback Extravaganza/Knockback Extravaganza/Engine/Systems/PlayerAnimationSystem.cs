@@ -1,0 +1,53 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading.Tasks;
+using ECS_Engine.Engine.Component;
+using ECS_Engine.Engine.Managers;
+using ECS_Engine.Engine.Systems.Interfaces;
+using Microsoft.Xna.Framework;
+using ECS_Engine.Engine.Component.Interfaces;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace ECS_Engine.Engine.Systems
+{
+    public class PlayerAnimationSystem : IUpdateSystem
+    {
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager)
+        {
+            Dictionary<Entity, IComponent> animationComponents = componentManager.GetComponents<AnimationComponent>();
+
+            foreach (KeyValuePair<Entity, IComponent> component in animationComponents)
+            {
+                ModelComponent model = componentManager.GetComponent<ModelComponent>(component.Key);
+                ModelTransformComponent meshTransforms = componentManager.GetComponent<ModelTransformComponent>(component.Key);
+                TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
+                MovementComponent movement = componentManager.GetComponent<MovementComponent>(component.Key);
+                foreach (ModelMesh mesh in model.Model.Meshes)
+                {
+                    if (movement.Speed > 0)
+                    {
+                        if (mesh.Name == "Left_Arm")
+                        {
+                                meshTransforms.GetTransform(mesh.Name).Rotation *= Quaternion.CreateFromYawPitchRoll(0,
+                                    0.2f*movement.Speed, 0);
+                        }
+                        else if (mesh.Name == "Right_Arm")
+                        {
+                            
+                            meshTransforms.GetTransform(mesh.Name).Rotation *= Quaternion.CreateFromYawPitchRoll(0,
+                                0.2f*movement.Speed, 0);
+                        }
+
+                    }
+                    else
+                    {
+                        meshTransforms.GetTransform(mesh.Name).Rotation = Quaternion.Identity;
+                    }
+                }
+            }
+        }
+    }
+}

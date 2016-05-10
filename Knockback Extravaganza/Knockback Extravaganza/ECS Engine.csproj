@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\Component\ActiveCollisionComponent.cs" />
+    <Compile Include="Engine\Component\AnimationComponent.cs" />
     <Compile Include="Engine\Component\CameraComponent.cs" />
     <Compile Include="Engine\Component\ChaseCameraComponent.cs" />
     <Compile Include="Engine\Component\CollisionComponent.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Engine\Systems\ModelRenderSystem.cs" />
     <Compile Include="Engine\Systems\MouseSystem.cs" />
     <Compile Include="Engine\Systems\MovementSystem.cs" />
+    <Compile Include="Engine\Systems\PlayerAnimationSystem.cs" />
     <Compile Include="Engine\Systems\TransformSystem.cs" />
     <Compile Include="Engine\Systems\VertexBufferRenderSystem.cs" />
     <Compile Include="Engine\Systems\VertexIndexBufferRenderSystem.cs" />

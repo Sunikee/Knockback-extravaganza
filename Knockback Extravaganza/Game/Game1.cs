@@ -54,7 +54,7 @@ namespace Game
             componentManager.AddComponent(camera, cameraC);
             componentManager.AddComponent(camera, tranformC);
             componentManager.AddComponent(camera, mouse);
-            
+
             Mouse.SetPosition(free.GraphicsDevice.Viewport.Width / 2, free.GraphicsDevice.Viewport.Height / 2);
 
             ModelComponent player1 = new ModelComponent();
@@ -127,6 +127,9 @@ namespace Game
             ActiveCollisionComponent actColl = new ActiveCollisionComponent();
             ActiveCollisionComponent actColl2 = new ActiveCollisionComponent();
 
+            AnimationComponent animationComponent1 = new AnimationComponent();
+            AnimationComponent animationComponent2 = new AnimationComponent();
+
             componentManager.AddComponent(playerEntity1, moveC1);
             componentManager.AddComponent(playerEntity1, pc1);
             componentManager.AddComponent(playerEntity1, kbc1);
@@ -134,6 +137,7 @@ namespace Game
             componentManager.AddComponent(playerEntity1, actColl);
             componentManager.AddComponent(playerEntity1, t1);
             componentManager.AddComponent(playerEntity1, player1);
+            componentManager.AddComponent(playerEntity1, animationComponent1);
 
             componentManager.AddComponent(playerEntity2, moveC2);
             componentManager.AddComponent(playerEntity2, pc2);
@@ -141,6 +145,7 @@ namespace Game
             componentManager.AddComponent(playerEntity2, actColl2);
             componentManager.AddComponent(playerEntity2, t2);
             componentManager.AddComponent(playerEntity2, player2);
+            componentManager.AddComponent(playerEntity2, animationComponent2);
 
 
             componentManager.AddComponent(camera, moveCCamera);
@@ -174,6 +179,7 @@ namespace Game
             systemManager.AddSystem(new PhysicsSystem());
             systemManager.AddSystem(new MouseSystem());
             systemManager.AddSystem(new FreeCameraSystem());
+            systemManager.AddSystem(new PlayerAnimationSystem());
 
             base.Initialize();
         }
