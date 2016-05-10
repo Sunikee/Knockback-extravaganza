@@ -54,7 +54,7 @@ namespace ECS_Engine.Engine.Systems
                                 Message m = new Message {
                                     sender = activeComp1.Key.ID,
                                     receiver = activeComp2.Key.ID,
-                                    acivateInSeconds = 10,
+                                    acivateInSeconds = 0,
                                     msg = "Collission"
                                 };
                                 messageManager.RegMessage(m);

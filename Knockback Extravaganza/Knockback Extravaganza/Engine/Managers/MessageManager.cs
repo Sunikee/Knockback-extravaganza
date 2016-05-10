@@ -23,7 +23,7 @@ namespace ECS_Engine.Engine.Managers {
             }
         }
         public void End() {
-            messages.RemoveAll(x => x.acivateInSeconds <= 0);
+            messages.RemoveAll(x => x.acivateInSeconds < 0);
         }
         public void RegMessage(Message msg) {
             messages.Add(msg);
