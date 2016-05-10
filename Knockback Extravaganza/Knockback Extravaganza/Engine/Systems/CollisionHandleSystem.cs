@@ -13,7 +13,7 @@ namespace ECS_Engine.Engine.Systems
 {
     public class CollisionHandleSystem:IUpdateSystem
     {
-        public void Update(GameTime gameTime, ComponentManager componentManager)
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)
         {
             //Make character moveback to prior frame when colliding
             HandleCollision(gameTime, componentManager);

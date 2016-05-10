@@ -61,6 +61,7 @@
     <Compile Include="Engine\Component\VertexIndexComponent.cs" />
     <Compile Include="Engine\Entity.cs" />
     <Compile Include="Engine\Managers\ComponentManager.cs" />
+    <Compile Include="Engine\Managers\MessageManager.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
     <Compile Include="Engine\Component\MovementComponent.cs" />
     <Compile Include="Engine\Systems\FreeCameraSystem.cs" />

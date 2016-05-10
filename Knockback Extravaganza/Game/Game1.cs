@@ -23,19 +23,15 @@ namespace Game
 
         }
 
-        Entity playerEntity1 = new Entity();
-        Entity playerEntity2 = new Entity();
+        Entity playerEntity1;
+        Entity playerEntity2;
 
         protected override void Initialize()
         {
-            for (int i = 0; i < 100; i++) {
-                componentManager.MakeEntity();
-            }
-            componentManager.RemoveEntity(componentManager.GetEntity(10));
-            componentManager.RemoveEntity(componentManager.GetEntity(20));
-            componentManager.RemoveEntity(componentManager.GetEntity(50));
-            componentManager.MakeEntity();
-            Entity camera = new Entity();
+            playerEntity1 = componentManager.MakeEntity();
+            playerEntity2 = componentManager.MakeEntity();
+
+            Entity camera = componentManager.MakeEntity();
             MouseComponent mouse = new MouseComponent();
             CameraComponent cameraC = new CameraComponent();
             cameraC.FieldOfView = MathHelper.PiOver4;
@@ -150,7 +146,7 @@ namespace Game
             componentManager.AddComponent(camera, moveCCamera);
             //componentManager.AddComponent(camera, kbc);
 
-            Entity platformEntity = new Entity();
+            Entity platformEntity = componentManager.MakeEntity();
 
             ModelComponent platformModelC = new ModelComponent {
                 Model = Content.Load<Model>("platform"),

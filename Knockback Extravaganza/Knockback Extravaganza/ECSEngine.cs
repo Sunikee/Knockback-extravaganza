@@ -15,6 +15,7 @@ namespace ECS_Engine {
         protected SpriteBatch spriteBatch;
         protected SystemManager systemManager;
         protected ComponentManager componentManager;
+        protected MessageManager messageManager;
 
         Task[] tasks = new Task[2];
         
@@ -24,6 +25,7 @@ namespace ECS_Engine {
             Content.RootDirectory = "Content";
             systemManager = new SystemManager();
             componentManager = new ComponentManager();
+            messageManager = new MessageManager();
 
         }
 
@@ -36,10 +38,9 @@ namespace ECS_Engine {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-            
-            
             systemManager.GraphicsDevice = GraphicsDevice;
             systemManager.ComponentManager = componentManager;
+            systemManager.MessageManager = messageManager;
             base.Initialize();
         }
 

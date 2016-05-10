@@ -19,7 +19,7 @@ namespace ECS_Engine.Engine.Systems
     {
         
 
-        public void Update(GameTime gameTime, ComponentManager componentManager)
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)
         {
             Dictionary<Entity, IComponent> components = componentManager.GetComponents<GamePadComponent>();
             if (components == null) {

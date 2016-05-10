@@ -11,7 +11,7 @@ using ECS_Engine.Engine.Component.Interfaces;
 
 namespace ECS_Engine.Engine.Systems {
     public class ChaseCameraSystem : IUpdateSystem {
-        public void Update(GameTime gametime, ComponentManager componentManager) {
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager) {
             Dictionary<Entity, IComponent> components = componentManager.GetComponents<CameraComponent>();
             if(components != null) {
                 foreach(KeyValuePair<Entity, IComponent> component in components) {

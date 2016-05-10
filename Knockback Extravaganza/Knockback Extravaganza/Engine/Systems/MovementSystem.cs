@@ -15,7 +15,7 @@ namespace ECS_Engine.Engine.Systems
     {
         public float DashTimer = 1;
         public float DashTime = 1500;
-        public void Update(GameTime gametime, ComponentManager componentManager)
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager)
         {
             HandleInput(gametime, componentManager);     
         }

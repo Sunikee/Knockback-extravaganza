@@ -17,7 +17,7 @@ namespace ECS_Engine.Engine.Systems
 {
     public class MouseSystem : IUpdateSystem
     {
-        public void Update(GameTime gameTime, ComponentManager componentManager)
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)
         {
             Dictionary<Entity, IComponent> components = componentManager.GetComponents<MouseComponent>();
             if (components != null)

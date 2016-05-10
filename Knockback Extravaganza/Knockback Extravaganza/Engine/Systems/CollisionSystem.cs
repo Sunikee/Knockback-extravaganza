@@ -16,7 +16,7 @@ namespace ECS_Engine.Engine.Systems
 {
     public class CollisionDetectionSystem : IUpdateSystem
     {
-        public void Update(GameTime gametime, ComponentManager componentManager)
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager)
         {
             Dictionary<Entity, IComponent> activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();
             Dictionary<Entity, IComponent> passiveComponents = componentManager.GetComponents<PassiveCollisionComponent>();
@@ -51,6 +51,13 @@ namespace ECS_Engine.Engine.Systems
                         {
                             if (aColl1.BoundingBox.Intersects(aColl2.BoundingBox))
                             {
+                                Message m = new Message {
+                                    sender = activeComp1.Key.ID,
+                                    receiver = activeComp2.Key.ID,
+                                    acivateInSeconds = 10,
+                                    msg = "Collission"
+                                };
+                                messageManager.RegMessage(m);
                                 aColl1.RegCollision(activeComp2.Key, true);
                             }
                             else

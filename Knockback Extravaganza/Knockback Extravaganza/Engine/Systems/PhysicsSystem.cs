@@ -10,13 +10,14 @@ namespace ECS_Engine.Engine.Systems
 {
     public class PhysicsSystem : IUpdateSystem
     {
-        public void Update(GameTime gameTime, ComponentManager componentManager)
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)
         {
             Dictionary<Entity, IComponent> components = componentManager.GetComponents<PhysicsComponent>();
             if (components != null) 
             {
                 foreach (KeyValuePair<Entity, IComponent> comp in components)
                 {
+                    var msg = messageManager.GetMessages(comp.Key.ID);
                     ActiveCollisionComponent activeCollisionComponent = componentManager.GetComponent<ActiveCollisionComponent>(comp.Key);
                     PhysicsComponent physicsComponent = componentManager.GetComponent<PhysicsComponent>(comp.Key);
                     TransformComponent transformComponent = componentManager.GetComponent<TransformComponent>(comp.Key);
