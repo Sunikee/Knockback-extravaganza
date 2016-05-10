@@ -78,6 +78,7 @@ namespace Game
             kbc1.AddKeyToAction("Right", Keys.D);
             kbc1.AddKeyToAction("Left", Keys.A);
             kbc1.AddKeyToAction("Jump", Keys.Space);
+            kbc1.AddKeyToAction("Dash", Keys.Q);
 
             PhysicsComponent pc1 = new PhysicsComponent
             {
@@ -89,7 +90,7 @@ namespace Game
             MovementComponent moveC1 = new MovementComponent
             {
                 Acceleration = 1.2f,
-                Speed = 10,
+                Speed = 0,
                 Velocity = Vector3.Zero,
                 AirTime = 0f
             };
@@ -177,7 +178,6 @@ namespace Game
             systemManager.AddSystem(new PhysicsSystem());
             systemManager.AddSystem(new MouseSystem());
             systemManager.AddSystem(new FreeCameraSystem());
-            systemManager.AddSystem(new CollisionHandleSystem());
 
             base.Initialize();
         }

@@ -16,7 +16,6 @@ namespace ECS_Engine.Engine.Systems
 {
     public class CollisionDetectionSystem : IUpdateSystem
     {
-        int count = 0;
         public void Update(GameTime gametime, ComponentManager componentManager)
         {
             Dictionary<Entity, IComponent> activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();

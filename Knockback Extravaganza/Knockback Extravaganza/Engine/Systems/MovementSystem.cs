@@ -13,11 +13,11 @@ namespace ECS_Engine.Engine.Systems
 {
     public class MovementSystem : IUpdateSystem
     {
+        public float DashTimer = 1;
+        public float DashTime = 1500;
         public void Update(GameTime gametime, ComponentManager componentManager)
         {
-            HandleInput(gametime, componentManager);
-            
-            
+            HandleInput(gametime, componentManager);     
         }
 
         public void HandleInput(GameTime gametime, ComponentManager componentManager)
@@ -37,21 +37,29 @@ namespace ECS_Engine.Engine.Systems
                     {
                         //mc.Velocity += tc.Forward * mc.Speed;
                         //tc.Position = mc.Velocity;
-                        tc.Position += tc.Forward * mc.Speed;
+                        //tc.Position += tc.Forward * mc.Speed;
                     }
+                    //tc.Position += tc.Forward * mc.Speed;
                     if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.HELD))
                     {
                         mc.Speed += (float)gametime.ElapsedGameTime.TotalSeconds * mc.Speed * mc.Acceleration;
+                        mc.Speed = 1;
                         if (mc.Speed > 3)
                             mc.Speed = 3;
                         //mc.Velocity += tc.Forward * mc.Speed;
                         //tc.Position = mc.Velocity;
-                        tc.Position += tc.Forward * mc.Speed;
+                        //tc.Position += tc.Forward * mc.Speed;
                     }
-
+                    tc.Position += tc.Forward * mc.Speed;
+                    mc.Speed -= (float) gametime.ElapsedGameTime.TotalSeconds;
+                    if (mc.Speed < 0)
+                    {
+                        mc.Speed = 0;
+                    }
                     if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.RELEASED))
                     {
                         mc.Speed = 1;
+                        
                         //tc.Position += tc.Forward * mc.Speed;
                     }
 
@@ -82,6 +90,43 @@ namespace ECS_Engine.Engine.Systems
                     {
                         pc.InJump = true;
                         tc.Position += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 3000;
+                    }
+
+                    if (actionState.Key.Equals("Dash") && actionState.Value.Equals((BUTTON_STATE.HELD)))
+                    {
+                        DashTimer += (float)gametime.ElapsedGameTime.Milliseconds;
+                        if (DashTimer > 2000f )
+                        {
+                            DashTimer = 2000f;
+                        }
+
+                        
+                    }
+                    if (actionState.Key.Equals("Dash") && actionState.Value.Equals(BUTTON_STATE.RELEASED))
+                    {
+                        mc.Speed = 2 * (DashTimer / 1000);
+                        //tc.Position += tc.Forward * mc.Speed;
+                        
+                        DashTime -= (float)gametime.ElapsedGameTime.Milliseconds;
+                        if (DashTime < 0)
+                        {
+                            DashTimer = 1;
+                            DashTime = 1500;
+                        }
+                    }
+                    if (actionState.Key.Equals("Dash") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED))
+                    {
+                        
+                        //mc.Speed = 6;
+                       
+                        //tc.Position += tc.Forward * mc.Speed;
+
+                        DashTime -= (float)gametime.ElapsedGameTime.Milliseconds;
+                        if (DashTime < 0)
+                        {
+                            DashTimer = 1;
+                            DashTime = 1500;
+                        }
                     }
                 }
 
