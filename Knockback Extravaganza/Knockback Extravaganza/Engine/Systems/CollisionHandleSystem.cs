@@ -13,7 +13,6 @@ namespace ECS_Engine.Engine.Systems
 {
     public class CollisionHandleSystem:IUpdateSystem
     {
-        private int count = 0;
         public void Update(GameTime gameTime, ComponentManager componentManager)
         {
             //Make character moveback to prior frame when colliding
@@ -27,19 +26,21 @@ namespace ECS_Engine.Engine.Systems
 
             foreach (KeyValuePair<Entity, IComponent> modelComponent in modelComponents)
             {
-                ActiveCollisionComponent ActiveCollisionComponent = componentManager.GetComponent<ActiveCollisionComponent>(modelComponent.Key);
+                ActiveCollisionComponent activeCollisionComponent = componentManager.GetComponent<ActiveCollisionComponent>(modelComponent.Key);
                 TransformComponent transformComponent = componentManager.GetComponent<TransformComponent>(modelComponent.Key);
+                PhysicsComponent physicsComponent = componentManager.GetComponent<PhysicsComponent>(modelComponent.Key);
+                MovementComponent movementComponent = componentManager.GetComponent<MovementComponent>(modelComponent.Key);
 
-                if (ActiveCollisionComponent != null)
+                if (activeCollisionComponent != null)
                 {
-                    foreach (KeyValuePair<Entity, bool> collided in ActiveCollisionComponent.GetCollision())
+                    foreach (KeyValuePair<Entity, bool> collided in activeCollisionComponent.GetCollision())
                     {
                         if (collided.Value == true)
                         {
-                            count += 1;
-                            Console.WriteLine(count);
-                            transformComponent.Position += -transformComponent.Forward*(float) gameTime.ElapsedGameTime.TotalSeconds * 9.82f;
-                            transformComponent.Position += transformComponent.Up*(float) gameTime.ElapsedGameTime.TotalSeconds * 9.82f*5f;
+                            physicsComponent.InJump = false;
+                            movementComponent.AirTime = 0;
+                            transformComponent.Position += -transformComponent.Forward * (float)gameTime.ElapsedGameTime.TotalSeconds * physicsComponent.Gravity;
+                            transformComponent.Position += transformComponent.Up * (float)gameTime.ElapsedGameTime.TotalSeconds * physicsComponent.Gravity * physicsComponent.GravityStrength;
                         }
                     }
                 }

@@ -23,7 +23,7 @@ namespace Game
 
         }
 
-        Entity playerEntity = new Entity();
+        Entity playerEntity1 = new Entity();
         Entity playerEntity2 = new Entity();
 
         protected override void Initialize()
@@ -46,10 +46,10 @@ namespace Game
             cameraC.Up = Vector3.Up;
             TransformComponent tranformC = new TransformComponent();
             //tranformC.Position = new Vector3(0f, 20, -10f);
-            tranformC.Position = new Vector3(0f, 0, 25f);
+            tranformC.Position = new Vector3(0f, 0f, 25f);
             ChaseCameraComponent chase = new ChaseCameraComponent();
-            chase.Target = playerEntity;
-            chase.Offset = new Vector3(0, 20, 75);
+            chase.Target = playerEntity1;
+            chase.Offset = new Vector3(0f, 50f, 90f);
             FreeCameraComponent free = new FreeCameraComponent();
             free.GraphicsDevice = graphics.GraphicsDevice;
             free.Game = this;
@@ -58,24 +58,45 @@ namespace Game
             componentManager.AddComponent(camera, cameraC);
             componentManager.AddComponent(camera, tranformC);
             componentManager.AddComponent(camera, mouse);
-
             
             Mouse.SetPosition(free.GraphicsDevice.Viewport.Width / 2, free.GraphicsDevice.Viewport.Height / 2);
 
-            ModelComponent player = new ModelComponent();
-            player.Model = Content.Load<Model>("Player");
-            ModelTransformComponent t = new ModelTransformComponent(player.Model);
-
-            ModelComponent player2 = new ModelComponent();
-            player2.Model = Content.Load<Model>("Player");
-            ModelTransformComponent t2 = new ModelTransformComponent(player2.Model);
-
-            TransformComponent tc = new TransformComponent()
+            ModelComponent player1 = new ModelComponent();
+            player1.Model = Content.Load<Model>("Player");
+            ModelTransformComponent t1 = new ModelTransformComponent(player1.Model);
+            
+            TransformComponent tc1 = new TransformComponent()
             {
                 Position = new Vector3(0, 0, 0),
                 Rotation = new Vector3(0, 0, 0),
                 Scale = Vector3.One
             };
+
+            KeyBoardComponent kbc1 = new KeyBoardComponent();
+            kbc1.AddKeyToAction("Forward", Keys.W);
+            kbc1.AddKeyToAction("Backward", Keys.S);
+            kbc1.AddKeyToAction("Right", Keys.D);
+            kbc1.AddKeyToAction("Left", Keys.A);
+            kbc1.AddKeyToAction("Jump", Keys.Space);
+
+            PhysicsComponent pc1 = new PhysicsComponent
+            {
+                InJump = false,
+                GravityStrength = 2,
+                Mass = 5
+            };
+
+            MovementComponent moveC1 = new MovementComponent
+            {
+                Acceleration = 1.2f,
+                Speed = 10,
+                Velocity = Vector3.Zero,
+                AirTime = 0f
+            };
+
+            ModelComponent player2 = new ModelComponent();
+            player2.Model = Content.Load<Model>("Player");
+            ModelTransformComponent t2 = new ModelTransformComponent(player2.Model);
 
             TransformComponent tc2 = new TransformComponent() {
                 Position = new Vector3(10, 0, -50),
@@ -83,47 +104,50 @@ namespace Game
                 Scale = Vector3.One
             };
 
-            KeyBoardComponent kbc = new KeyBoardComponent();
-            kbc.AddKeyToAction("Forward", Keys.W);
-            kbc.AddKeyToAction("Backward", Keys.S);
-            kbc.AddKeyToAction("Right", Keys.D);
-            kbc.AddKeyToAction("Left", Keys.A);
-            kbc.AddKeyToAction("Jump", Keys.Space);
-
-            PhysicsComponent pc = new PhysicsComponent {
+            PhysicsComponent pc2 = new PhysicsComponent
+            {
                 InJump = false,
-                GravityStrength = 5,
+                GravityStrength = 2,
                 Mass = 5
             };
 
-            MovementComponent moveC = new MovementComponent
+            MovementComponent moveC2 = new MovementComponent
             {
                 Acceleration = 1.2f,
                 Speed = 10,
-                Velocity = Vector3.Zero
+                Velocity = Vector3.Zero,
+                AirTime = 0f
+            };
+
+            MovementComponent moveCCamera = new MovementComponent
+            {
+                Acceleration = 1.2f,
+                Speed = 10,
+                Velocity = Vector3.Zero,
+                AirTime = 0f
             };
 
             ActiveCollisionComponent actColl = new ActiveCollisionComponent();
             ActiveCollisionComponent actColl2 = new ActiveCollisionComponent();
 
-            componentManager.AddComponent(playerEntity, moveC);
-            componentManager.AddComponent(playerEntity, pc);
-            componentManager.AddComponent(playerEntity, kbc);
-            componentManager.AddComponent(playerEntity, tc);
-            componentManager.AddComponent(playerEntity, actColl);
-            componentManager.AddComponent(playerEntity, t);
-            componentManager.AddComponent(playerEntity, player);
+            componentManager.AddComponent(playerEntity1, moveC1);
+            componentManager.AddComponent(playerEntity1, pc1);
+            componentManager.AddComponent(playerEntity1, kbc1);
+            componentManager.AddComponent(playerEntity1, tc1);
+            componentManager.AddComponent(playerEntity1, actColl);
+            componentManager.AddComponent(playerEntity1, t1);
+            componentManager.AddComponent(playerEntity1, player1);
 
-            componentManager.AddComponent(playerEntity2, moveC);
-            componentManager.AddComponent(playerEntity2, pc);
+            componentManager.AddComponent(playerEntity2, moveC2);
+            componentManager.AddComponent(playerEntity2, pc2);
             componentManager.AddComponent(playerEntity2, tc2);
             componentManager.AddComponent(playerEntity2, actColl2);
             componentManager.AddComponent(playerEntity2, t2);
             componentManager.AddComponent(playerEntity2, player2);
 
 
-            componentManager.AddComponent(camera, moveC);
-            componentManager.AddComponent(camera, kbc);
+            componentManager.AddComponent(camera, moveCCamera);
+            //componentManager.AddComponent(camera, kbc);
 
             Entity platformEntity = new Entity();
 

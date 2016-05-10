@@ -16,6 +16,7 @@ namespace ECS_Engine.Engine.Systems
 {
     public class CollisionDetectionSystem : IUpdateSystem
     {
+        int count = 0;
         public void Update(GameTime gametime, ComponentManager componentManager)
         {
             Dictionary<Entity, IComponent> activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();
@@ -32,6 +33,7 @@ namespace ECS_Engine.Engine.Systems
                     ModelTransformComponent activeModelTrans1 = componentManager.GetComponent<ModelTransformComponent>(activeComp1.Key);
                     TransformComponent activeTrans1 = componentManager.GetComponent<TransformComponent>(activeComp1.Key);
                     PhysicsComponent activePC1 = componentManager.GetComponent<PhysicsComponent>(activeComp1.Key);
+                    MovementComponent activeMC1 = componentManager.GetComponent<MovementComponent>(activeComp1.Key);
                     ActiveCollisionComponent aColl1 = componentManager.GetComponent<ActiveCollisionComponent>(activeComp1.Key);
 
                    
@@ -70,7 +72,7 @@ namespace ECS_Engine.Engine.Systems
 
                         if (aColl1.BoundingBox.Intersects(passColl.BoundingBox))
                         {
-                            Console.WriteLine(aColl1.BoundingBox.Max);
+                            //Console.WriteLine(aColl1.BoundingBox.Max);
                             aColl1.RegCollision(passiveComp.Key, true);
                         }
                         else
