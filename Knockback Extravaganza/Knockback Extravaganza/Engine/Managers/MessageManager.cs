@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Managers {
     public class Message {
-        public float acivateInSeconds;
+        public float activateInSeconds;
         public int sender;
         public int receiver;
         public string msg;
@@ -19,18 +19,18 @@ namespace ECS_Engine.Engine.Managers {
         public void Begin(GameTime gametime) {
             startTime = DateTime.Now;
             for(int i = 0; i < messages.Count; ++i) {
-                messages[i].acivateInSeconds -= (float)gametime.ElapsedGameTime.TotalSeconds;
+                messages[i].activateInSeconds -= (float)gametime.ElapsedGameTime.TotalSeconds;
             }
         }
         public void End() {
-            messages.RemoveAll(x => x.acivateInSeconds < 0);
+            messages.RemoveAll(x => x.activateInSeconds < 0);
         }
         public void RegMessage(Message msg) {
             messages.Add(msg);
         }
         public List<Message> GetMessages(int id) {
             
-            return messages.FindAll(x => x.receiver == id && x.acivateInSeconds <= 0) as List<Message>;
+            return messages.FindAll(x => x.receiver == id && x.activateInSeconds <= 0) as List<Message>;
         }
 
     }

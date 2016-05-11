@@ -65,6 +65,7 @@
     <Compile Include="Engine\Managers\MessageManager.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
     <Compile Include="Engine\Component\MovementComponent.cs" />
+    <Compile Include="Engine\Systems\CollisionHandlingSystem.cs" />
     <Compile Include="Engine\Systems\FreeCameraSystem.cs" />
     <Compile Include="Engine\Systems\PhysicsSystem.cs" />
     <Compile Include="Engine\Systems\CameraSystem.cs" />
