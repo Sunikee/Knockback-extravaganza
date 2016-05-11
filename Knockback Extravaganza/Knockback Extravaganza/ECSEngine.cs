@@ -18,7 +18,10 @@ namespace ECS_Engine {
         protected MessageManager messageManager;
 
         Task[] tasks = new Task[2];
-        
+
+        double elapsedTime = 0;
+        int frameCounter = 0;
+        int frameRate = 0;
 
         public ECSEngine() {
             graphics = new GraphicsDeviceManager(this);
@@ -41,6 +44,10 @@ namespace ECS_Engine {
             systemManager.GraphicsDevice = GraphicsDevice;
             systemManager.ComponentManager = componentManager;
             systemManager.MessageManager = messageManager;
+
+            graphics.SynchronizeWithVerticalRetrace = false;
+            this.IsFixedTimeStep = false;
+            graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -72,6 +79,16 @@ namespace ECS_Engine {
             // TODO: Add your update logic here
             systemManager.GameTime = gameTime;
 
+            elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if(elapsedTime > 1)
+            {
+                elapsedTime -= 1;
+                frameRate = frameCounter;
+                frameCounter = 0;
+            }
+            frameCounter++;
+            this.Window.Title = "FPS: " + frameRate;
 
             systemManager.RunUpdateSystem();
 
