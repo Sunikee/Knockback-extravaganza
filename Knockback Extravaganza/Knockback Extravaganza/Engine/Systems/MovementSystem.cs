@@ -63,20 +63,11 @@ namespace ECS_Engine.Engine.Systems
                         //tc.Position += tc.Forward * mc.Speed;
                     }
 
-                    if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.PRESSED))
-                    {
-                        tc.Position += tc.Forward *-mc.Speed;
-                    }
+                    
                     if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.HELD))
                     {
-                        mc.Speed += (float)gametime.ElapsedGameTime.TotalSeconds * mc.Speed * mc.Acceleration;
-                        if (mc.Speed > 1.5f)
-                            mc.Speed = 1.5f;
-                        tc.Position += tc.Forward * -mc.Speed * 0.5f;
-                    }
-                    if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.RELEASED))
-                    {
-                        mc.Speed = 2;
+                        mc.Speed = -2;
+
                     }
                     if (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.HELD)))
                     {

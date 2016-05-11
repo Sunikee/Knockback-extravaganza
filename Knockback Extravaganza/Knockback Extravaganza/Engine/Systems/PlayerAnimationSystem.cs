@@ -22,29 +22,21 @@ namespace ECS_Engine.Engine.Systems
             foreach (KeyValuePair<Entity, IComponent> component in animationComponents)
             {
                 ModelComponent model = componentManager.GetComponent<ModelComponent>(component.Key);
-                ModelTransformComponent meshTransforms = componentManager.GetComponent<ModelTransformComponent>(component.Key);
+                ModelTransformComponent meshTransforms =
+                    componentManager.GetComponent<ModelTransformComponent>(component.Key);
                 TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                 MovementComponent movement = componentManager.GetComponent<MovementComponent>(component.Key);
                 foreach (ModelMesh mesh in model.Model.Meshes)
                 {
-                    if (movement.Speed > 0)
+                    if (mesh.Name == "Left_Arm")
                     {
-                        if (mesh.Name == "Left_Arm")
-                        {
-                                meshTransforms.GetTransform(mesh.Name).Rotation *= Quaternion.CreateFromYawPitchRoll(0,
-                                    0.2f*movement.Speed, 0);
-                        }
-                        else if (mesh.Name == "Right_Arm")
-                        {
-                            
-                            meshTransforms.GetTransform(mesh.Name).Rotation *= Quaternion.CreateFromYawPitchRoll(0,
-                                0.2f*movement.Speed, 0);
-                        }
-
+                        meshTransforms.GetTransform(mesh.Name).Rotation = Quaternion.CreateFromYawPitchRoll(0,
+                            -MathHelper.Clamp(2*movement.Speed, -MathHelper.PiOver4, MathHelper.PiOver4), 0);
                     }
-                    else
+                    else if (mesh.Name == "Right_Arm")
                     {
-                        meshTransforms.GetTransform(mesh.Name).Rotation = Quaternion.Identity;
+                        meshTransforms.GetTransform(mesh.Name).Rotation = Quaternion.CreateFromYawPitchRoll(0,
+                            -MathHelper.Clamp(2*movement.Speed, -MathHelper.PiOver4, MathHelper.PiOver4), 0);
                     }
                 }
             }
