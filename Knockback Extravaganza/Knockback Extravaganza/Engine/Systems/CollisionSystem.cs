@@ -78,6 +78,10 @@ namespace ECS_Engine.Engine.Systems
 
                         if (aColl1.BoundingBox.Intersects(passColl.BoundingBox))
                         {
+                            //HandleCollision(activeModelTrans1, passTrans)
+                            //activePC1.InJump = false;
+                            //activeTrans1.Position += new Vector3(0, activePC1.Gravity * activePC1.GravityStrength * (float)gametime.ElapsedGameTime.TotalSeconds, 0);
+                            //activePC1.ElapsedTime = 0;
                             //Console.WriteLine(aColl1.BoundingBox.Max);
                             aColl1.RegCollision(passiveComp.Key, true);
                         }

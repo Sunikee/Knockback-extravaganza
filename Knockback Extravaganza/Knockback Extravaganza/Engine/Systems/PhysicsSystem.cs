@@ -6,6 +6,11 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
+/* System Description
+ * This system handles the physics of the game, more specifically the 
+ * different forces that acts on the game.
+ * */
+
 namespace ECS_Engine.Engine.Systems
 {
     public class PhysicsSystem : IUpdateSystem
@@ -28,6 +33,15 @@ namespace ECS_Engine.Engine.Systems
             }
         }
 
+        /// <summary>
+        /// Function name: ApplyGravity(GameTime, PhysicsComponent, TransformComponent, MovementComponent)
+        /// This function applies gravity to a moveable object using the gravity varible of the game 
+        /// as well as the speed and air time of the falling object.
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="physicsComponent"></param>
+        /// <param name="transformComponent"></param>
+        /// <param name="movementComponent"></param>
         private void ApplyGravity(GameTime gameTime, PhysicsComponent physicsComponent, TransformComponent transformComponent, MovementComponent movementComponent)
         {
             if (physicsComponent.InJump)
@@ -38,6 +52,15 @@ namespace ECS_Engine.Engine.Systems
             transformComponent.Position -= new Vector3(0, distance, 0);
         }
 
+        /// <summary>
+        /// Function name: ApplyKnockback(PhysicsComponent, PhysicsComponent, MovementComponent, MovementComponent)
+        /// This function receives the mass and velocity for two objects that just collided and calculates
+        /// the end velocity for both of the objects.
+        /// </summary>
+        /// <param name="physicsComponent1"></param>
+        /// <param name="physicsComponent2"></param>
+        /// <param name="movementComponent1"></param>
+        /// <param name="movementComponent2"></param>
         private void ApplyKnockback(PhysicsComponent physicsComponent1, PhysicsComponent physicsComponent2, MovementComponent movementComponent1, MovementComponent movementComponent2) {
             movementComponent1.Velocity = (movementComponent1.Velocity * (physicsComponent1.Mass - physicsComponent2.Mass) + 2 * physicsComponent2.Mass * movementComponent2.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
             movementComponent2.Velocity = (movementComponent2.Velocity * (physicsComponent2.Mass - physicsComponent1.Mass) + 2 * physicsComponent1.Mass * movementComponent1.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);

@@ -8,6 +8,8 @@ namespace ECS_Engine.Engine.Component
         public float GravityStrength { get; set; }
         public float Friction { get; set; }
         public float Mass { get; set; }
+
+        public float ElapsedTime { get; set; }
         public bool InJump { get; set; }
         
     }

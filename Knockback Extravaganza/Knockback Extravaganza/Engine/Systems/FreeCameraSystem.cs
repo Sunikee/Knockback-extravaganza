@@ -11,6 +11,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/* System description
+ * This system defines a free-roaming camera that is able to move in any
+ * direction using the mouse and keyboard.
+ * */
+
 namespace ECS_Engine.Engine.Systems {
     public class FreeCameraSystem : IUpdateSystem {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager) {
@@ -33,6 +38,14 @@ namespace ECS_Engine.Engine.Systems {
             }
         }
 
+        /// <summary>
+        /// Function name: ProcessInput(float, MouseComponent, FreeCameraComponent)
+        /// This function receives input data from the active mouse and uses it to determine 
+        /// the direction which the camera is looking. 
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="mouse"></param>
+        /// <param name="free"></param>
         private void ProcessInput(float amount, MouseComponent mouse, FreeCameraComponent free) {
             if (mouse.NewState != mouse.OldState)
             {
@@ -54,6 +67,14 @@ namespace ECS_Engine.Engine.Systems {
             }
         }
 
+        /// <summary>
+        /// Function name: UpdateViewMatrix(FreeCameraComponent, CameraComponent, TransformComponent)
+        /// This function updates the view matrix of the camera using information obtained from the 
+        /// rotation values of the FreeCameraComponent.
+        /// </summary>
+        /// <param name="free"></param>
+        /// <param name="camera"></param>
+        /// <param name="cameraTransform"></param>
         private void UpdateViewMatrix(FreeCameraComponent free, CameraComponent camera, TransformComponent cameraTransform) {
             Matrix cameraRotation = Matrix.CreateRotationX(free.UpDownRot) * Matrix.CreateRotationY(free.LeftRightRot);
 

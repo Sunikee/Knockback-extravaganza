@@ -105,7 +105,8 @@ namespace Game
             {
                 InJump = false,
                 GravityStrength = 2,
-                Mass = 5
+                Mass = 5,
+                ElapsedTime = 0
             };
 
             MovementComponent moveC2 = new MovementComponent
