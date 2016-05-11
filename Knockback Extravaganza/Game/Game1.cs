@@ -64,7 +64,7 @@ namespace Game
             tranformC.Position = new Vector3(0f, 0f, 25f);
             ChaseCameraComponent chase = new ChaseCameraComponent();
             chase.Target = playerEntity1;
-            chase.Offset = new Vector3(0f, 50f, 90f);
+            chase.Offset = new Vector3(0f, 40f, 120f);
             FreeCameraComponent free = new FreeCameraComponent();
             free.GraphicsDevice = graphics.GraphicsDevice;
             free.Game = this;
@@ -73,7 +73,7 @@ namespace Game
             componentManager.AddComponent(camera, cameraC);
             componentManager.AddComponent(camera, tranformC);
             componentManager.AddComponent(camera, mouse);
-
+            
             Mouse.SetPosition(free.GraphicsDevice.Viewport.Width / 2, free.GraphicsDevice.Viewport.Height / 2);
 
             ModelComponent player1 = new ModelComponent();
@@ -89,11 +89,14 @@ namespace Game
 
             KeyBoardComponent kbc1 = new KeyBoardComponent();
             kbc1.AddKeyToAction("Forward", Keys.W);
+            kbc1.AddKeyToAction("Left", Keys.A);
             kbc1.AddKeyToAction("Backward", Keys.S);
             kbc1.AddKeyToAction("Right", Keys.D);
-            kbc1.AddKeyToAction("Left", Keys.A);
+            kbc1.AddKeyToAction("RotateLeft", Keys.Left);
+            kbc1.AddKeyToAction("RotateRight", Keys.Right);
             kbc1.AddKeyToAction("Jump", Keys.Space);
-            kbc1.AddKeyToAction("Dash", Keys.Q);
+            kbc1.AddKeyToAction("Dash", Keys.Up);
+            kbc1.AddKeyToAction("Reset", Keys.R);
 
             PhysicsComponent pc1 = new PhysicsComponent
             {
@@ -104,7 +107,7 @@ namespace Game
 
             MovementComponent moveC1 = new MovementComponent
             {
-                Acceleration = 1.2f,
+                Acceleration = 2f,
                 Speed = 0,
                 Velocity = Vector3.Zero,
                 AirTime = 0f
@@ -125,8 +128,7 @@ namespace Game
             {
                 InJump = false,
                 GravityStrength = 2,
-                Mass = 5,
-                ElapsedTime = 0
+                Mass = 5
             };
 
             MovementComponent moveC2 = new MovementComponent
@@ -148,9 +150,6 @@ namespace Game
             ActiveCollisionComponent actColl = new ActiveCollisionComponent();
             ActiveCollisionComponent actColl2 = new ActiveCollisionComponent();
 
-            AnimationComponent animationComponent1 = new AnimationComponent();
-            AnimationComponent animationComponent2 = new AnimationComponent();
-
             componentManager.AddComponent(playerEntity1, moveC1);
             componentManager.AddComponent(playerEntity1, pc1);
             componentManager.AddComponent(playerEntity1, kbc1);
@@ -158,7 +157,6 @@ namespace Game
             componentManager.AddComponent(playerEntity1, actColl);
             componentManager.AddComponent(playerEntity1, t1);
             componentManager.AddComponent(playerEntity1, player1);
-            componentManager.AddComponent(playerEntity1, animationComponent1);
 
             componentManager.AddComponent(playerEntity2, moveC2);
             componentManager.AddComponent(playerEntity2, pc2);
@@ -166,7 +164,6 @@ namespace Game
             componentManager.AddComponent(playerEntity2, actColl2);
             componentManager.AddComponent(playerEntity2, t2);
             componentManager.AddComponent(playerEntity2, player2);
-            componentManager.AddComponent(playerEntity2, animationComponent2);
 
 
             componentManager.AddComponent(camera, moveCCamera);
@@ -182,7 +179,7 @@ namespace Game
             TransformComponent platformTransformC = new TransformComponent
             {
                 Position = Vector3.Zero,
-                Scale = Vector3.One
+                Scale = new Vector3(4,4,4)
             };
 
             PassiveCollisionComponent passColl = new PassiveCollisionComponent();
@@ -290,7 +287,6 @@ namespace Game
             systemManager.AddSystem(new PhysicsSystem());
             systemManager.AddSystem(new MouseSystem());
             systemManager.AddSystem(new FreeCameraSystem());
-            systemManager.AddSystem(new PlayerAnimationSystem());
             systemManager.AddSystem(new PowerUpSystem());
         }
     }

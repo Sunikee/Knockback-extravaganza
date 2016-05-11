@@ -120,6 +120,7 @@ namespace ECS_Engine.Engine.Systems
                         {
                             aColl1.RegCollision(passiveComp.Key, false);
                             activePC1.InJump = true;
+                            activePC1.InJump = true;
                         }
                     }
                 }

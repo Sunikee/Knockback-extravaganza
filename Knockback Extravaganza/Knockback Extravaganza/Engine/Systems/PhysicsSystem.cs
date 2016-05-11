@@ -50,6 +50,8 @@ namespace ECS_Engine.Engine.Systems
             if(movementComponent.AirTime >= 5f)
                 movementComponent.AirTime = 5f;
             float distance = movementComponent.AirTime * movementComponent.Speed + physicsComponent.Gravity * physicsComponent.GravityStrength * movementComponent.AirTime * movementComponent.AirTime * 0.5f;
+            if(distance > 100)
+                distance = 100;
             transformComponent.Position -= new Vector3(0, distance, 0);
         }
 

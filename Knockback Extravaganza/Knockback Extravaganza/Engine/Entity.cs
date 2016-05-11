@@ -11,7 +11,7 @@ namespace ECS_Engine.Engine {
         public bool Active { get; set; }
 
         public Entity() {
-
+            Active = false;
         }
         public Entity(int id) {
             ID = id;

@@ -35,81 +35,103 @@ namespace ECS_Engine.Engine.Systems
                 {
                     if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.PRESSED))
                     {
-                        //mc.Velocity += tc.Forward * mc.Speed;
-                        //tc.Position = mc.Velocity;
+                        tc.Forward.Normalize();
+                        mc.Velocity = tc.Forward;
+                        tc.Position += mc.Velocity * mc.Speed;
                         //tc.Position += tc.Forward * mc.Speed;
                     }
                     //tc.Position += tc.Forward * mc.Speed;
                     if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.HELD))
                     {
-                        mc.Speed += (float)gametime.ElapsedGameTime.TotalSeconds * mc.Speed * mc.Acceleration;
-                        mc.Speed = 1;
-                        if (mc.Speed > 3)
-                            mc.Speed = 3;
-                        //mc.Velocity += tc.Forward * mc.Speed;
-                        //tc.Position = mc.Velocity;
+                        mc.Speed += (float)gametime.ElapsedGameTime.TotalSeconds * mc.Acceleration;
+                        if (mc.Speed > 6)
+                            mc.Speed = 6;
+                        tc.Forward.Normalize();
+                        mc.Velocity = tc.Forward;
+                        tc.Position += mc.Velocity * mc.Speed;
                         //tc.Position += tc.Forward * mc.Speed;
                     }
-                    tc.Position += tc.Forward * mc.Speed;
-                    mc.Speed -= (float) gametime.ElapsedGameTime.TotalSeconds;
-                    if (mc.Speed < 0)
-                    {
-                        mc.Speed = 0;
-                    }
+                    
                     if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.RELEASED))
                     {
-                        mc.Speed = 1;
-                        
-                        //tc.Position += tc.Forward * mc.Speed;
+                        if (mc.Speed > 0)
+                            mc.Speed -= (float)gametime.ElapsedGameTime.TotalSeconds * mc.Acceleration;
+                        else
+                            mc.Speed = 0;
                     }
+                    //if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED) && actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED) && actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED) && actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED))
+                    //{
+                    //    mc.Speed -= (float)gametime.ElapsedGameTime.TotalSeconds * mc.Acceleration;
+                    //    if (mc.Speed < 0)
+                    //        mc.Speed = 0;
+                    //    mc.Velocity = tc.Forward;
+                    //    tc.Position += mc.Velocity * mc.Speed;
+                    //}
 
-                    
                     if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.HELD))
                     {
-                        mc.Speed = -2;
-
+                        if (mc.Speed < 3)
+                            mc.Speed += (float)gametime.ElapsedGameTime.TotalSeconds * mc.Acceleration; 
+                        else
+                            mc.Speed = 3;
+                        mc.Velocity = -tc.Forward;
+                        tc.Position += mc.Velocity * mc.Speed;
                     }
+                    //if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.RELEASED) || actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED))
+                    //{
+                    //    if (mc.Speed < 0)
+                    //        mc.Speed -= (float)gametime.ElapsedGameTime.TotalSeconds * mc.Acceleration;
+                    //    else
+                    //        mc.Speed = 0;
+                    //    mc.Velocity = -tc.Forward;
+                    //    tc.Position += mc.Velocity * mc.Speed;
+                    //}
                     if (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.HELD)))
                     {
-                        tc.Rotation += new Vector3(0, -.1f, 0);
+                        //tc.Rotation += new Vector3(0, -.1f, 0);
+                        mc.Velocity = tc.Right;
+                        tc.Position += mc.Velocity * mc.Speed;
                     }
                     if (actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.HELD)))
                     {
-                        tc.Rotation += new Vector3(0, .1f, 0);
+                        //tc.Rotation += new Vector3(0, .1f, 0);
+                        mc.Velocity = -tc.Right;
+                        tc.Position += mc.Velocity * mc.Speed;
+                    }
+                    if (actionState.Key.Equals("RotateRight") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("RotateRight") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                    {
+                        tc.Rotation += new Vector3(0, -0.1f, 0f);
+                    }
+                    if (actionState.Key.Equals("RotateLeft") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("RotateLeft") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                    {
+                        tc.Rotation += new Vector3(0, 0.1f, 0f);
                     }
                     if ((actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) && !pc.InJump || (actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.HELD) && !pc.InJump))
                     {
                         pc.InJump = true;
-                        tc.Position += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 1000;
+                        //mc.Velocity += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 1000;
+                        tc.Position += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 2000;
                     }
-
+                    if (actionState.Key.Equals("Reset") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Reset") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                    {
+                        tc.Position = new Vector3(0, 0, 0);
+                    }
                     if (actionState.Key.Equals("Dash") && actionState.Value.Equals((BUTTON_STATE.HELD)))
                     {
                         DashTimer += (float)gametime.ElapsedGameTime.Milliseconds;
-                        if (DashTimer > 2000f )
+                        if (DashTimer > 10000f )
                         {
-                            DashTimer = 2000f;
+                            DashTimer = 10000f;
                         }
-
-                        
                     }
                     if (actionState.Key.Equals("Dash") && actionState.Value.Equals(BUTTON_STATE.RELEASED))
                     {
-                        mc.Speed = 2 * (DashTimer / 1000);
-                        //tc.Position += tc.Forward * mc.Speed;
-                        
-                        DashTime -= (float)gametime.ElapsedGameTime.Milliseconds;
-                        if (DashTime < 0)
-                        {
-                            DashTimer = 1;
-                            DashTime = 1500;
-                        }
+                        mc.Speed += mc.Acceleration * (DashTimer / 10);
+                        tc.Position += tc.Forward * mc.Speed;                        
                     }
                     if (actionState.Key.Equals("Dash") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED))
                     {
-                        
-                        //mc.Speed = 6;
-                       
+                        mc.Speed = 6;
                         //tc.Position += tc.Forward * mc.Speed;
 
                         DashTime -= (float)gametime.ElapsedGameTime.Milliseconds;
