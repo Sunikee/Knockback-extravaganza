@@ -51,10 +51,13 @@
     <Compile Include="Engine\Component\ModelComponent.cs" />
     <Compile Include="Engine\Component\ModelTransformComponent.cs" />
     <Compile Include="Engine\Component\MouseComponent.cs" />
+    <Compile Include="Engine\Component\Network\ClientNetworkComponent.cs" />
+    <Compile Include="Engine\Component\Network\ServerNetworkComponent.cs" />
     <Compile Include="Engine\Component\PassiveCollisionComponent.cs" />
     <Compile Include="Engine\Component\PhysicsComponent.cs" />
     <Compile Include="Engine\Component\PlayerComponent.cs" />
     <Compile Include="Engine\Component\PlayerStateDefines.cs" />
+    <Compile Include="Engine\Component\PowerUpComponent.cs" />
     <Compile Include="Engine\Component\VertexBufferComponent.cs" />
     <Compile Include="Engine\Component\VertexComponent.cs" />
     <Compile Include="Engine\Component\TransformComponent.cs" />
@@ -67,6 +70,9 @@
     <Compile Include="Engine\Component\MovementComponent.cs" />
     <Compile Include="Engine\Systems\CollisionHandlingSystem.cs" />
     <Compile Include="Engine\Systems\FreeCameraSystem.cs" />
+    <Compile Include="Engine\Systems\Network\ClientNetworkSystem.cs" />
+    <Compile Include="Engine\Systems\Network\INetworkSystem.cs" />
+    <Compile Include="Engine\Systems\Network\ServerNetworkSystem.cs" />
     <Compile Include="Engine\Systems\PhysicsSystem.cs" />
     <Compile Include="Engine\Systems\CameraSystem.cs" />
     <Compile Include="Engine\Systems\ChaseCameraSystem.cs" />
@@ -81,6 +87,7 @@
     <Compile Include="Engine\Systems\MouseSystem.cs" />
     <Compile Include="Engine\Systems\MovementSystem.cs" />
     <Compile Include="Engine\Systems\PlayerAnimationSystem.cs" />
+    <Compile Include="Engine\Systems\PowerUpSystem.cs" />
     <Compile Include="Engine\Systems\TransformSystem.cs" />
     <Compile Include="Engine\Systems\VertexBufferRenderSystem.cs" />
     <Compile Include="Engine\Systems\VertexIndexBufferRenderSystem.cs" />

@@ -29,9 +29,7 @@ namespace ECS_Engine {
             systemManager = new SystemManager();
             componentManager = new ComponentManager();
             messageManager = new MessageManager();
-
         }
-
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.

@@ -12,17 +12,19 @@ using ECS_Engine.Engine.Component;
 namespace ECS_Engine.Engine.Systems {
     public class TransformSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager) {
-           var components = componentManager.GetComponents<TransformComponent>();
+
+            var components = componentManager.GetComponents<TransformComponent>();
             if(components != null){
                 foreach(var component in components) {
+                   
                     TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                     Quaternion rotation = Quaternion.CreateFromYawPitchRoll(transform.Rotation.Y, transform.Rotation.X, transform.Rotation.Z);
-
+                    PhysicsComponent physics = componentManager.GetComponent<PhysicsComponent>(component.Key);
+                    MovementComponent movement = componentManager.GetComponent<MovementComponent>(component.Key);
                     transform.World = Matrix.CreateScale(transform.Scale) * Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(transform.Position);
                     transform.Forward = GetLocalDir(Vector3.Forward, rotation);
                     transform.Right = GetLocalDir(Vector3.Right, rotation);
                     transform.Up = GetLocalDir(Vector3.Up, rotation);
-
                 }
             }
 
@@ -43,7 +45,6 @@ namespace ECS_Engine.Engine.Systems {
                         mesh.Right = GetLocalDir(Vector3.Right, rotation);
                         mesh.Up = GetLocalDir(Vector3.Up, rotation);
                     }
-
                 }
             }
         }

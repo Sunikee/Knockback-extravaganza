@@ -51,14 +51,48 @@ namespace ECS_Engine.Engine.Systems
                         {
                             if (aColl1.BoundingBox.Intersects(aColl2.BoundingBox))
                             {
-                                Message m = new Message {
-                                    sender = activeComp1.Key.ID,
-                                    receiver = activeComp2.Key.ID,
-                                    activateInSeconds = 0,
-                                    msg = "Collission"
-                                };
-                                messageManager.RegMessage(m);
-                               
+                                Message msg;
+                                switch (activeComp1.Key.Tag)
+                                    
+                                {
+                                    case "Big":
+                                         msg = new Message
+                                        {
+                                            sender = activeComp1.Key.ID,
+                                            receiver = activeComp2.Key.ID,
+                                             activateInSeconds = 0,
+                                            msg = "Big"
+                                        };
+                                        messageManager.RegMessage(msg);
+                                        break;
+                                    case "Small":
+                                        msg = new Message
+                                        {
+                                            sender = activeComp1.Key.ID,
+                                            receiver = activeComp2.Key.ID,
+                                            activateInSeconds = 0,
+                                            msg = "Small"
+                                        };
+                                        messageManager.RegMessage(msg);
+                                        break;
+                                    default:
+                                         msg = new Message
+                                        {
+                                            sender = activeComp1.Key.ID,
+                                            receiver = activeComp2.Key.ID,
+                                             activateInSeconds = 0,
+                                            msg = "Collission"
+                                        };
+                                        messageManager.RegMessage(msg);
+                                        break;
+
+
+                                }                               
+                                aColl1.RegCollision(activeComp2.Key, true);
+                            }
+                            else
+                            {
+                                aColl1.RegCollision(activeComp2.Key, false);
                             }
                         }
                     }
@@ -74,22 +108,18 @@ namespace ECS_Engine.Engine.Systems
 
                         if (aColl1.BoundingBox.Intersects(passColl.BoundingBox))
                         {
-                            Message m = new Message
-                            {
-                                sender = activeComp1.Key.ID,
-                                receiver = passiveComp.Key.ID,
-                                activateInSeconds = 0,
-                                msg = "Collision"
-                            };
-                            messageManager.RegMessage(m);
+                            //HandleCollision(activeModelTrans1, passTrans)
+                            activePC1.InJump = false;
+                            activeMC1.AirTime = 0;
+                            //activeTrans1.Position += new Vector3(0, activePC1.Gravity * activePC1.GravityStrength * (float)gametime.ElapsedGameTime.TotalSeconds, 0);
+                            //activePC1.ElapsedTime = 0;
                             //Console.WriteLine(aColl1.BoundingBox.Max);
-                            //activePC1.InJump = false;
-                            //activeMC1.AirTime = 0;
-
+                            aColl1.RegCollision(passiveComp.Key, true);
                         }
                         else
                         {
-                            //activePC1.InJump = true;
+                            aColl1.RegCollision(passiveComp.Key, false);
+                            activePC1.InJump = true;
                         }
                     }
                 }

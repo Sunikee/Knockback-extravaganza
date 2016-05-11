@@ -52,17 +52,22 @@ namespace ECS_Engine.Engine.Managers {
         }
 
         public void RunUpdateSystem() {
+            
             MessageManager.Begin(GameTime);
             if(updateSystems.Count > 0) {
-                foreach(IUpdateSystem system in updateSystems) {
+                foreach (IUpdateSystem system in updateSystems) {
+                    
                     system.Update(GameTime, ComponentManager, MessageManager);
+
+                    
                 }
+                
             }
             MessageManager.End();
         }
 
         public void RunRenderSystem() {
-            if(renderSystems.Count > 0) {
+            if (renderSystems.Count > 0) {
                 foreach(IRenderSystem system in renderSystems) {
                     system.Render(GameTime, GraphicsDevice, ComponentManager);
                 }

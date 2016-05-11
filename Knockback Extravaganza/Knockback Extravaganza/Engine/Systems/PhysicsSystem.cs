@@ -28,6 +28,7 @@ namespace ECS_Engine.Engine.Systems
                     TransformComponent transformComponent = componentManager.GetComponent<TransformComponent>(comp.Key);
                     MovementComponent movementComponent = componentManager.GetComponent<MovementComponent>(comp.Key);
                     PlayerComponent playerComponent = componentManager.GetComponent<PlayerComponent>(comp.Key);
+                   
                     ApplyGravity(gameTime, physicsComponent, transformComponent, movementComponent);
                 }
             }

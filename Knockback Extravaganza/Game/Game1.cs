@@ -23,13 +23,32 @@ namespace Game
 
         }
 
-        Entity playerEntity1;
-        Entity playerEntity2;
+
 
         protected override void Initialize()
         {
-            playerEntity1 = componentManager.MakeEntity();
-            playerEntity2 = componentManager.MakeEntity();
+            InitializeSystems();
+            base.Initialize();
+        }
+
+        protected override void LoadContent()
+        {
+            // Create a new SpriteBatch, which can be used to draw textures.
+            CreateEntities();
+            spriteBatch = new SpriteBatch(GraphicsDevice);  
+        }
+
+        protected override void UnloadContent()
+        {
+
+        }
+        /// <summary>
+        /// Create all entities for the game
+        /// </summary>
+        public void CreateEntities()
+        {
+            Entity playerEntity1 = componentManager.MakeEntity();
+            Entity playerEntity2 = componentManager.MakeEntity();
 
             Entity camera = componentManager.MakeEntity();
             MouseComponent mouse = new MouseComponent();
@@ -60,7 +79,7 @@ namespace Game
             ModelComponent player1 = new ModelComponent();
             player1.Model = Content.Load<Model>("Player");
             ModelTransformComponent t1 = new ModelTransformComponent(player1.Model);
-            
+
             TransformComponent tc1 = new TransformComponent()
             {
                 Position = new Vector3(0, 0, 0),
@@ -95,7 +114,8 @@ namespace Game
             player2.Model = Content.Load<Model>("Player");
             ModelTransformComponent t2 = new ModelTransformComponent(player2.Model);
 
-            TransformComponent tc2 = new TransformComponent() {
+            TransformComponent tc2 = new TransformComponent()
+            {
                 Position = new Vector3(10, 0, -50),
                 Rotation = new Vector3(0, 0, 0),
                 Scale = Vector3.One
@@ -154,7 +174,8 @@ namespace Game
 
             Entity platformEntity = componentManager.MakeEntity();
 
-            ModelComponent platformModelC = new ModelComponent {
+            ModelComponent platformModelC = new ModelComponent
+            {
                 Model = Content.Load<Model>("platform"),
             };
 
@@ -170,6 +191,95 @@ namespace Game
             componentManager.AddComponent(platformEntity, platformTransformC);
             componentManager.AddComponent(platformEntity, passColl);
 
+            //Test PowerupBig
+            Entity powerUpBigEntity = componentManager.MakeEntity();
+            powerUpBigEntity.Tag = "Big";
+            var powerUpBigModelC = new ModelComponent
+            {
+                Model = Content.Load<Model>("box")
+            };
+            var powerUpBigTransC = new TransformComponent
+            {
+                Position = new Vector3(50, 60, -80),
+                Rotation = Vector3.Zero,
+                Scale = new Vector3(0.5f)
+            };
+            var powerUpBigPhysicsC = new PhysicsComponent
+            {
+                InJump = true,
+                GravityStrength = 1,
+            };
+
+            var powerUpBigMovementC = new MovementComponent
+            {
+                Acceleration = 1f,
+                Speed = 0,
+                Velocity = Vector3.Zero,
+                AirTime = 0f
+            };
+            var powerUpBigC = new PowerUpComponent
+            {
+                ActiveTime = 10,
+                IsActive = false,
+            };
+
+            var powerUpBigActiveCollC = new ActiveCollisionComponent();
+
+            componentManager.AddComponent(powerUpBigEntity, powerUpBigModelC);
+            componentManager.AddComponent(powerUpBigEntity, powerUpBigTransC);
+            componentManager.AddComponent(powerUpBigEntity, powerUpBigPhysicsC);
+            componentManager.AddComponent(powerUpBigEntity, powerUpBigActiveCollC);
+            componentManager.AddComponent(powerUpBigEntity, powerUpBigMovementC);
+            componentManager.AddComponent(powerUpBigEntity, powerUpBigC);
+
+            //Test PowerUpSmall
+            Entity powerUpSmallEntity = componentManager.MakeEntity();
+            powerUpSmallEntity.Tag = "Small";
+            var powerUpSmallModelC = new ModelComponent
+            {
+                Model = Content.Load<Model>("box")
+            };
+            var powerUpSmallTransC = new TransformComponent
+            {
+                Position = new Vector3(-50, 60, -80),
+                Rotation = Vector3.Zero,
+                Scale = new Vector3(0.5f)
+            };
+            var powerUpSmallPhysicsC = new PhysicsComponent
+            {
+                InJump = true,
+                GravityStrength = 1,
+            };
+
+            var powerUpSmallMovementC = new MovementComponent
+            {
+                Acceleration = 1f,
+                Speed = 0,
+                Velocity = Vector3.Zero,
+                AirTime = 0f
+            };
+
+            var powerUpSmallActiveCollC = new ActiveCollisionComponent();
+
+            var powerUpSmallC = new PowerUpComponent
+            {
+                ActiveTime = 10,
+                IsActive = false,
+            };
+
+            componentManager.AddComponent(powerUpSmallEntity, powerUpSmallModelC);
+            componentManager.AddComponent(powerUpSmallEntity, powerUpSmallTransC);
+            componentManager.AddComponent(powerUpSmallEntity, powerUpSmallPhysicsC);
+            componentManager.AddComponent(powerUpSmallEntity, powerUpSmallActiveCollC);
+            componentManager.AddComponent(powerUpSmallEntity, powerUpSmallMovementC);
+            componentManager.AddComponent(powerUpSmallEntity, powerUpSmallC);
+        }
+
+        /// <summary>
+        /// Initializes all needed systems
+        /// </summary>
+        public void InitializeSystems()
+        {
             systemManager.AddSystem(new TransformSystem());
             systemManager.AddSystem(new CameraSystem());
             systemManager.AddSystem(new ModelRenderSystem());
@@ -181,21 +291,7 @@ namespace Game
             systemManager.AddSystem(new MouseSystem());
             systemManager.AddSystem(new FreeCameraSystem());
             systemManager.AddSystem(new PlayerAnimationSystem());
-
-            base.Initialize();
-        }
-
-        protected override void LoadContent()
-        {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-           
-        }
-
-        protected override void UnloadContent()
-        {
-
+            systemManager.AddSystem(new PowerUpSystem());
         }
     }
 }
