@@ -64,7 +64,7 @@ namespace Game
             tranformC.Position = new Vector3(0f, 0f, 25f);
             ChaseCameraComponent chase = new ChaseCameraComponent();
             chase.Target = playerEntity1;
-            chase.Offset = new Vector3(0f, 40f, 120f);
+            chase.Offset = new Vector3(0f, 100, 200);
             FreeCameraComponent free = new FreeCameraComponent();
             free.GraphicsDevice = graphics.GraphicsDevice;
             free.Game = this;
@@ -190,7 +190,7 @@ namespace Game
 
             //Test PowerupBig
             Entity powerUpBigEntity = componentManager.MakeEntity();
-            powerUpBigEntity.Tag = "Big";
+            powerUpBigEntity.Tag = "powerUp";
             var powerUpBigModelC = new ModelComponent
             {
                 Model = Content.Load<Model>("box")
@@ -214,11 +214,7 @@ namespace Game
                 Velocity = Vector3.Zero,
                 AirTime = 0f
             };
-            var powerUpBigC = new PowerUpComponent
-            {
-                ActiveTime = 10,
-                IsActive = false,
-            };
+ 
 
             var powerUpBigActiveCollC = new ActiveCollisionComponent();
 
@@ -227,11 +223,12 @@ namespace Game
             componentManager.AddComponent(powerUpBigEntity, powerUpBigPhysicsC);
             componentManager.AddComponent(powerUpBigEntity, powerUpBigActiveCollC);
             componentManager.AddComponent(powerUpBigEntity, powerUpBigMovementC);
-            componentManager.AddComponent(powerUpBigEntity, powerUpBigC);
 
+           
             //Test PowerUpSmall
             Entity powerUpSmallEntity = componentManager.MakeEntity();
-            powerUpSmallEntity.Tag = "Small";
+            powerUpSmallEntity.Tag = "powerUp";
+
             var powerUpSmallModelC = new ModelComponent
             {
                 Model = Content.Load<Model>("box")
@@ -258,18 +255,11 @@ namespace Game
 
             var powerUpSmallActiveCollC = new ActiveCollisionComponent();
 
-            var powerUpSmallC = new PowerUpComponent
-            {
-                ActiveTime = 10,
-                IsActive = false,
-            };
-
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallModelC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallTransC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallPhysicsC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallActiveCollC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallMovementC);
-            componentManager.AddComponent(powerUpSmallEntity, powerUpSmallC);
         }
 
         /// <summary>

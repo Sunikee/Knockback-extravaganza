@@ -10,6 +10,7 @@ namespace ECS_Engine.Engine.Component
     public class PowerUpComponent : IComponent
     {
         public bool IsActive { get; set; }
-        public int ActiveTime { get; set; }
+        public float ActiveTime { get; set; }
+        public int PowerUpType { get; set; }
     }
 }

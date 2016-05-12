@@ -55,26 +55,17 @@ namespace ECS_Engine.Engine.Systems
                                 switch (activeComp1.Key.Tag)
                                     
                                 {
-                                    case "Big":
+                                    case "powerUp":
                                          msg = new Message
                                         {
                                             sender = activeComp1.Key.ID,
                                             receiver = activeComp2.Key.ID,
                                              activateInSeconds = 0,
-                                            msg = "Big"
+                                            msg = "powerUp"
                                         };
                                         messageManager.RegMessage(msg);
                                         break;
-                                    case "Small":
-                                        msg = new Message
-                                        {
-                                            sender = activeComp1.Key.ID,
-                                            receiver = activeComp2.Key.ID,
-                                            activateInSeconds = 0,
-                                            msg = "Small"
-                                        };
-                                        messageManager.RegMessage(msg);
-                                        break;
+                                   
                                     default:
                                          msg = new Message
                                         {
