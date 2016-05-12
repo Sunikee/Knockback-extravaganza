@@ -10,5 +10,8 @@ namespace ECS_Engine.Engine.Component
 {
     public class ActiveCollisionComponent : CollisionComponent
     {
+        public BoundingBox BoundingBox { get; set; }
+        public Vector3 Maximum { get; set; }
+        public Vector3 Minimum { get; set; }
     }
 }

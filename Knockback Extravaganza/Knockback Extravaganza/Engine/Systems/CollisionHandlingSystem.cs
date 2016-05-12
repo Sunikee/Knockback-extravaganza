@@ -24,13 +24,33 @@ namespace ECS_Engine.Engine.Systems
         {
             Dictionary<Entity, IComponent> activeCollisionComponents = componentManager.GetComponents<ActiveCollisionComponent>();
 
-
-            foreach (KeyValuePair<Entity, IComponent> activeCollisionComponent in activeCollisionComponents)
+            foreach (KeyValuePair<Entity, IComponent> aColl in activeCollisionComponents)
             {
-                var msg = messageManager.GetMessages(activeCollisionComponent.Key.ID);
-                TransformComponent transformComponent = componentManager.GetComponent<TransformComponent>(activeCollisionComponent.Key);
-                
+                ActiveCollisionComponent activeColl = (ActiveCollisionComponent) aColl.Value;
+                ModelComponent model = componentManager.GetComponent<ModelComponent>(aColl.Key);
+                TransformComponent transform = componentManager.GetComponent<TransformComponent>(aColl.Key);
+                MovementComponent movement = componentManager.GetComponent<MovementComponent>(aColl.Key);
+                PhysicsComponent physics = componentManager.GetComponent<PhysicsComponent>(aColl.Key);
+
+                foreach (Message message in messageManager.GetMessages(aColl.Key.ID))
+                {
+                    var collidedWith = componentManager.GetEntity(message.receiver);
+                    if (message.msg.ToLower() == "collision")
+                    {
+                        if (collidedWith.Tag.ToLower() == "platform")
+                        {
+                            PassiveCollisionComponent passiveColl = componentManager.GetComponent<PassiveCollisionComponent>(collidedWith);
+
+                        }
+                        if (collidedWith.Tag.ToLower() == "player")
+                        {
+                            
+                        }
+                    }
+                }
             }
+
+
         }
     }
 }
