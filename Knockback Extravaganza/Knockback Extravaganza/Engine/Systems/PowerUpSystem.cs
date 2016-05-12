@@ -17,7 +17,6 @@ using System.Threading.Tasks;
  * the player loses the power up.
  * */
 
-
 namespace ECS_Engine.Engine.Systems
 {
     public class PowerUpSystem : IUpdateSystem
