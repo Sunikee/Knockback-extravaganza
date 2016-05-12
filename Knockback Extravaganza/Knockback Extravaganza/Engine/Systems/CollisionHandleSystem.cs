@@ -11,41 +11,46 @@ using Microsoft.Xna.Framework;
 
 namespace ECS_Engine.Engine.Systems
 {
-    public class CollisionHandleSystem:IUpdateSystem
+    public class CollisionHandlingSystem : IUpdateSystem
     {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)
         {
             //Make character moveback to prior frame when colliding
-            HandleCollision(gameTime, componentManager);
+            HandleCollision(gameTime, componentManager, messageManager);
             //Implement type of collision and put on colliding units
         }
 
-        public void HandleCollision(GameTime gameTime, ComponentManager componentManager)
+        public void HandleCollision(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)
         {
-            Dictionary<Entity, IComponent> modelComponents = componentManager.GetComponents<ModelComponent>();
+            Dictionary<Entity, IComponent> activeCollisionComponents = componentManager.GetComponents<ActiveCollisionComponent>();
 
-            foreach (KeyValuePair<Entity, IComponent> modelComponent in modelComponents)
+            foreach (KeyValuePair<Entity, IComponent> aColl in activeCollisionComponents)
             {
-                ActiveCollisionComponent activeCollisionComponent = componentManager.GetComponent<ActiveCollisionComponent>(modelComponent.Key);
-                TransformComponent transformComponent = componentManager.GetComponent<TransformComponent>(modelComponent.Key);
-                PhysicsComponent physicsComponent = componentManager.GetComponent<PhysicsComponent>(modelComponent.Key);
-                MovementComponent movementComponent = componentManager.GetComponent<MovementComponent>(modelComponent.Key);
+                ActiveCollisionComponent activeColl = (ActiveCollisionComponent)aColl.Value;
+                ModelComponent model = componentManager.GetComponent<ModelComponent>(aColl.Key);
+                TransformComponent transform = componentManager.GetComponent<TransformComponent>(aColl.Key);
+                MovementComponent movement = componentManager.GetComponent<MovementComponent>(aColl.Key);
+                PhysicsComponent physics = componentManager.GetComponent<PhysicsComponent>(aColl.Key);
 
-                if (activeCollisionComponent != null)
+                foreach (Message message in messageManager.GetMessages(aColl.Key.ID))
                 {
-                    foreach (KeyValuePair<Entity, bool> collided in activeCollisionComponent.GetCollision())
+                    var collidedWith = componentManager.GetEntity(message.receiver);
+                    if (message.msg.ToLower() == "collision")
                     {
-                        if (collided.Value == true)
+                        if (collidedWith.Tag.ToLower() == "platform")
                         {
-                            physicsComponent.InJump = false;
-                            movementComponent.AirTime = 0;
-                            transformComponent.Position += -transformComponent.Forward * (float)gameTime.ElapsedGameTime.TotalSeconds * physicsComponent.Gravity;
-                            transformComponent.Position += transformComponent.Up * (float)gameTime.ElapsedGameTime.TotalSeconds * physicsComponent.Gravity * physicsComponent.GravityStrength;
+                            PassiveCollisionComponent passiveColl = componentManager.GetComponent<PassiveCollisionComponent>(collidedWith);
+
+                        }
+                        if (collidedWith.Tag.ToLower() == "player")
+                        {
+
                         }
                     }
                 }
-
             }
+
+
         }
     }
 }

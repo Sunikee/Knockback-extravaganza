@@ -79,11 +79,6 @@ namespace ECS_Engine.Engine.Systems
 
 
                                 }                               
-                                aColl1.RegCollision(activeComp2.Key, true);
-                            }
-                            else
-                            {
-                                aColl1.RegCollision(activeComp2.Key, false);
                             }
                         }
                     }
@@ -105,11 +100,10 @@ namespace ECS_Engine.Engine.Systems
                             //activeTrans1.Position += new Vector3(0, activePC1.Gravity * activePC1.GravityStrength * (float)gametime.ElapsedGameTime.TotalSeconds, 0);
                             //activePC1.ElapsedTime = 0;
                             //Console.WriteLine(aColl1.BoundingBox.Max);
-                            aColl1.RegCollision(passiveComp.Key, true);
+                         
                         }
                         else
                         {
-                            aColl1.RegCollision(passiveComp.Key, false);
                             activePC1.InJump = true;
                             activePC1.InJump = true;
                         }
