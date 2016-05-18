@@ -56,25 +56,11 @@ namespace ECS_Engine.Engine.Systems
                                     
                                 {
                                     case "powerUp":
-                                         msg = new Message
-                                        {
-                                            sender = activeComp1.Key.ID,
-                                            receiver = activeComp2.Key.ID,
-                                             activateInSeconds = 0,
-                                            msg = "powerUp"
-                                        };
-                                        messageManager.RegMessage(msg);
+                                        messageManager.RegMessage(activeComp1.Key.ID, activeComp2.Key.ID, 0, "powerUp");
                                         break;
                                    
                                     default:
-                                         msg = new Message
-                                        {
-                                            sender = activeComp1.Key.ID,
-                                            receiver = activeComp2.Key.ID,
-                                             activateInSeconds = 0,
-                                            msg = "Collission"
-                                        };
-                                        messageManager.RegMessage(msg);
+                                        messageManager.RegMessage(activeComp1.Key.ID, activeComp2.Key.ID, 0, "Collission");
                                         break;
 
 

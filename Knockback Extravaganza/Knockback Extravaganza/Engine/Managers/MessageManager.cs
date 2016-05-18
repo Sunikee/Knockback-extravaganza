@@ -11,26 +11,71 @@ namespace ECS_Engine.Engine.Managers {
         public int sender;
         public int receiver;
         public string msg;
+
+        public void Set(int sender, int receiver, float activateInSeconds, string msg) {
+            this.sender = sender;
+            this.receiver = receiver;
+            this.activateInSeconds = activateInSeconds;
+            this.msg = msg;
+        }
     }
     public class MessageManager {
 
-        private List<Message> messages = new List<Message>();
+        private Message[] messages = new Message[50];
         private DateTime startTime;
+
+        public MessageManager() {
+            for(int i = 0; i < messages.Length; ++i) {
+                messages[i] = new Message() {
+                    activateInSeconds = -1,
+                    sender = -1,
+                    receiver = -1,
+                    msg = "",
+                };
+            }
+        }
+
         public void Begin(GameTime gametime) {
             startTime = DateTime.Now;
-            for(int i = 0; i < messages.Count; ++i) {
+            for(int i = 0; i < messages.Length; ++i) {
                 messages[i].activateInSeconds -= (float)gametime.ElapsedGameTime.TotalSeconds;
             }
         }
         public void End() {
-            messages.RemoveAll(x => x.activateInSeconds < 0);
+            for(int i = 0; i < messages.Length; ++i) {
+                if(messages[i].activateInSeconds < 0) {
+                    messages[i].Set(-1,-1,-1, "");
+                }
+            }
         }
-        public void RegMessage(Message msg) {
-            messages.Add(msg);
+        public void RegMessage(int sender, int reciver, float activateInSeconds, string msg) {
+            for(int i = 0; i <= messages.Length; ++i) {
+                if(i == messages.Length) {
+                    Message[] newMsg = new Message[messages.Length * 2];
+                    for(int j = 0; j < newMsg.Length; ++j) {
+                        if (j < messages.Length) {
+                            newMsg[j] = messages[j];
+                        }
+                        else {
+                            newMsg[j] = new Message() {
+                                activateInSeconds = -1,
+                                sender = 0,
+                                receiver = 0,
+                                msg = "",
+                            };
+                        }
+                    }
+                    messages = newMsg;
+                    i = 0;
+                }
+                if(messages[i].activateInSeconds <= -1) {
+                    messages[i].Set(sender, reciver, activateInSeconds, msg);
+                    break;
+                }
+            }
         }
         public List<Message> GetMessages(int id) {
-            
-            return messages.FindAll(x => x.receiver == id && x.activateInSeconds <= 0) as List<Message>;
+            return messages.Where(x => x.activateInSeconds <= 0 && x.receiver == id).ToList();
         }
 
     }

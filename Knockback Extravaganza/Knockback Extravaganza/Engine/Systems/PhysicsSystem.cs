@@ -23,6 +23,7 @@ namespace ECS_Engine.Engine.Systems
                 foreach (KeyValuePair<Entity, IComponent> comp in components)
                 {
                     var msg = messageManager.GetMessages(comp.Key.ID);
+
                     ActiveCollisionComponent activeCollisionComponent = componentManager.GetComponent<ActiveCollisionComponent>(comp.Key);
                     PhysicsComponent physicsComponent = componentManager.GetComponent<PhysicsComponent>(comp.Key);
                     TransformComponent transformComponent = componentManager.GetComponent<TransformComponent>(comp.Key);
