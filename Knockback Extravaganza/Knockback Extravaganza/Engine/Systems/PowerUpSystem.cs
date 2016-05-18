@@ -32,6 +32,7 @@ namespace ECS_Engine.Engine.Systems
                 var physics = componentManager.GetComponent<PhysicsComponent>(component.Key);
                 var messages = messageManager.GetMessages(component.Key.ID);
                 var powerUp = componentManager.GetComponent<PowerUpComponent>(component.Key);
+                var movement = componentManager.GetComponent<MovementComponent>(component.Key);
 
                 if (powerUp != null)
                 {
@@ -58,7 +59,7 @@ namespace ECS_Engine.Engine.Systems
                             physics.Mass *= 2;
                             if (physics.Mass >= 10)
                                 physics.Mass = 10;
-                            //also make him slower
+                          
                             var powerupC = new PowerUpComponent { ActiveTime = 10000, PowerUpType = power };
                             componentManager.AddComponent(component.Key, powerupC);
 
@@ -72,7 +73,7 @@ namespace ECS_Engine.Engine.Systems
                             physics.Mass *= 0.5f;
                             if (physics.Mass >= 2.5f)
                                 physics.Mass = 2.5f;
-
+                           
                             var powerupC = new PowerUpComponent { ActiveTime = 10000, PowerUpType = power };
                             componentManager.AddComponent(component.Key, powerupC);
 

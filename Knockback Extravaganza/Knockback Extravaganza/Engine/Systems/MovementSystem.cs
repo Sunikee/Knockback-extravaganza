@@ -131,7 +131,7 @@ namespace ECS_Engine.Engine.Systems
                     }
                     if (actionState.Key.Equals("Dash") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED))
                     {
-                        mc.Speed = 6;
+                       
                         //tc.Position += tc.Forward * mc.Speed;
 
                         DashTime -= (float)gametime.ElapsedGameTime.Milliseconds;

@@ -51,9 +51,7 @@ namespace ECS_Engine.Engine.Systems
                         {
                             if (aColl1.BoundingBox.Intersects(aColl2.BoundingBox))
                             {
-                                Message msg;
-                                switch (activeComp1.Key.Tag)
-                                    
+                                switch (activeComp1.Key.Tag) 
                                 {
                                     case "powerUp":
                                         messageManager.RegMessage(activeComp1.Key.ID, activeComp2.Key.ID, 0, "powerUp");
