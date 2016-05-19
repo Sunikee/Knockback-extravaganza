@@ -71,6 +71,7 @@ namespace ECS_Engine.Engine.Systems.Network
                             case NetIncomingMessageType.Data:
                                 // handle custom messages
                                 var data = message.ReadInt32();
+                                
                                 break;
 
                             case NetIncomingMessageType.StatusChanged:
@@ -115,6 +116,8 @@ namespace ECS_Engine.Engine.Systems.Network
                 }
             }
         }
+
+        
 
         /// <summary>
         /// Sends a message to a specific client
