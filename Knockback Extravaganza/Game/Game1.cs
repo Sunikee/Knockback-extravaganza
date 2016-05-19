@@ -260,7 +260,55 @@ namespace Game
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallPhysicsC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallActiveCollC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallMovementC);
+
+            //Test of particle on powerup
+
+            //var smokeParticle = componentManager.MakeEntity();
+
+            var particleSettingsC = new ParticleSettings {
+                TextureName = "smoke",
+                MaxParticles = 600,
+                Duration = TimeSpan.FromSeconds(10),
+                MinHorizontalVelocity = 0,
+                MaxHorizontalVelocity = 15,
+                MinVerticalVelocity = 10,
+                MaxVerticalVelocity = 20,
+                Gravity = new Vector3(-20,-5,0),
+                EndVelocity = 0.75f,
+                MinRotateSpeed = -1,
+                MaxRotateSpeed = 1,
+                MinStartSize = 4,
+                MaxStartSize = 7,
+                MinEndSize = 35,
+                MaxEndSize = 140,
+                Type = ParticleType.Smoke,
+                MinColor = Color.White,
+                MaxColor = Color.White
+
+            };
+            var particleVertexC = new ParticleVertex { SizeInBytes = 40};
+            var particleProjectileC = new ParticleProjectile {
+                TrailParticlesPerSecond = 200,
+                NumExplosionParticles = 30,
+                NumExplosionSmokeParticles = 50,
+                ProjectileLifeSpan = 1.5f,
+                SidewaysVelocityRange = 60,
+                VerticalVelocityRange = 40,
+                Gravity = 15
+            };
+            var particleEmitterC = new ParticleEmitter {
+                ParticleSettings = particleSettingsC,
+                ParticleVertex = particleVertexC,
+                ParticlesPerSecond = 200,
+                Projectile = particleProjectileC,
+            };
+            particleEmitterC.TimeBetweenParticles = 1.0f / particleEmitterC.ParticlesPerSecond;
+
+            componentManager.AddComponent(powerUpBigEntity, particleEmitterC);
         }
+        
+
+        
 
         /// <summary>
         /// Initializes all needed systems
