@@ -115,6 +115,7 @@ namespace Game
 
             ModelComponent player2 = new ModelComponent();
             player2.Model = Content.Load<Model>("Player");
+            
             ModelTransformComponent t2 = new ModelTransformComponent(player2.Model);
 
             TransformComponent tc2 = new TransformComponent()
@@ -147,8 +148,11 @@ namespace Game
                 AirTime = 0f
             };
 
-            ActiveCollisionComponent actColl = new ActiveCollisionComponent();
-            ActiveCollisionComponent actColl2 = new ActiveCollisionComponent();
+            ActiveCollisionComponent actColl = new ActiveCollisionComponent(player1.Model, tc1.World);
+            ActiveCollisionComponent actColl2 = new ActiveCollisionComponent(player2.Model, tc2.World);
+
+            playerEntity1.Tag = "player";
+            playerEntity2.Tag = "player";
 
             componentManager.AddComponent(playerEntity1, moveC1);
             componentManager.AddComponent(playerEntity1, pc1);
@@ -170,6 +174,7 @@ namespace Game
             //componentManager.AddComponent(camera, kbc);
 
             Entity platformEntity = componentManager.MakeEntity();
+            platformEntity.Tag = "platform";
 
             ModelComponent platformModelC = new ModelComponent
             {
@@ -182,7 +187,7 @@ namespace Game
                 Scale = new Vector3(4,4,4)
             };
 
-            PassiveCollisionComponent passColl = new PassiveCollisionComponent();
+            PassiveCollisionComponent passColl = new PassiveCollisionComponent(platformModelC.Model, platformTransformC.World);
 
             componentManager.AddComponent(platformEntity, platformModelC);
             componentManager.AddComponent(platformEntity, platformTransformC);
@@ -216,12 +221,12 @@ namespace Game
             };
  
 
-            var powerUpBigActiveCollC = new ActiveCollisionComponent();
+            var powerUpBigPassiveCollC = new PassiveCollisionComponent(powerUpBigModelC.Model, powerUpBigTransC.World);
 
             componentManager.AddComponent(powerUpBigEntity, powerUpBigModelC);
             componentManager.AddComponent(powerUpBigEntity, powerUpBigTransC);
             componentManager.AddComponent(powerUpBigEntity, powerUpBigPhysicsC);
-            componentManager.AddComponent(powerUpBigEntity, powerUpBigActiveCollC);
+            componentManager.AddComponent(powerUpBigEntity, powerUpBigPassiveCollC);
             componentManager.AddComponent(powerUpBigEntity, powerUpBigMovementC);
 
            
@@ -253,62 +258,63 @@ namespace Game
                 AirTime = 0f
             };
 
-            var powerUpSmallActiveCollC = new ActiveCollisionComponent();
+            var powerUpSmallPassiveCollC = new PassiveCollisionComponent(powerUpSmallModelC.Model, powerUpSmallTransC.World);
 
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallModelC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallTransC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallPhysicsC);
-            componentManager.AddComponent(powerUpSmallEntity, powerUpSmallActiveCollC);
+            componentManager.AddComponent(powerUpSmallEntity, powerUpSmallPassiveCollC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallMovementC);
 
             //Test of particle on powerup
 
             //var smokeParticle = componentManager.MakeEntity();
+            /*
+                        var particleSettingsC = new ParticleSettings {
+                            TextureName = "smoke",
+                            MaxParticles = 600,
+                            Duration = TimeSpan.FromSeconds(10),
+                            MinHorizontalVelocity = 0,
+                            MaxHorizontalVelocity = 15,
+                            MinVerticalVelocity = 10,
+                            MaxVerticalVelocity = 20,
+                            Gravity = new Vector3(-20,-5,0),
+                            EndVelocity = 0.75f,
+                            MinRotateSpeed = -1,
+                            MaxRotateSpeed = 1,
+                            MinStartSize = 4,
+                            MaxStartSize = 7,
+                            MinEndSize = 35,
+                            MaxEndSize = 140,
+                            Type = ParticleType.Smoke,
+                            MinColor = Color.White,
+                            MaxColor = Color.White
 
-            var particleSettingsC = new ParticleSettings {
-                TextureName = "smoke",
-                MaxParticles = 600,
-                Duration = TimeSpan.FromSeconds(10),
-                MinHorizontalVelocity = 0,
-                MaxHorizontalVelocity = 15,
-                MinVerticalVelocity = 10,
-                MaxVerticalVelocity = 20,
-                Gravity = new Vector3(-20,-5,0),
-                EndVelocity = 0.75f,
-                MinRotateSpeed = -1,
-                MaxRotateSpeed = 1,
-                MinStartSize = 4,
-                MaxStartSize = 7,
-                MinEndSize = 35,
-                MaxEndSize = 140,
-                Type = ParticleType.Smoke,
-                MinColor = Color.White,
-                MaxColor = Color.White
+                        };
+                        var particleVertexC = new ParticleVertex { SizeInBytes = 40};
+                        var particleProjectileC = new ParticleProjectile {
+                            TrailParticlesPerSecond = 200,
+                            NumExplosionParticles = 30,
+                            NumExplosionSmokeParticles = 50,
+                            ProjectileLifeSpan = 1.5f,
+                            SidewaysVelocityRange = 60,
+                            VerticalVelocityRange = 40,
+                            Gravity = 15
+                        };
+                        var particleEmitterC = new ParticleEmitter {
+                            ParticleSettings = particleSettingsC,
+                            ParticleVertex = particleVertexC,
+                            ParticlesPerSecond = 200,
+                            Projectile = particleProjectileC,
+                        };
+                        particleEmitterC.TimeBetweenParticles = 1.0f / particleEmitterC.ParticlesPerSecond;
 
-            };
-            var particleVertexC = new ParticleVertex { SizeInBytes = 40};
-            var particleProjectileC = new ParticleProjectile {
-                TrailParticlesPerSecond = 200,
-                NumExplosionParticles = 30,
-                NumExplosionSmokeParticles = 50,
-                ProjectileLifeSpan = 1.5f,
-                SidewaysVelocityRange = 60,
-                VerticalVelocityRange = 40,
-                Gravity = 15
-            };
-            var particleEmitterC = new ParticleEmitter {
-                ParticleSettings = particleSettingsC,
-                ParticleVertex = particleVertexC,
-                ParticlesPerSecond = 200,
-                Projectile = particleProjectileC,
-            };
-            particleEmitterC.TimeBetweenParticles = 1.0f / particleEmitterC.ParticlesPerSecond;
-
-            componentManager.AddComponent(powerUpBigEntity, particleEmitterC);
+                        componentManager.AddComponent(powerUpBigEntity, particleEmitterC);
+                        */
         }
-        
 
-        
+
+
 
         /// <summary>
         /// Initializes all needed systems
@@ -322,6 +328,7 @@ namespace Game
             systemManager.AddSystem(new KeyBoardSystem());
             systemManager.AddSystem(new ChaseCameraSystem());
             systemManager.AddSystem(new CollisionDetectionSystem());
+            systemManager.AddSystem(new CollisionHandlingSystem());
             systemManager.AddSystem(new PhysicsSystem());
             systemManager.AddSystem(new MouseSystem());
             systemManager.AddSystem(new FreeCameraSystem());

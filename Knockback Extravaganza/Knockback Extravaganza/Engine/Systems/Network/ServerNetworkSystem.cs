@@ -1,4 +1,4 @@
-﻿using ECS_Engine.Engine.Component.Interfaces;
+﻿/*using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Component.Network;
 using ECS_Engine.Engine.Managers;
 using ECS_Engine.Engine.Systems.Interfaces;
@@ -106,7 +106,6 @@ namespace ECS_Engine.Engine.Systems.Network
                                 Console.WriteLine(message.ReadString());
                                 break;
 
-                            /* .. */
                             default:
                                 Console.WriteLine("unhandled message with type: "
                                     + message.MessageType);
@@ -154,5 +153,5 @@ namespace ECS_Engine.Engine.Systems.Network
         }
     }
 }
-
+*/
 

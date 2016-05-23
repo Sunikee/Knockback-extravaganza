@@ -10,7 +10,7 @@ namespace ECS_Engine.Engine.Component
 {
     public class ActiveCollisionComponent : CollisionComponent
     {
-        private ActiveCollisionComponent(Model model, Matrix world) : base(model, world)
+        public ActiveCollisionComponent(Model model, Matrix world) : base(model, world)
         {
         }
     }

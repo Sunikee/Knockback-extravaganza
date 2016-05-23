@@ -11,11 +11,13 @@ namespace ECS_Engine.Engine {
         public bool Active { get; set; }
 
         public Entity() {
-            Active = false;
+            Active = true;
+            Tag = "";
         }
         public Entity(int id) {
             ID = id;
             Active = true;
+            Tag = "";
         }
     }
 }

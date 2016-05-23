@@ -32,19 +32,21 @@ namespace ECS_Engine.Engine.Systems
                 MovementComponent movement = componentManager.GetComponent<MovementComponent>(aColl.Key);
                 PhysicsComponent physics = componentManager.GetComponent<PhysicsComponent>(aColl.Key);
 
+                
                 foreach (Message message in messageManager.GetMessages(aColl.Key.ID))
                 {
-                    var collidedWith = componentManager.GetEntity(message.receiver);
+                    var collidedWith = componentManager.GetEntity(message.sender);
                     if (message.msg.ToLower() == "collision")
                     {
                         if (collidedWith.Tag.ToLower() == "platform")
                         {
-                            PassiveCollisionComponent passiveColl = componentManager.GetComponent<PassiveCollisionComponent>(collidedWith);
-
+                            transform.Position += new Vector3(0,
+                    physics.Gravity * (float)gameTime.ElapsedGameTime.TotalSeconds, 0); //movement.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                            physics.InJump = false;
                         }
                         if (collidedWith.Tag.ToLower() == "player")
                         {
-
+                            
                         }
                     }
                 }

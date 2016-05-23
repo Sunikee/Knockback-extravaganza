@@ -110,7 +110,7 @@ namespace ECS_Engine.Engine.Systems
                     {
                         pc.InJump = true;
                         //mc.Velocity += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 1000;
-                        tc.Position += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 2000;
+                        tc.Position += tc.Up * 100;
                     }
                     if (actionState.Key.Equals("Reset") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Reset") && actionState.Value.Equals(BUTTON_STATE.HELD)))
                     {

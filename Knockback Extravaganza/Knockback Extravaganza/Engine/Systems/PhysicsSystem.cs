@@ -53,7 +53,11 @@ namespace ECS_Engine.Engine.Systems
             float distance = movementComponent.AirTime * movementComponent.Speed + physicsComponent.Gravity * physicsComponent.GravityStrength * movementComponent.AirTime * movementComponent.AirTime * 0.5f;
             if(distance > 100)
                 distance = 100;
-            transformComponent.Position -= new Vector3(0, distance, 0);
+            if (physicsComponent.InJump)
+            {
+                transformComponent.Position -= new Vector3(0,
+                    physicsComponent.Gravity*(float) gameTime.ElapsedGameTime.TotalSeconds * 10, 0);
+            }
         }
 
         /// <summary>

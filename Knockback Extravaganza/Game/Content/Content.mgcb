@@ -101,9 +101,3 @@
 /processorParam:TextureFormat=DxtCompressed
 /build:box.fbx
 
-#begin Effects/ParticleEffect.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Effects/ParticleEffect.fx
-

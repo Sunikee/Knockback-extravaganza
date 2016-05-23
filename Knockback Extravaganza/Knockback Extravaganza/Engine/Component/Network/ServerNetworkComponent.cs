@@ -1,4 +1,4 @@
-﻿using ECS_Engine.Engine.Component.Interfaces;
+﻿/*using ECS_Engine.Engine.Component.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,3 +18,4 @@ namespace ECS_Engine.Engine.Component.Network
         public List<IPEndPoint> ClientConnections { get; set; }
     }
 }
+*/

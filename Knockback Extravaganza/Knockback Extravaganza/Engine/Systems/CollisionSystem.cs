@@ -44,9 +44,8 @@ namespace ECS_Engine.Engine.Systems
                         TransformComponent activeTrans2 = componentManager.GetComponent<TransformComponent>(activeComp2.Key);
                         PhysicsComponent activePC2 = componentManager.GetComponent<PhysicsComponent>(activeComp2.Key);
                         ActiveCollisionComponent aColl2 = componentManager.GetComponent<ActiveCollisionComponent>(activeComp2.Key);
-                        UpdateCollisionComponent(activeModel2.Model, aColl2, activeTrans2.World);
-                        UpdateCollisionComponent(activeModel1.Model, aColl1, activeTrans1.World);
-
+                        UpdateCollisionComponent(aColl2, activeTrans2.World);
+                        UpdateCollisionComponent(aColl1, activeTrans1.World);
                         if (activeModel1 != activeModel2)
                         {
                             if (aColl1.BoundingBox.Intersects(aColl2.BoundingBox))
@@ -58,7 +57,7 @@ namespace ECS_Engine.Engine.Systems
                                         break;
                                    
                                     default:
-                                        messageManager.RegMessage(activeComp1.Key.ID, activeComp2.Key.ID, 0, "Collission");
+                                        messageManager.RegMessage(activeComp1.Key.ID, activeComp2.Key.ID, 0, "collision");
                                         break;
 
 
@@ -78,26 +77,20 @@ namespace ECS_Engine.Engine.Systems
 
                         if (aColl1.BoundingBox.Intersects(passColl.BoundingBox))
                         {
-                            //HandleCollision(activeModelTrans1, passTrans)
-                            activePC1.InJump = false;
-                            activeMC1.AirTime = 0;
-                            //activeTrans1.Position += new Vector3(0, activePC1.Gravity * activePC1.GravityStrength * (float)gametime.ElapsedGameTime.TotalSeconds, 0);
-                            //activePC1.ElapsedTime = 0;
-                            //Console.WriteLine(aColl1.BoundingBox.Max);
-                         
-                        }
-                        else
-                        {
-                            activePC1.InJump = true;
-                            activePC1.InJump = true;
+                            messageManager.RegMessage(passiveComp.Key.ID, activeComp1.Key.ID, 0, "collision");
+                            
                         }
                     }
                 }
             }
         }
-        public void UpdateCollisionComponent(CollisionComponent collisionComponent)
+        public void UpdateCollisionComponent(CollisionComponent collisionComponent, Matrix world)
         {
 
+            Vector3 positionMax = Vector3.Transform(collisionComponent.Maximum, world);
+            Vector3 positionMin = Vector3.Transform(collisionComponent.Minimum, world);
+
+            collisionComponent.BoundingBox = new BoundingBox(positionMin, positionMax);
         }
     }
 }

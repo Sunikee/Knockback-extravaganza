@@ -1,6 +1,5 @@
 ﻿using ECS_Engine.Engine.Component.Interfaces;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 namespace ECS_Engine.Engine.Component
 {
 
-    public class ParticleEmitterComponent : IComponent
+    public class ParticleEmitter : IComponent
     {
 
         public ParticleSettings ParticleSettings { get; set; }
@@ -41,9 +40,6 @@ namespace ECS_Engine.Engine.Component
         public float MaxEndSize { get; set; }
         public ParticleType Type { get; set; }
         public Vector3 Gravity { get; set; }
-        public float EmitterVelocitySensitivity { get; set; }
-        public BlendState BlendState { get; set; }
-        public float DurationRandomness { get; set; }
     }
     public class ParticleProjectile
     {
@@ -67,18 +63,6 @@ namespace ECS_Engine.Engine.Component
         public Color Random { get; set; }
         public float Time { get; set; }
         public int SizeInBytes { get; set; }
-        public VertexDeclaration VertexDeclaration { get; set; } = new VertexDeclaration
-                (
-          new VertexElement(0, VertexElementFormat.Vector3,
-                                 VertexElementUsage.Position, 0),
-          new VertexElement(12, VertexElementFormat.Vector2,
-                                 VertexElementUsage.Normal, 0),
-          new VertexElement(20, VertexElementFormat.Vector3,
-                                 VertexElementUsage.Normal, 1),
-          new VertexElement(32, VertexElementFormat.Color,
-                                 VertexElementUsage.Color, 0),
-          new VertexElement(36, VertexElementFormat.Single,
-                                 VertexElementUsage.TextureCoordinate, 0));
     }
     public enum ParticleType
     {

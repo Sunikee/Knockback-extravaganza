@@ -12,11 +12,12 @@ namespace ECS_Engine.Engine.Component
     public abstract class CollisionComponent: IComponent
     {
         public BoundingBox BoundingBox { get; set; }
-        Vector3 Maximum { get; set; }
-        Vector3 Minimum { get; set; }
+        public Vector3 Maximum { get; set; }
+        public Vector3 Minimum { get; set; }
 
         protected CollisionComponent(Model model, Matrix world)
         {
+            world = Matrix.Identity;
             Minimum = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
             Maximum = new Vector3(float.MinValue, float.MinValue, float.MinValue);
             Matrix[] transforms = new Matrix[model.Bones.Count()];

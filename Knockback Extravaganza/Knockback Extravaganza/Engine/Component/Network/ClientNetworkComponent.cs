@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Lidgren.Network;
+/*using Lidgren.Network;
 
 namespace ECS_Engine.Engine.Component.Network
 {
@@ -18,3 +18,4 @@ namespace ECS_Engine.Engine.Component.Network
         public NetClient Client { get; set; }
     }
 }
+*/
