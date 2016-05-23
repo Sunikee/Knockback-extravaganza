@@ -69,6 +69,8 @@
     <Compile Include="Engine\Managers\SystemManager.cs" />
     <Compile Include="Engine\Component\MovementComponent.cs" />
     <Compile Include="Engine\Systems\CollisionHandleSystem.cs" />
+    <Compile Include="Engine\Systems\ParticleSystems\ParticleSystem.cs" />
+    <Compile Include="Engine\Systems\ParticleSystems\ParticleVertex.cs" />
     <Compile Include="Engine\Systems\FreeCameraSystem.cs" />
     <Compile Include="Engine\Systems\Network\ClientNetworkSystem.cs" />
     <Compile Include="Engine\Systems\Network\INetworkSystem.cs" />
