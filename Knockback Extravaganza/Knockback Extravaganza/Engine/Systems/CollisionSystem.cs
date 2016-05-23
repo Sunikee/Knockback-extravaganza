@@ -73,8 +73,8 @@ namespace ECS_Engine.Engine.Systems
                         TransformComponent passTrans = componentManager.GetComponent<TransformComponent>(passiveComp.Key);
                         PhysicsComponent passPC = componentManager.GetComponent<PhysicsComponent>(passiveComp.Key);
                         PassiveCollisionComponent passColl = componentManager.GetComponent<PassiveCollisionComponent>(passiveComp.Key);
-                        UpdateCollisionComponent(passModel.Model, passColl, passTrans.World);
-                        UpdateCollisionComponent(activeModel1.Model, aColl1, activeTrans1.World);
+                        UpdateCollisionComponent(passColl, passTrans.World);
+                        UpdateCollisionComponent(aColl1, activeTrans1.World);
 
                         if (aColl1.BoundingBox.Intersects(passColl.BoundingBox))
                         {
@@ -95,36 +95,9 @@ namespace ECS_Engine.Engine.Systems
                 }
             }
         }
-
-        public void UpdateCollisionComponent(Model model, CollisionComponent collisionComponent, Matrix world)
+        public void UpdateCollisionComponent(CollisionComponent collisionComponent)
         {
-            collisionComponent.Minimum = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-            collisionComponent.Maximum = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-            Matrix[] transforms = new Matrix[model.Bones.Count()];
-            model.CopyAbsoluteBoneTransformsTo(transforms);
-            foreach (ModelMesh mesh in model.Meshes)
-            {
-                
-                foreach (ModelMeshPart meshPart in mesh.MeshParts)
-                {
-                    int vertexStride = meshPart.VertexBuffer.VertexDeclaration.VertexStride;
-                    int vertexBufferSize = meshPart.NumVertices * vertexStride;
 
-                    float[] vertexData = new float[vertexBufferSize / sizeof(float)];
-                    meshPart.VertexBuffer.GetData<float>(vertexData);
-
-                    for (int i = 0; i < vertexBufferSize / sizeof(float); i += vertexStride / sizeof(float))
-                    {
-                        Vector3 transformedPosition = Vector3.Transform(new Vector3(vertexData[i], vertexData[i + 1], vertexData[i + 2]), transforms[mesh.ParentBone.Index] * world);
-
-                        collisionComponent.Minimum = Vector3.Min(collisionComponent.Minimum, transformedPosition);
-                        collisionComponent.Maximum = Vector3.Max(collisionComponent.Maximum, transformedPosition);
-                    }
-                }
-            }
-            collisionComponent.BoundingBox = new BoundingBox(collisionComponent.Minimum, collisionComponent.Maximum); 
         }
-
-        
     }
 }
