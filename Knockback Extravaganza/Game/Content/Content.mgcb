@@ -101,3 +101,81 @@
 /processorParam:TextureFormat=DxtCompressed
 /build:box.fbx
 
+#begin Effects/ParticleEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Effects/ParticleEffect.fx
+
+#begin Sound/fs_general_dirt_01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/fs_general_dirt_01.wav
+
+#begin Sound/fs_general_dirt_02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/fs_general_dirt_02.wav
+
+#begin Sound/fs_general_dirt_03.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/fs_general_dirt_03.wav
+
+#begin Sound/fs_general_dirt_04.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/fs_general_dirt_04.wav
+
+#begin Sound/AfternoonAmbienceSimple_01.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/AfternoonAmbienceSimple_01.wav
+
+#begin Sound/AfternoonAmbienceSimple_02.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/AfternoonAmbienceSimple_02.wav
+
+#begin Sound/AfternoonAmbienceSimple_03.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sound/AfternoonAmbienceSimple_03.wav
+
+#begin Sound/Body_Hit_01.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Body_Hit_01.wav
+
+#begin Sound/Body_Hit_02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Body_Hit_02.wav
+
+#begin Sound/Body_Hit_03.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Body_Hit_03.wav
+
+#begin Sound/Body_Hit_04.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Body_Hit_04.wav
+
+#begin Sound/Body_Hit_05.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Body_Hit_05.wav
+

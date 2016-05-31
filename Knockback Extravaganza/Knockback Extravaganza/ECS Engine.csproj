@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,7 +13,8 @@
     <AssemblyName>ECS Engine</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -45,6 +46,7 @@
     <Compile Include="Engine\Component\CollisionComponent.cs" />
     <Compile Include="Engine\Component\FreeCameraComponent.cs" />
     <Compile Include="Engine\Component\GamePadComponent.cs" />
+    <Compile Include="Engine\Component\GameSceneComponent.cs" />
     <Compile Include="Engine\Component\InputDefines.cs" />
     <Compile Include="Engine\Component\Interfaces\IComponent.cs" />
     <Compile Include="Engine\Component\KeyBoardComponent.cs" />
@@ -53,11 +55,15 @@
     <Compile Include="Engine\Component\MouseComponent.cs" />
     <Compile Include="Engine\Component\Network\ClientNetworkComponent.cs" />
     <Compile Include="Engine\Component\Network\ServerNetworkComponent.cs" />
+    <Compile Include="Engine\Component\ParticleComponent.cs" />
     <Compile Include="Engine\Component\PassiveCollisionComponent.cs" />
     <Compile Include="Engine\Component\PhysicsComponent.cs" />
     <Compile Include="Engine\Component\PlayerComponent.cs" />
     <Compile Include="Engine\Component\PlayerStateDefines.cs" />
     <Compile Include="Engine\Component\PowerUpComponent.cs" />
+    <Compile Include="Engine\Component\SongComponent.cs" />
+    <Compile Include="Engine\Component\SoundComponent.cs" />
+    <Compile Include="Engine\Component\SoundEffectComponent.cs" />
     <Compile Include="Engine\Component\VertexBufferComponent.cs" />
     <Compile Include="Engine\Component\VertexComponent.cs" />
     <Compile Include="Engine\Component\TransformComponent.cs" />
@@ -66,10 +72,14 @@
     <Compile Include="Engine\Entity.cs" />
     <Compile Include="Engine\Managers\ComponentManager.cs" />
     <Compile Include="Engine\Managers\MessageManager.cs" />
+    <Compile Include="Engine\Managers\SceneManager.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
     <Compile Include="Engine\Component\MovementComponent.cs" />
+    <Compile Include="Engine\SongPiece.cs" />
+    <Compile Include="Engine\SoundEffectPiece.cs" />
     <Compile Include="Engine\Systems\CollisionHandleSystem.cs" />
     <Compile Include="Engine\Systems\FreeCameraSystem.cs" />
+    <Compile Include="Engine\Systems\GameSceneSystem.cs" />
     <Compile Include="Engine\Systems\Network\ClientNetworkSystem.cs" />
     <Compile Include="Engine\Systems\Network\INetworkSystem.cs" />
     <Compile Include="Engine\Systems\Network\ServerNetworkSystem.cs" />
@@ -88,6 +98,7 @@
     <Compile Include="Engine\Systems\MovementSystem.cs" />
     <Compile Include="Engine\Systems\PlayerAnimationSystem.cs" />
     <Compile Include="Engine\Systems\PowerUpSystem.cs" />
+    <Compile Include="Engine\Systems\SoundSystem.cs" />
     <Compile Include="Engine\Systems\TransformSystem.cs" />
     <Compile Include="Engine\Systems\VertexBufferRenderSystem.cs" />
     <Compile Include="Engine\Systems\VertexIndexBufferRenderSystem.cs" />
@@ -98,6 +109,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Lidgren.Network, Version=3.5.1.1679, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="MonoGame.Framework">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
@@ -111,14 +123,7 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lidgren-network-gen3\Lidgren XNA Extensions\Lidgren XNA Extensions\Lidgren XNA Extensions.csproj">
-      <Project>{2b661abd-63a8-4916-a94b-034729231271}</Project>
-      <Name>Lidgren XNA Extensions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Lidgren-network-gen3\Lidgren.Network\Lidgren.Network.csproj">
-      <Project>{49ba1c69-6104-41ac-a5d8-b54fa9f696e8}</Project>
-      <Name>Lidgren.Network</Name>
-    </ProjectReference>
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Engine\Systems\ParticleSystems\" />

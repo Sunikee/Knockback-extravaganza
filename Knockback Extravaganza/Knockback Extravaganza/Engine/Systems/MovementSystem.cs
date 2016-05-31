@@ -17,10 +17,10 @@ namespace ECS_Engine.Engine.Systems
         public float DashTime = 1500;
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager)
         {
-            HandleInput(gametime, componentManager);     
+            HandleInput(gametime, componentManager, messageManager);     
         }
 
-        public void HandleInput(GameTime gametime, ComponentManager componentManager)
+        public void HandleInput(GameTime gametime, ComponentManager componentManager, MessageManager messageManager)
         {
             Dictionary<Entity, IComponent> kComponents = componentManager.GetComponents<KeyBoardComponent>();
 
@@ -30,6 +30,7 @@ namespace ECS_Engine.Engine.Systems
                 TransformComponent tc = componentManager.GetComponent<TransformComponent>(component.Key);
                 MovementComponent mc = componentManager.GetComponent<MovementComponent>(component.Key);
                 PhysicsComponent pc = componentManager.GetComponent<PhysicsComponent>(component.Key);
+                SoundEffectComponent soundEffComp = componentManager.GetComponent<SoundEffectComponent>(component.Key);
 
                 foreach (KeyValuePair<string, BUTTON_STATE> actionState in keyboardComp.ActionStates)
                 {
@@ -38,6 +39,7 @@ namespace ECS_Engine.Engine.Systems
                         tc.Forward.Normalize();
                         mc.Velocity = tc.Forward;
                         tc.Position += mc.Velocity * mc.Speed;
+                        messageManager.RegMessage(component.Key.ID, component.Key.ID, 0, "START: footstep");
                         //tc.Position += tc.Forward * mc.Speed;
                     }
                     //tc.Position += tc.Forward * mc.Speed;
@@ -49,6 +51,7 @@ namespace ECS_Engine.Engine.Systems
                         tc.Forward.Normalize();
                         mc.Velocity = tc.Forward;
                         tc.Position += mc.Velocity * mc.Speed;
+                        messageManager.RegMessage(component.Key.ID, component.Key.ID, 0, "START: footstep");
                         //tc.Position += tc.Forward * mc.Speed;
                     }
                     
@@ -76,6 +79,7 @@ namespace ECS_Engine.Engine.Systems
                             mc.Speed = 3;
                         mc.Velocity = -tc.Forward;
                         tc.Position += mc.Velocity * mc.Speed;
+                        messageManager.RegMessage(component.Key.ID, component.Key.ID, 0, "START: footstep");
                     }
                     //if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.RELEASED) || actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED))
                     //{
@@ -91,12 +95,14 @@ namespace ECS_Engine.Engine.Systems
                         //tc.Rotation += new Vector3(0, -.1f, 0);
                         mc.Velocity = tc.Right;
                         tc.Position += mc.Velocity * mc.Speed;
+                        messageManager.RegMessage(component.Key.ID, component.Key.ID, 0, "START: footstep");
                     }
                     if (actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.HELD)))
                     {
                         //tc.Rotation += new Vector3(0, .1f, 0);
                         mc.Velocity = -tc.Right;
                         tc.Position += mc.Velocity * mc.Speed;
+                        messageManager.RegMessage(component.Key.ID, component.Key.ID, 0, "START: footstep");
                     }
                     if (actionState.Key.Equals("RotateRight") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("RotateRight") && actionState.Value.Equals(BUTTON_STATE.HELD)))
                     {

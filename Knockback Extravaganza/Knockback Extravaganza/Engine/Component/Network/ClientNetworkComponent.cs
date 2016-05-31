@@ -6,10 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 /*using Lidgren.Network;
 
-namespace ECS_Engine.Engine.Component.Network
-{
-    class ClientNetworkComponent : IComponent
-    {
+namespace ECS_Engine.Engine.Component.Network {
+    class ClientNetworkComponent : IComponent {
         public string HostIp { get; set; }
         public int Port { get; set; }
         public bool IsRunning { get; set; }

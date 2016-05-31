@@ -9,10 +9,8 @@ using ECS_Engine.Engine.Component.Network;
 using ECS_Engine.Engine.Managers;
 using ECS_Engine.Engine.Component.Interfaces;
 
-namespace ECS_Engine.Engine.Systems.Network
-{
-    class ClientNetworkSystem : INetworkSystem
-    {
+namespace ECS_Engine.Engine.Systems.Network {
+    class ClientNetworkSystem : INetworkSystem {
 
         /// <summary>
         /// Starts a client with the nessesary data
@@ -20,11 +18,9 @@ namespace ECS_Engine.Engine.Systems.Network
         /// <param name="componentManager"></param>
         /// <param name="hostIp"></param>
         /// <param name="port"></param>
-        public void Start(ComponentManager componentManager, string hostIp, int port)
-        {
+        public void Start(ComponentManager componentManager, string hostIp, int port) {
             Entity ClientEntity = new Entity();
-            ClientNetworkComponent clientC = new ClientNetworkComponent
-            {
+            ClientNetworkComponent clientC = new ClientNetworkComponent {
                 HostIp = hostIp,
                 Port = port,
                 Config = new NetPeerConfiguration("KnockbackGame")
@@ -37,50 +33,44 @@ namespace ECS_Engine.Engine.Systems.Network
         /// Connects to a server and starts the running loop
         /// </summary>
         /// <param name="componentManager"></param>
-        public void Run(ComponentManager componentManager)
-        {
+        public void Run(ComponentManager componentManager) {
             Dictionary<Entity, IComponent> components = componentManager.GetComponents<ClientNetworkComponent>();
-            if (components != null)
-            {
-                foreach (KeyValuePair<Entity, IComponent> comp in components)
-                {
+            if (components != null) {
+                foreach (KeyValuePair<Entity, IComponent> comp in components) {
                     ClientNetworkComponent client = componentManager.GetComponent<ClientNetworkComponent>(comp.Key);
                     client.Client.Start();
                     client.Client.Connect(host: client.HostIp, port: client.Port);
                     Console.WriteLine("Client connected");
 
                     NetIncomingMessage message;
-                    while ((message = client.Client.ReadMessage()) != null)
-                    {
-                        switch (message.MessageType)
-                        {
+                    while ((message = client.Client.ReadMessage()) != null) {
+                        switch (message.MessageType) {
                             case NetIncomingMessageType.Data:
-                                // handle custom messages
-                                var data = message.ReadInt32();
-                                break;
+                            // handle custom messages
+                            var data = message.ReadInt32();
+                            break;
 
                             case NetIncomingMessageType.StatusChanged:
-                                // handle connection status messages
-                                switch (message.SenderConnection.Status)
-                                {
-                                    // if (message.SenderConnection.Status == NetConnectionStatus.Connected)
-                                    ////Handle when client connects
-                                    //else
-                                    //Handle disconnect from server
-                                }
-                                break;
+                            // handle connection status messages
+                            switch (message.SenderConnection.Status) {
+                                // if (message.SenderConnection.Status == NetConnectionStatus.Connected)
+                                ////Handle when client connects
+                                //else
+                                //Handle disconnect from server
+                            }
+                            break;
 
                             case NetIncomingMessageType.DebugMessage:
-                                //For debugging
+                            //For debugging
 
-                                Console.WriteLine(message.ReadString());
-                                break;
+                            Console.WriteLine(message.ReadString());
+                            break;
 
 
                             default:
-                                Console.WriteLine("unhandled message with type: "
-                                    + message.MessageType);
-                                break;
+                            Console.WriteLine("unhandled message with type: "
+                                + message.MessageType);
+                            break;
                         }
                     }
                 }
@@ -91,8 +81,7 @@ namespace ECS_Engine.Engine.Systems.Network
         /// </summary>
         /// <param name="message"></param>
         /// <param name="clientId"></param>
-        public void SendMessage(ComponentManager componentManager, string message, int clientId)
-        {
+        public void SendMessage(ComponentManager componentManager, string message, int clientId) {
             var clientE = componentManager.GetEntity(clientId);
             var clientC = componentManager.GetComponent<ClientNetworkComponent>(clientE);
 
@@ -108,8 +97,7 @@ namespace ECS_Engine.Engine.Systems.Network
         /// </summary>
         /// <param name="messageManager"></param>
         /// <param name="message"></param>
-        public void ParseToMessage(MessageManager messageManager, string message)
-        {
+        public void ParseToMessage(MessageManager messageManager, string message) {
             string[] parameters = message.Split(',');
 
             var sender = parameters[0];
@@ -124,15 +112,14 @@ namespace ECS_Engine.Engine.Systems.Network
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public string ParseToString(Message msg)
-        {
+        public string ParseToString(Message msg) {
             var sendMessage = msg.sender.ToString() + ",";
             sendMessage = string.Concat(sendMessage, msg.receiver.ToString() + ",");
-            sendMessage = string.Concat(sendMessage, msg.receiver.ToString() +",");
-            sendMessage = string.Concat(sendMessage, msg.msg +",");
+            sendMessage = string.Concat(sendMessage, msg.receiver.ToString() + ",");
+            sendMessage = string.Concat(sendMessage, msg.msg + ",");
 
             //sendMessage = msg.sender + "," + msg.receiver + "," + msg.activateInSeconds + "," + msg.msg;
- 
+
             return sendMessage;
 
         }

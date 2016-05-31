@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 using Lidgren.Network;
 using System.Net;
 
-namespace ECS_Engine.Engine.Component.Network
-{
-    public class ServerNetworkComponent : IComponent
-    {
+namespace ECS_Engine.Engine.Component.Network {
+    public class ServerNetworkComponent : IComponent {
         public NetServer Server { get; set; }
         public NetPeerConfiguration Config { get; set; }
         public int Port { get; set; }

@@ -48,7 +48,7 @@ namespace ECS_Engine.Engine.Managers {
                 }
             }
         }
-        public void RegMessage(int sender, int reciver, float activateInSeconds, string msg) {
+        public void RegMessage(int sender, int receiver, float activateInSeconds, string msg) {
             for(int i = 0; i <= messages.Length; ++i) {
                 if(i == messages.Length) {
                     Message[] newMsg = new Message[messages.Length * 2];
@@ -69,7 +69,7 @@ namespace ECS_Engine.Engine.Managers {
                     i = 0;
                 }
                 if(messages[i].activateInSeconds <= -1) {
-                    messages[i].Set(sender, reciver, activateInSeconds, msg);
+                    messages[i].Set(sender, receiver, activateInSeconds, msg);
                     break;
                 }
             }

@@ -11,17 +11,14 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
-//namespace ECS_Engine.Engine.Systems
-//{
- 
-//    class UpdateParticles
-//    {
+//namespace ECS_Engine.Engine.Systems {
+
+//    class UpdateParticles {
 //    }
 //    /// <summary>
 //    /// The main component in charge of displaying particles.
 //    /// </summary>
-//    public abstract class ParticleSystem : DrawableGameComponent, IUpdateSystem
-//    {
+//    public abstract class ParticleSystem : DrawableGameComponent, IUpdateSystem {
 //        #region Fields
 
 
@@ -158,8 +155,7 @@
 //        /// Constructor.
 //        /// </summary>
 //        protected ParticleSystem(Game game, ContentManager content)
-//            : base(game)
-//        {
+//            : base(game) {
 //            this.content = content;
 //        }
 
@@ -167,15 +163,13 @@
 //        /// <summary>
 //        /// Initializes the component.
 //        /// </summary>
-//        public override void Initialize()
-//        {
+//        public override void Initialize() {
 //            InitializeSettings(settings);
 
 //            // Allocate the particle array, and fill in the corner fields (which never change).
 //            particles = new ParticleVertex[settings.MaxParticles * 4];
 
-//            for (int i = 0; i < settings.MaxParticles; i++)
-//            {
+//            for (int i = 0; i < settings.MaxParticles; i++) {
 //                particles[i * 4 + 0].Corner = new Vector2(-1, -1);
 //                particles[i * 4 + 1].Corner = new Vector2(1, -1);
 //                particles[i * 4 + 2].Corner = new Vector2(1, 1);
@@ -196,17 +190,14 @@
 //        /// <summary>
 //        /// Loads graphics for the particle system.
 //        /// </summary>
-//        protected override void LoadContent()
-//        {
+//        protected override void LoadContent() {
 
 //            LoadParticleEffect();
 
-//              Dictionary<Entity, IComponent> components = componentManager.GetComponents<ParticleEmitterComponent>();
-            
-//            if (components != null)
-//            {
-//                foreach (KeyValuePair<Entity, IComponent> comp in components)
-//                {
+//            Dictionary<Entity, IComponent> components = componentManager.GetComponents<ParticleEmitterComponent>();
+
+//            if (components != null) {
+//                foreach (KeyValuePair<Entity, IComponent> comp in components) {
 //                    componentManager.
 
 //                    // Create a dynamic vertex buffer.
@@ -216,8 +207,7 @@
 //                    // Create and populate the index buffer.
 //                    ushort[] indices = new ushort[settings.MaxParticles * 6];
 
-//                    for (int i = 0; i < settings.MaxParticles; i++)
-//                    {
+//                    for (int i = 0; i < settings.MaxParticles; i++) {
 //                        indices[i * 6 + 0] = (ushort)(i * 4 + 0);
 //                        indices[i * 6 + 1] = (ushort)(i * 4 + 1);
 //                        indices[i * 6 + 2] = (ushort)(i * 4 + 2);
@@ -234,8 +224,7 @@
 //            }
 //        }
 //        /// </summary>
-//       public void LoadParticleEffect()
-//        {
+//        public void LoadParticleEffect() {
 //            Effect effect = content.Load<Effect>("ParticleEffect");
 
 //            // If we have several particle systems, the content manager will return
@@ -286,8 +275,7 @@
 //        /// <summary>
 //        /// Updates the particle system.
 //        /// </summary>
-//        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)
-//        {
+//        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager) {
 //            if (gameTime == null)
 //                throw new ArgumentNullException("gameTime");
 
@@ -315,12 +303,10 @@
 //        /// their life. It moves old particles from the active area of the queue
 //        /// to the retired section.
 //        /// </summary>
-//        void RetireActiveParticles()
-//        {
+//        void RetireActiveParticles() {
 //            float particleDuration = (float)settings.Duration.TotalSeconds;
 
-//            while (firstActiveParticle != firstNewParticle)
-//            {
+//            while (firstActiveParticle != firstNewParticle) {
 //                // Is this particle old enough to retire?
 //                // We multiply the active particle index by four, because each
 //                // particle consists of a quad that is made up of four vertices.
@@ -346,10 +332,8 @@
 //        /// enough that we can be sure the GPU is no longer using them. It moves
 //        /// old particles from the retired area of the queue to the free section.
 //        /// </summary>
-//        void FreeRetiredParticles()
-//        {
-//            while (firstRetiredParticle != firstActiveParticle)
-//            {
+//        void FreeRetiredParticles() {
+//            while (firstRetiredParticle != firstActiveParticle) {
 //                // Has this particle been unused long enough that
 //                // the GPU is sure to be finished with it?
 //                // We multiply the retired particle index by four, because each
@@ -374,26 +358,22 @@
 //        /// <summary>
 //        /// Draws the particle system.
 //        /// </summary>
-//        public override void Draw(GameTime gameTime)
-//        {
+//        public override void Draw(GameTime gameTime) {
 //            GraphicsDevice device = GraphicsDevice;
 
 //            // Restore the vertex buffer contents if the graphics device was lost.
-//            if (vertexBuffer.IsContentLost)
-//            {
+//            if (vertexBuffer.IsContentLost) {
 //                vertexBuffer.SetData(particles);
 //            }
 
 //            // If there are any particles waiting in the newly added queue,
 //            // we'd better upload them to the GPU ready for drawing.
-//            if (firstNewParticle != firstFreeParticle)
-//            {
+//            if (firstNewParticle != firstFreeParticle) {
 //                AddNewParticlesToVertexBuffer();
 //            }
 
 //            // If there are any active particles, draw them now!
-//            if (firstActiveParticle != firstFreeParticle)
-//            {
+//            if (firstActiveParticle != firstFreeParticle) {
 //                device.BlendState = settings.BlendState;
 //                device.DepthStencilState = DepthStencilState.DepthRead;
 
@@ -410,28 +390,23 @@
 //                device.Indices = indexBuffer;
 
 //                // Activate the particle effect.
-//                foreach (EffectPass pass in particleEffect.CurrentTechnique.Passes)
-//                {
+//                foreach (EffectPass pass in particleEffect.CurrentTechnique.Passes) {
 //                    pass.Apply();
 
-//                    if (firstActiveParticle < firstFreeParticle)
-//                    {
+//                    if (firstActiveParticle < firstFreeParticle) {
 //                        // If the active particles are all in one consecutive range,
 //                        // we can draw them all in a single call.
 //                        device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
 //                                                     firstActiveParticle * 4, (firstFreeParticle - firstActiveParticle) * 4,
 //                                                     firstActiveParticle * 6, (firstFreeParticle - firstActiveParticle) * 2);
-//                    }
-//                    else
-//                    {
+//                    } else {
 //                        // If the active particle range wraps past the end of the queue
 //                        // back to the start, we must split them over two draw calls.
 //                        device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
 //                                                     firstActiveParticle * 4, (settings.MaxParticles - firstActiveParticle) * 4,
 //                                                     firstActiveParticle * 6, (settings.MaxParticles - firstActiveParticle) * 2);
 
-//                        if (firstFreeParticle > 0)
-//                        {
+//                        if (firstFreeParticle > 0) {
 //                            device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
 //                                                         0, firstFreeParticle * 4,
 //                                                         0, firstFreeParticle * 2);
@@ -452,21 +427,17 @@
 //        /// Helper for uploading new particles from our managed
 //        /// array to the GPU vertex buffer.
 //        /// </summary>
-//        void AddNewParticlesToVertexBuffer()
-//        {
+//        void AddNewParticlesToVertexBuffer() {
 //            int stride = ParticleVertex.SizeInBytes;
 
-//            if (firstNewParticle < firstFreeParticle)
-//            {
+//            if (firstNewParticle < firstFreeParticle) {
 //                // If the new particles are all in one consecutive range,
 //                // we can upload them all in a single call.
 //                vertexBuffer.SetData(firstNewParticle * stride * 4, particles,
 //                                     firstNewParticle * 4,
 //                                     (firstFreeParticle - firstNewParticle) * 4,
 //                                     stride, SetDataOptions.NoOverwrite);
-//            }
-//            else
-//            {
+//            } else {
 //                // If the new particle range wraps past the end of the queue
 //                // back to the start, we must split them over two upload calls.
 //                vertexBuffer.SetData(firstNewParticle * stride * 4, particles,
@@ -474,8 +445,7 @@
 //                                     (settings.MaxParticles - firstNewParticle) * 4,
 //                                     stride, SetDataOptions.NoOverwrite);
 
-//                if (firstFreeParticle > 0)
-//                {
+//                if (firstFreeParticle > 0) {
 //                    vertexBuffer.SetData(0, particles,
 //                                         0, firstFreeParticle * 4,
 //                                         stride, SetDataOptions.NoOverwrite);
@@ -496,8 +466,7 @@
 //        /// Sets the camera view and projection matrices
 //        /// that will be used to draw this particle system.
 //        /// </summary>
-//        public void SetCamera(Matrix view, Matrix projection)
-//        {
+//        public void SetCamera(Matrix view, Matrix projection) {
 //            effectViewParameter.SetValue(view);
 //            effectProjectionParameter.SetValue(projection);
 //        }
@@ -508,8 +477,7 @@
 //        /// <summary>
 //        /// Adds a new particle to the system.
 //        /// </summary>
-//        public void AddParticle(Vector3 position, Vector3 velocity)
-//        {
+//        public void AddParticle(Vector3 position, Vector3 velocity) {
 //            // Figure out where in the circular queue to allocate the new particle.
 //            int nextFreeParticle = firstFreeParticle + 1;
 
@@ -547,8 +515,7 @@
 //                                           (byte)random.Next(255));
 
 //            // Fill in the particle vertex structure.
-//            for (int i = 0; i < 4; i++)
-//            {
+//            for (int i = 0; i < 4; i++) {
 //                particles[firstFreeParticle * 4 + i].Position = position;
 //                particles[firstFreeParticle * 4 + i].Velocity = velocity;
 //                particles[firstFreeParticle * 4 + i].Random = randomValues;
