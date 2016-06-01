@@ -49,6 +49,7 @@
     <Compile Include="Engine\Component\GameSceneComponent.cs" />
     <Compile Include="Engine\Component\InputDefines.cs" />
     <Compile Include="Engine\Component\Interfaces\IComponent.cs" />
+    <Compile Include="Engine\Component\Interfaces\IScene.cs" />
     <Compile Include="Engine\Component\KeyBoardComponent.cs" />
     <Compile Include="Engine\Component\ModelComponent.cs" />
     <Compile Include="Engine\Component\ModelTransformComponent.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Engine\Component\PlayerComponent.cs" />
     <Compile Include="Engine\Component\PlayerStateDefines.cs" />
     <Compile Include="Engine\Component\PowerUpComponent.cs" />
+    <Compile Include="Engine\Component\SceneComponent.cs" />
     <Compile Include="Engine\Component\SongComponent.cs" />
     <Compile Include="Engine\Component\SoundComponent.cs" />
     <Compile Include="Engine\Component\SoundEffectComponent.cs" />
@@ -75,6 +77,10 @@
     <Compile Include="Engine\Managers\SceneManager.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
     <Compile Include="Engine\Component\MovementComponent.cs" />
+    <Compile Include="Engine\Scenes\GameplayScene.cs" />
+    <Compile Include="Engine\Scenes\GameScene.cs" />
+    <Compile Include="Engine\Scenes\PauseScene.cs" />
+    <Compile Include="Engine\Scenes\StartScreen.cs" />
     <Compile Include="Engine\SongPiece.cs" />
     <Compile Include="Engine\SoundEffectPiece.cs" />
     <Compile Include="Engine\Systems\CollisionHandleSystem.cs" />

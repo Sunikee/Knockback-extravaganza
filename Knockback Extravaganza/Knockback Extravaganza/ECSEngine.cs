@@ -16,6 +16,7 @@ namespace ECS_Engine {
         protected SystemManager systemManager;
         protected ComponentManager componentManager;
         protected MessageManager messageManager;
+        protected SceneManager sceneManager;
 
         Task[] tasks = new Task[2];
 
@@ -29,6 +30,7 @@ namespace ECS_Engine {
             systemManager = new SystemManager();
             componentManager = new ComponentManager();
             messageManager = new MessageManager();
+            sceneManager = new SceneManager();
         }
 
         /// <summary>
@@ -42,6 +44,7 @@ namespace ECS_Engine {
             systemManager.GraphicsDevice = GraphicsDevice;
             systemManager.ComponentManager = componentManager;
             systemManager.MessageManager = messageManager;
+            systemManager.SceneManager = sceneManager;
 
             graphics.SynchronizeWithVerticalRetrace = false;
             this.IsFixedTimeStep = false;

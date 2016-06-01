@@ -13,6 +13,7 @@ using System;
 using GameEngine;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using ECS_Engine.Engine.Scenes;
 
 namespace Game
 {
@@ -31,13 +32,23 @@ namespace Game
         {
             InitializeSystems();
             base.Initialize();
+        
         }
 
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            var spriteFont = Content.Load<SpriteFont>("Font/font1");
+            var blankTexture = Content.Load<Texture2D>("blank");
+            sceneManager.Initialize(spriteBatch, spriteFont, blankTexture);
+            StartScreen startScene = new StartScreen();
+            startScene.SceneName = "StartScene";
+            startScene.IsActive = true;
+            sceneManager.AddScene(startScene);
             CreateEntities();
-            spriteBatch = new SpriteBatch(GraphicsDevice);  
+   
+            
         }
 
         protected override void UnloadContent()
@@ -335,6 +346,9 @@ namespace Game
             songComponent.AddSong("background", song);
             componentManager.AddComponent(playerEntity1, soundEffComp);
             componentManager.AddComponent(soundEntity, songComponent);
+
+            sceneManager.SetActiveScene("StartScene");
+            sceneManager.Update();
         }
 
 

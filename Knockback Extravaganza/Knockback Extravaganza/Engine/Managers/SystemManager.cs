@@ -12,6 +12,7 @@ namespace ECS_Engine.Engine.Managers {
 
         public ComponentManager ComponentManager { get; set; }
         public MessageManager MessageManager { get; set; }
+        public SceneManager SceneManager { get; set; }
         public GameTime GameTime { get; set; }
         public GraphicsDevice GraphicsDevice { get; set; }
         private int bufferOne = 0;
