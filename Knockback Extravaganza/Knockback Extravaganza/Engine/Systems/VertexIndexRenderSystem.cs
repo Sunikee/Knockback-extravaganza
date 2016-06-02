@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Systems {
     public class VertexIndexRenderSystem<T> : IRenderSystem where T : struct, IVertexType {
-        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager) {
+        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) {
             Dictionary<Entity, IComponent> cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
 

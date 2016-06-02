@@ -13,6 +13,7 @@ using System;
 using GameEngine;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+
 using ECS_Engine.Engine.Scenes;
 
 namespace Game
@@ -20,7 +21,9 @@ namespace Game
 
     public class Game1 : ECSEngine
     {
-
+        SpriteFont startFont;
+        Texture2D startBackground;
+        Texture2D pauseBackground;
         public Game1() : base()
         {
 
@@ -32,23 +35,36 @@ namespace Game
         {
             InitializeSystems();
             base.Initialize();
-        
+
+            //Initialise Scenes
+
+            //Init startmenu
+            var startScene = new StartScene {Name = "startScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Join Game", "Host Game", "Single Player", "MultiPlayer" } };
+            sceneManager.AddScene(startScene);
+
+            //Init multiplayer
+            var multiplayerScene = new MultiplayerScene { Name = "multiplayerScene", Font = startFont, Background = startBackground };
+            sceneManager.AddScene(multiplayerScene);
+
+            //Init pause
+            var pauseScene = new PauseScene { Name = "pauseScene", Font = startFont, Background = pauseBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Continue", "Settings", "Exit to main menu" } };
+            sceneManager.AddScene(pauseScene);
+
+            //Set start scene
+            sceneManager.SetCurrentScene(startScene);
         }
 
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            var spriteFont = Content.Load<SpriteFont>("Font/font1");
-            var blankTexture = Content.Load<Texture2D>("blank");
-            sceneManager.Initialize(spriteBatch, spriteFont, blankTexture);
-            StartScreen startScene = new StartScreen();
-            startScene.SceneName = "StartScene";
-            startScene.IsActive = true;
-            sceneManager.AddScene(startScene);
             CreateEntities();
-   
+            spriteBatch = new SpriteBatch(GraphicsDevice);
             
+
+            //Load startScene stuff
+             startBackground = Content.Load<Texture2D>("Scenes/startBackground2");
+             startFont = Content.Load<SpriteFont>("Scenes/Font1");
+            pauseBackground = Content.Load<Texture2D>("Scenes/pauseBackground");
         }
 
         protected override void UnloadContent()
@@ -260,71 +276,12 @@ namespace Game
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallPhysicsC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallPassiveCollC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallMovementC);
-        
+
             //Test of particle on powerup
 
-            //var smokeParticle = componentManager.MakeEntity();
-            /*
-                        var particleSettingsC = new ParticleSettings {
-                            TextureName = "smoke",
-                            MaxParticles = 600,
-                            Duration = TimeSpan.FromSeconds(10),
-                            MinHorizontalVelocity = 0,
-                            MaxHorizontalVelocity = 15,
-                            MinVerticalVelocity = 10,
-                            MaxVerticalVelocity = 20,
-                            Gravity = new Vector3(-20,-5,0),
-                            EndVelocity = 0.75f,
-                            MinRotateSpeed = -1,
-                            MaxRotateSpeed = 1,
-                            MinStartSize = 4,
-                            MaxStartSize = 7,
-                            MinEndSize = 35,
-                            MaxEndSize = 140,
-                            Type = ParticleType.Smoke,
-                            MinColor = Color.White,
-                            MaxColor = Color.White
-
-                        };
-                        var particleVertexC = new ParticleVertex { SizeInBytes = 40};
-                        var particleProjectileC = new ParticleProjectile {
-                            TrailParticlesPerSecond = 200,
-                            NumExplosionParticles = 30,
-                            NumExplosionSmokeParticles = 50,
-                            ProjectileLifeSpan = 1.5f,
-                            SidewaysVelocityRange = 60,
-                            VerticalVelocityRange = 40,
-                            Gravity = 15
-                        };
-                        var particleEmitterC = new ParticleEmitter {
-                            ParticleSettings = particleSettingsC,
-                            ParticleVertex = particleVertexC,
-                            ParticlesPerSecond = 200,
-                            Projectile = particleProjectileC,
-                        };
-                        particleEmitterC.TimeBetweenParticles = 1.0f / particleEmitterC.ParticlesPerSecond;
-            };
-
-            //var particleVertexC = new ParticleVertex { SizeInBytes = 40};
-            //var particleProjectileC = new ParticleProjectile {
-            //    TrailParticlesPerSecond = 200,
-            //    NumExplosionParticles = 30,
-            //    NumExplosionSmokeParticles = 50,
-            //    ProjectileLifeSpan = 1.5f,
-            //    SidewaysVelocityRange = 60,
-            //    VerticalVelocityRange = 40,
-            //    Gravity = 15
-            //};
-            //var particleEmitterC = new ParticleEmitter {
-            //    ParticleSettings = particleSettingsC,
-            //    ParticleVertex = particleVertexC,
-            //    ParticlesPerSecond = 200,
-            //    Projectile = particleProjectileC,
-            //};
-            //particleEmitterC.TimeBetweenParticles = 1.0f / particleEmitterC.ParticlesPerSecond;
-
-            //componentManager.AddComponent(powerUpBigEntity, particleEmitterC);
-            */
+            //var smokeParticleEntity = componentManager.MakeEntity();
+          //  InitiateParticleSettings(smokeParticleEntity);
+            
             Entity soundEntity = componentManager.MakeEntity();
             SoundEffectComponent soundEffComp = new SoundEffectComponent();
 
@@ -346,12 +303,109 @@ namespace Game
             songComponent.AddSong("background", song);
             componentManager.AddComponent(playerEntity1, soundEffComp);
             componentManager.AddComponent(soundEntity, songComponent);
-
-            sceneManager.SetActiveScene("StartScene");
-            sceneManager.Update();
         }
 
+        public void InitiateParticleSettings(Entity smokeParticleEntity)
+        {
+            //Create ParticleSettings 
+            var particleSettings = new ParticleSettings
+            {
+                TextureName = "smoke",
+                MaxParticles = 600,
+                Duration = TimeSpan.FromSeconds(10),
+                DurationRandomness = 0,
+                MinHorizontalVelocity = 0,
+                MaxHorizontalVelocity = 15,
+                MinVerticalVelocity = 10,
+                MaxVerticalVelocity = 20,
+                Gravity = new Vector3(-20, -5, 0),
+                EndVelocity = 0.75f,
+                MinRotateSpeed = -1,
+                MaxRotateSpeed = 1,
+                MinStartSize = 4,
+                MaxStartSize = 7,
+                MinEndSize = 35,
+                MaxEndSize = 140,
+                Type = ParticleType.Smoke,
+                MinColor = Color.White,
+                MaxColor = Color.White,
+            };
 
+            //Create ParticleSystemSettings
+            ushort[] indices = new ushort[particleSettings.MaxParticles * 6];
+            for(int i = 0; i<particleSettings.MaxParticles; i++)
+            {
+                indices[i * 6 * 0] = (ushort)(i * 4 * 0);
+                indices[i * 6 * 1] = (ushort)(i * 4 * 1);
+                indices[i * 6 * 2] = (ushort)(i * 4 * 2);
+                indices[i * 6 * 3] = (ushort)(i * 4 * 0);
+                indices[i * 6 * 4] = (ushort)(i * 4 * 2);
+                indices[i * 6 * 5] = (ushort)(i * 4 * 3);
+            }
+
+            Effect effect = Content.Load<Effect>("Effects/ParticleEffect");
+            Effect particleEffectClone = effect.Clone();
+            EffectParameterCollection parameters = particleEffectClone.Parameters;
+            var particleSystemSettings = new ParticleSystemSettings
+            {
+                particles = new ParticleVertex[particleSettings.MaxParticles * 4],
+                indexBuffer = new IndexBuffer(graphics.GraphicsDevice, typeof(ushort), indices.Length, BufferUsage.WriteOnly),
+                particleEffect = particleEffectClone,
+                effectViewParameter = parameters["View"],
+                effectProjectionParameter = parameters["Projection"],
+                effectViewportScaleParameter = parameters["ViewportScale"],
+                effectTimeParameter = parameters["CurrentTime"],
+        };
+            parameters["Duration"].SetValue((float)particleSettings.Duration.TotalSeconds);
+            parameters["DurationRandomness"].SetValue(particleSettings.DurationRandomness);
+            parameters["Gravity"].SetValue(particleSettings.Gravity);
+            parameters["EndVelocity"].SetValue(particleSettings.EndVelocity);
+            parameters["MinColor"].SetValue(particleSettings.MinColor.ToVector4());
+            parameters["MaxColor"].SetValue(particleSettings.MaxColor.ToVector4());
+            parameters["RotateSpeed"].SetValue(new Vector2(particleSettings.MinRotateSpeed, particleSettings.MaxRotateSpeed));
+            parameters["StarSize"].SetValue(new Vector2(particleSettings.MinStartSize, particleSettings.MaxStartSize));
+            parameters["EndSize"].SetValue(new Vector2(particleSettings.MinEndSize, particleSettings.MaxEndSize));
+            Texture2D texture = Content.Load<Texture2D>(particleSettings.TextureName);
+
+            particleSystemSettings.indexBuffer.SetData(indices);
+
+            //Create ParticleVertex
+            var particleVertex = new ParticleVertex
+            {
+                SizeInBytes = 40,
+                vertexDeclaration = new VertexDeclaration(
+                new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
+                new VertexElement(12, VertexElementFormat.Vector2, VertexElementUsage.Normal, 0),
+                new VertexElement(20, VertexElementFormat.Vector3, VertexElementUsage.Normal, 1),
+                new VertexElement(32, VertexElementFormat.Color, VertexElementUsage.Color, 0),
+                new VertexElement(36, VertexElementFormat.Single, VertexElementUsage.TextureCoordinate, 0)
+                )
+            };
+
+            //Create ParticleProjectile
+            var particleProjectileC = new ParticleProjectile
+            {
+                TrailParticlesPerSecond = 200,
+                NumExplosionParticles = 30,
+                NumExplosionSmokeParticles = 50,
+                ProjectileLifeSpan = 1.5f,
+                SidewaysVelocityRange = 60,
+                VerticalVelocityRange = 40,
+                Gravity = 15
+            };
+
+            //Create ParticleComponent
+            var particleComponent = new ParticleComponent
+            {
+                ParticleSettings = particleSettings,
+                ParticleVertex = particleVertex,
+                ParticlesPerSecond = 200,
+                Projectile = particleProjectileC,
+            };
+            particleComponent.TimeBetweenParticles = 1.0f / particleComponent.ParticlesPerSecond;
+
+            componentManager.AddComponent(smokeParticleEntity, particleComponent);
+        }
 
 
         /// <summary>

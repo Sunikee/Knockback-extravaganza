@@ -1,5 +1,6 @@
 ﻿using ECS_Engine.Engine.Component.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,43 @@ using System.Threading.Tasks;
 namespace ECS_Engine.Engine.Component
 {
 
-    public class ParticleEmitter : IComponent
+    public class ParticleComponent : IComponent
     {
 
         public ParticleSettings ParticleSettings { get; set; }
         public ParticleProjectile Projectile { get; set; }
+        public ParticleSystemSettings ParticleSystemSettings { get; set; }
         public float TimeBetweenParticles { get; set; }
         public Vector3 PreviousPosition { get; set; }
         public float TimeLeftOver { get; set; }
         public ParticleVertex ParticleVertex { get; set; }
         public float ParticlesPerSecond { get; set; }
     }
+    public class ParticleSystemSettings
+    {
+        public Effect particleEffect { get; set; }
+        public EffectParameter effectViewParameter { get; set; }
+        public EffectParameter effectProjectionParameter { get; set; }
+        public EffectParameter effectViewportScaleParameter { get; set; }
+        public EffectParameter effectTimeParameter { get; set; }
+        public ParticleVertex[] particles { get; set; }
+        public DynamicVertexBuffer vertexBuffer { get; set; }
+        public IndexBuffer indexBuffer { get; set; }
+        public int firstActiveParticle { get; set; }
+        public int firstNewParticle { get; set; }
+        public int firstFreeParticle { get; set; }
+        public int firstRetiredPArticle { get; set; }
+        public float currentTime { get; set; }
+        public int drawCounter { get; set; }
+        public static Random random { get; set; }
+
+    }
     public class ParticleSettings
     {
         public string TextureName { get; set; }
         public int MaxParticles { get; set; }
         public TimeSpan Duration { get; set; }
+        public float DurationRandomness { get; set; }
         public float MinHorizontalVelocity { get; set; }
         public float MaxHorizontalVelocity { get; set; }
         public float MinVerticalVelocity { get; set; }
@@ -63,6 +85,7 @@ namespace ECS_Engine.Engine.Component
         public Color Random { get; set; }
         public float Time { get; set; }
         public int SizeInBytes { get; set; }
+        public VertexDeclaration vertexDeclaration { get; set; }
     }
     public enum ParticleType
     {

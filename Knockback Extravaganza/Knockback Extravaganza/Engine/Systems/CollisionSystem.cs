@@ -59,8 +59,6 @@ namespace ECS_Engine.Engine.Systems
                                     default:
                                         messageManager.RegMessage(activeComp1.Key.ID, activeComp2.Key.ID, 0, "collision");
                                         break;
-
-
                                 }                               
                             }
                         }

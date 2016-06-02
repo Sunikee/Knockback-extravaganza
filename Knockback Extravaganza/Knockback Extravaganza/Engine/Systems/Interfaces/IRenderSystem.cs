@@ -9,6 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS_Engine.Engine.Systems.Interfaces {
     public interface IRenderSystem : ISystem{
-        void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager);
+        void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManagers);
     }
 }

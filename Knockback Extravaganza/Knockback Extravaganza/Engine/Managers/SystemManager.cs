@@ -70,7 +70,7 @@ namespace ECS_Engine.Engine.Managers {
         public void RunRenderSystem() {
             if (renderSystems.Count > 0) {
                 foreach(IRenderSystem system in renderSystems) {
-                    system.Render(GameTime, GraphicsDevice, ComponentManager);
+                    system.Render(GameTime, GraphicsDevice, ComponentManager, SceneManager);
                 }
             }
         }

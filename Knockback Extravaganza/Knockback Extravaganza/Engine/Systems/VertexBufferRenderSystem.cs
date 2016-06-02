@@ -12,7 +12,7 @@ using ECS_Engine.Engine.Component;
 
 namespace ECS_Engine.Engine.Systems {
     public class VertexBufferRenderSystem<T> : IRenderSystem where T : struct, IVertexType{
-        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager) {
+        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) {
             var cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
 

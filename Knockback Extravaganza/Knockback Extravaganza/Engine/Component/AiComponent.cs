@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECS_Engine.Engine.Component
+namespace ECS_Engine.Engine
 {
-    public class PlayerComponent : IComponent
+    public class AIComponent : IComponent
     {
-        public float Health { get; set; }
-        public float knockBackResistance { get; set; }
+        public int Target { get; set; }
+        public int Duration { get; set; }
     }
 }

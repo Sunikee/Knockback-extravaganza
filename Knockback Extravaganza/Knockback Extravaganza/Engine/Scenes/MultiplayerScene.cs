@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Scenes
 {
-    public class PauseScene : Scene
+    public class MultiplayerScene : Scene
     {
     }
 }

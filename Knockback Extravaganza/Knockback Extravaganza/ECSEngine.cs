@@ -26,11 +26,15 @@ namespace ECS_Engine {
 
         public ECSEngine() {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = 1280;
+            //graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
+            sceneManager = new SceneManager();
             systemManager = new SystemManager();
             componentManager = new ComponentManager();
             messageManager = new MessageManager();
-            sceneManager = new SceneManager();
+            
         }
 
         /// <summary>
@@ -45,6 +49,8 @@ namespace ECS_Engine {
             systemManager.ComponentManager = componentManager;
             systemManager.MessageManager = messageManager;
             systemManager.SceneManager = sceneManager;
+
+            
 
             graphics.SynchronizeWithVerticalRetrace = false;
             this.IsFixedTimeStep = false;

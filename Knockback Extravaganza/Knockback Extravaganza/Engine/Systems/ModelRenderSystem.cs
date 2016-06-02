@@ -1,6 +1,7 @@
 ﻿using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Managers;
+using ECS_Engine.Engine.Scenes;
 using ECS_Engine.Engine.Systems.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,9 +12,47 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Systems {
-    public class ModelRenderSystem : IRenderSystem{
+    public class ModelRenderSystem : IRenderSystem {
         public static float r = 0.1f;
-        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager) {
+      
+      
+
+        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager)
+        {
+            //spriteBatch = new SpriteBatch(graphicsDevice);
+            //renderTarget = new RenderTarget2D(graphicsDevice, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight);
+
+            var currScene = sceneManager._currentScene;
+
+
+            if (currScene.Name == "multiplayerScene")
+            {
+                RenderModels(gameTime, graphicsDevice, componentManager);
+            }
+            else RenderScenes(graphicsDevice, sceneManager, currScene);
+        }
+        public void RenderScenes(GraphicsDevice graphicsDevice, SceneManager sceneManager, Scene currScene)
+        {
+            currScene.SpriteBatch.Begin();
+            currScene.SpriteBatch.Draw(currScene.Background, new Vector2(0), Color.Green);
+            int activeChoice = 0;
+            var spacingY = 100;
+            var color = Color.Red;
+
+            foreach (var choice in currScene.menuChoices)
+            {
+                if (activeChoice == currScene.menuChoices.FindIndex(i => i == choice))
+                  color = Color.Yellow;
+                currScene.SpriteBatch.DrawString(currScene.Font, choice, new Vector2(graphicsDevice.PresentationParameters.BackBufferWidth * 0.5f - currScene.Font.MeasureString(choice).X * 0.5f, spacingY), color);
+                color = Color.Red;
+                spacingY += 150;
+            }
+            currScene.SpriteBatch.End();
+     
+        }
+
+        public void RenderModels(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager)
+        {
             Dictionary<Entity, IComponent> cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
 
@@ -23,18 +62,18 @@ namespace ECS_Engine.Engine.Systems {
                 ModelTransformComponent MeshTransform = componentManager.GetComponent<ModelTransformComponent>(component.Key);
                 TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                 if (MeshTransform != default(ModelTransformComponent) && transform != default(TransformComponent)) {
-                    foreach (ModelMesh mesh in model.Model.Meshes) {                        
+                    foreach (ModelMesh mesh in model.Model.Meshes) {
                         foreach (BasicEffect effect in mesh.Effects) {
                             CheckForTexture(model, effect);
                             effect.EnableDefaultLighting();
                             effect.View = camera.View;
                             effect.Projection = camera.Projection;
-                            effect.World = MeshTransform.GetTransform(mesh.Name).ParentBone * MeshTransform.GetTransform(mesh.Name).World *  transform.World;
+                            effect.World = MeshTransform.GetTransform(mesh.Name).ParentBone * MeshTransform.GetTransform(mesh.Name).World * transform.World;
                         }
                         mesh.Draw();
                     }
                 }
-                else if(transform != default(TransformComponent)) {
+                else if (transform != default(TransformComponent)) {
 
                     Matrix[] transforms = new Matrix[model.Model.Bones.Count()];
                     model.Model.CopyAbsoluteBoneTransformsTo(transforms);
@@ -51,7 +90,7 @@ namespace ECS_Engine.Engine.Systems {
                 }
             }
         }
-
+    
         private void CheckForTexture(ModelComponent model, BasicEffect effect) {
             if(model.Texture != null) {
                 effect.TextureEnabled = true;
