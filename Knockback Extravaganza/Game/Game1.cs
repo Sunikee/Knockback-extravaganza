@@ -125,6 +125,11 @@ namespace Game
             kbc1.AddKeyToAction("Dash", Keys.Up);
             kbc1.AddKeyToAction("Reset", Keys.R);
 
+            KeyBoardComponent menuKeys = new KeyBoardComponent();
+            menuKeys.AddKeyToAction("Up", Keys.Up);
+            menuKeys.AddKeyToAction("Down", Keys.Down);
+            menuKeys.AddKeyToAction("Select", Keys.Enter);
+
             PhysicsComponent pc1 = new PhysicsComponent {
                 InJump = false,
                 GravityStrength = 2,

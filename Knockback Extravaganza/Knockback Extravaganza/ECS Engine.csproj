@@ -49,6 +49,7 @@
     <Compile Include="Engine\Component\InputDefines.cs" />
     <Compile Include="Engine\Component\Interfaces\IComponent.cs" />
     <Compile Include="Engine\Component\KeyBoardComponent.cs" />
+    <Compile Include="Engine\Component\MenuComponent.cs" />
     <Compile Include="Engine\Component\ModelComponent.cs" />
     <Compile Include="Engine\Component\ModelTransformComponent.cs" />
     <Compile Include="Engine\Component\MouseComponent.cs" />
@@ -82,11 +83,10 @@
     <Compile Include="Engine\SoundEffectPiece.cs" />
     <Compile Include="Engine\Systems\CollisionHandleSystem.cs" />
     <Compile Include="Engine\Systems\FreeCameraSystem.cs" />
+    <Compile Include="Engine\Systems\MenuSystem.cs" />
     <Compile Include="Engine\Systems\Network\ClientNetworkSystem.cs" />
     <Compile Include="Engine\Systems\Network\INetworkSystem.cs" />
     <Compile Include="Engine\Systems\Network\ServerNetworkSystem.cs" />
-    <Compile Include="Engine\Systems\ParticleSystems\ParticleSystem.cs" />
-    <Compile Include="Engine\Systems\ParticleSystems\SmokeParticleSystem.cs" />
     <Compile Include="Engine\Systems\PhysicsSystem.cs" />
     <Compile Include="Engine\Systems\CameraSystem.cs" />
     <Compile Include="Engine\Systems\ChaseCameraSystem.cs" />
@@ -126,7 +126,9 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Engine\Systems\ParticleSystems\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
