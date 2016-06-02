@@ -11,7 +11,7 @@ using ECS_Engine.Engine.Component;
 
 namespace ECS_Engine.Engine.Systems {
     public class TransformSystem : IUpdateSystem {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager) {
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
 
             var components = componentManager.GetComponents<TransformComponent>();
             if(components != null){

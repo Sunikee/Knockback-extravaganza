@@ -29,8 +29,6 @@ namespace Game
 
         }
 
-
-
         protected override void Initialize()
         {
             InitializeSystems();
@@ -39,19 +37,19 @@ namespace Game
             //Initialise Scenes
 
             //Init startmenu
-            var startScene = new StartScene {Name = "startScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Join Game", "Host Game", "Single Player", "MultiPlayer" } };
+            var startScene = new Scene {Name = "startScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Join Game", "Host Game", "Single Player", "Multiplayer"} };
             sceneManager.AddScene(startScene);
 
             //Init multiplayer
-            var multiplayerScene = new MultiplayerScene { Name = "multiplayerScene", Font = startFont, Background = startBackground };
+            var multiplayerScene = new Scene { Name = "multiplayerScene", Font = startFont, Background = startBackground };
             sceneManager.AddScene(multiplayerScene);
 
             //Init pause
-            var pauseScene = new PauseScene { Name = "pauseScene", Font = startFont, Background = pauseBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Continue", "Settings", "Exit to main menu" } };
+            var pauseScene = new Scene { Name = "pauseScene", Font = startFont, Background = pauseBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Continue", "Settings", "Exit to main menu" } };
             sceneManager.AddScene(pauseScene);
 
             //Set start scene
-            sceneManager.SetCurrentScene(startScene);
+            sceneManager.SetCurrentScene("startScene");
         }
 
         protected override void LoadContent()
@@ -61,7 +59,7 @@ namespace Game
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
 
-            //Load startScene stuff
+            //Load Scene content
              startBackground = Content.Load<Texture2D>("Scenes/startBackground2");
              startFont = Content.Load<SpriteFont>("Scenes/Font1");
             pauseBackground = Content.Load<Texture2D>("Scenes/pauseBackground");
@@ -75,6 +73,18 @@ namespace Game
         /// Create all entities for the game
         /// </summary>
         public void CreateEntities() {
+
+            //Creates a menu entity
+            Entity menuEntity = componentManager.MakeEntity();
+            var menuC = new MenuComponent { ActiveChoice = 0, ActiveColor = Color.Yellow, InactiveColor = Color.Red, MenuChoicesSpacing = 150 };
+            KeyBoardComponent menukeysC = new KeyBoardComponent();
+            menukeysC.AddKeyToAction("Up", Keys.Up);
+            menukeysC.AddKeyToAction("Down", Keys.Down);
+            menukeysC.AddKeyToAction("Select", Keys.Enter);
+            componentManager.AddComponent(menuEntity, menuC);
+            componentManager.AddComponent(menuEntity, menukeysC);
+
+
             Entity playerEntity1 = componentManager.MakeEntity();
             Entity playerEntity2 = componentManager.MakeEntity();
 
@@ -124,11 +134,7 @@ namespace Game
             kbc1.AddKeyToAction("Jump", Keys.Space);
             kbc1.AddKeyToAction("Dash", Keys.Up);
             kbc1.AddKeyToAction("Reset", Keys.R);
-
-            KeyBoardComponent menuKeys = new KeyBoardComponent();
-            menuKeys.AddKeyToAction("Up", Keys.Up);
-            menuKeys.AddKeyToAction("Down", Keys.Down);
-            menuKeys.AddKeyToAction("Select", Keys.Enter);
+            kbc1.AddKeyToAction("Pause", Keys.Escape);
 
             PhysicsComponent pc1 = new PhysicsComponent {
                 InJump = false,
@@ -431,6 +437,7 @@ namespace Game
             systemManager.AddSystem(new FreeCameraSystem());
             systemManager.AddSystem(new PowerUpSystem());
             systemManager.AddSystem(new SoundSystem());
+            systemManager.AddSystem(new MenuSystem());
         }
     }
 }

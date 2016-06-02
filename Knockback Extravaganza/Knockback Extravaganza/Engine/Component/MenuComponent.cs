@@ -13,6 +13,6 @@ namespace ECS_Engine.Engine.Component {
         public Color ActiveColor { get; set; }
         public Color InactiveColor { get; set; }
 
-        public List<string> MenuEntries { get; set; } 
+        public int MenuChoicesSpacing { get; set; }
     }
 }

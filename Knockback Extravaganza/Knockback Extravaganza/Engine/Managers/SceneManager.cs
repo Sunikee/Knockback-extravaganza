@@ -10,20 +10,32 @@ namespace ECS_Engine.Engine.Managers
 {
     public class SceneManager
     {
-        public Scene _currentScene;
-        public List<Scene> scenes = new List<Scene>();
-        public void SetCurrentScene(Scene sceneType)
+        private Scene _currentScene;
+        private List<Scene> _scenes = new List<Scene>();
+        public void SetCurrentScene(string sceneName)
         {
-            _currentScene = sceneType;
+            _currentScene = _scenes.First(s => s.Name == sceneName);
         }
+
         public Scene GetCurrentScene()
         {
             return _currentScene;
         }
+
         public void AddScene(Scene scene)
         {
-            if (!scenes.Contains(scene))
-                scenes.Add(scene);
+            if (!_scenes.Contains(scene))
+                _scenes.Add(scene);
+        }
+
+        public Scene GetScene(string name)
+        {
+            return _scenes.First(s => s.Name == name);
+        }
+
+        public List<Scene> GetAllScenes()
+        {
+            return _scenes;
         }
     }
 }

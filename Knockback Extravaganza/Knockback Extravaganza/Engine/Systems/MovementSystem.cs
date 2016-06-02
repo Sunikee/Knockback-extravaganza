@@ -15,12 +15,12 @@ namespace ECS_Engine.Engine.Systems
     {
         public float DashTimer = 1;
         public float DashTime = 1500;
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager)
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            HandleInput(gametime, componentManager, messageManager);     
+            HandleInput(gametime, componentManager, messageManager, sceneManager);     
         }
 
-        public void HandleInput(GameTime gametime, ComponentManager componentManager, MessageManager messageManager)
+        public void HandleInput(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
             Dictionary<Entity, IComponent> kComponents = componentManager.GetComponents<KeyBoardComponent>();
 
@@ -81,6 +81,8 @@ namespace ECS_Engine.Engine.Systems
                         tc.Position += mc.Velocity * mc.Speed;
                         messageManager.RegMessage(component.Key.ID, component.Key.ID, 0, "START: footstep");
                     }
+                    if (actionState.Key.Equals("Pause") && actionState.Value.Equals(BUTTON_STATE.PRESSED) && sceneManager.GetCurrentScene().Name != "startScene")
+                        sceneManager.SetCurrentScene(sceneManager.GetScene("pauseScene").Name);
                     //if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.RELEASED) || actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED))
                     //{
                     //    if (mc.Speed < 0)
@@ -90,7 +92,7 @@ namespace ECS_Engine.Engine.Systems
                     //    mc.Velocity = -tc.Forward;
                     //    tc.Position += mc.Velocity * mc.Speed;
                     //}
-                    if (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.HELD)))
+                        if (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.HELD)))
                     {
                         //tc.Rotation += new Vector3(0, -.1f, 0);
                         mc.Velocity = tc.Right;

@@ -15,7 +15,7 @@ namespace ECS_Engine.Engine.Systems
 {
     public class PlayerAnimationSystem : IUpdateSystem
     {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager)
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
             Dictionary<Entity, IComponent> animationComponents = componentManager.GetComponents<AnimationComponent>();
 

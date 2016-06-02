@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Scenes
 {
-    public abstract class Scene
+    public class Scene
     {
         public string Name { get; set; }
         public Texture2D Background { get; set; }

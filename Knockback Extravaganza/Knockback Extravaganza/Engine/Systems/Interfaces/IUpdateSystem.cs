@@ -8,6 +8,6 @@ using ECS_Engine.Engine.Managers;
 
 namespace ECS_Engine.Engine.Systems.Interfaces {
     public interface IUpdateSystem : ISystem{
-        void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager);
+        void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager);
     }
 }

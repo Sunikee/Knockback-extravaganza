@@ -15,7 +15,7 @@ namespace ECS_Engine.Engine.Systems
 {
     public class PhysicsSystem : IUpdateSystem
     {
-        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
             Dictionary<Entity, IComponent> components = componentManager.GetComponents<PhysicsComponent>();
             if (components != null) 

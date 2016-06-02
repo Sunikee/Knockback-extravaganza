@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Systems {
     public class FreeCameraSystem : IUpdateSystem {
-        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager) {
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
             Dictionary<Entity, IComponent> components = componentManager.GetComponents<CameraComponent>();
             if(components != null) {
                 foreach (KeyValuePair<Entity, IComponent> component in components) {

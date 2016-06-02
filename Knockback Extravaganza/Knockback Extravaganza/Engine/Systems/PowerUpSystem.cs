@@ -23,7 +23,7 @@ namespace ECS_Engine.Engine.Systems
     {
         public List<Entity> powerUpsToRemove = new List<Entity>();
        
-        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
             Dictionary<Entity, IComponent> activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();
             foreach (KeyValuePair<Entity, IComponent> component in activeComponents)
