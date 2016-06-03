@@ -18,8 +18,8 @@ namespace ECS_Engine.Engine.Systems
     {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            Dictionary<Entity, IComponent> activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();
-            Dictionary<Entity, IComponent> passiveComponents = componentManager.GetComponents<PassiveCollisionComponent>();
+            var activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();
+            var passiveComponents = componentManager.GetComponents<PassiveCollisionComponent>();
 
             if (activeComponents != null && passiveComponents != null)
             {
@@ -44,8 +44,8 @@ namespace ECS_Engine.Engine.Systems
                         TransformComponent activeTrans2 = componentManager.GetComponent<TransformComponent>(activeComp2.Key);
                         PhysicsComponent activePC2 = componentManager.GetComponent<PhysicsComponent>(activeComp2.Key);
                         ActiveCollisionComponent aColl2 = componentManager.GetComponent<ActiveCollisionComponent>(activeComp2.Key);
-                        UpdateCollisionComponent(aColl2, activeTrans2.World);
-                        UpdateCollisionComponent(aColl1, activeTrans1.World);
+                        UpdateCollisionComponent(aColl2, activeTrans2.GetWorld(activeTrans1.UpdateBuffer));
+                        UpdateCollisionComponent(aColl1, activeTrans1.GetWorld(activeTrans1.UpdateBuffer));
                         if (activeModel1 != activeModel2)
                         {
                             if (aColl1.BoundingBox.Intersects(aColl2.BoundingBox))
@@ -70,13 +70,12 @@ namespace ECS_Engine.Engine.Systems
                         TransformComponent passTrans = componentManager.GetComponent<TransformComponent>(passiveComp.Key);
                         PhysicsComponent passPC = componentManager.GetComponent<PhysicsComponent>(passiveComp.Key);
                         PassiveCollisionComponent passColl = componentManager.GetComponent<PassiveCollisionComponent>(passiveComp.Key);
-                        UpdateCollisionComponent(passColl, passTrans.World);
-                        UpdateCollisionComponent(aColl1, activeTrans1.World);
+                        UpdateCollisionComponent(passColl, passTrans.GetWorld(passTrans.UpdateBuffer));
+                        UpdateCollisionComponent(aColl1, activeTrans1.GetWorld(activeTrans1.UpdateBuffer));
 
                         if (aColl1.BoundingBox.Intersects(passColl.BoundingBox))
                         {
                             messageManager.RegMessage(passiveComp.Key.ID, activeComp1.Key.ID, 0, "collision");
-                            
                         }
                     }
                 }

@@ -13,16 +13,16 @@ using System.Threading.Tasks;
 namespace ECS_Engine.Engine.Systems {
     public class VertexIndexRenderSystem<T> : IRenderSystem where T : struct, IVertexType {
         public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) {
-            Dictionary<Entity, IComponent> cam = componentManager.GetComponents<CameraComponent>();
+            var cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
 
-            Dictionary<Entity, IComponent> components = componentManager.GetComponents<VertexIndexComponent<T>>();
+            var components = componentManager.GetComponents<VertexIndexComponent<T>>();
             foreach (KeyValuePair<Entity, IComponent> component in components) {
                 VertexIndexComponent<T> model = (VertexIndexComponent<T>)component.Value;
                 TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                 if (transform != default(TransformComponent)) {
                     BasicEffect effect = model.Effect;
-                    effect.World = transform.World;
+                    effect.World = transform.GetWorld(transform.UpdateBuffer);
                     effect.View = camera.View;
                     effect.Projection = camera.Projection;
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) {

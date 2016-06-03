@@ -22,7 +22,7 @@ namespace ECS_Engine.Engine.Systems
 
         public void HandleCollision(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)
         {
-            Dictionary<Entity, IComponent> activeCollisionComponents = componentManager.GetComponents<ActiveCollisionComponent>();
+           var activeCollisionComponents = componentManager.GetComponents<ActiveCollisionComponent>();
 
             foreach (KeyValuePair<Entity, IComponent> aColl in activeCollisionComponents)
             {
@@ -32,23 +32,35 @@ namespace ECS_Engine.Engine.Systems
                 MovementComponent movement = componentManager.GetComponent<MovementComponent>(aColl.Key);
                 PhysicsComponent physics = componentManager.GetComponent<PhysicsComponent>(aColl.Key);
 
-                
-                foreach (Message message in messageManager.GetMessages(aColl.Key.ID))
+                var msg = messageManager.GetMessages(aColl.Key.ID);
+                foreach (Message message in msg)
                 {
                     var collidedWith = componentManager.GetEntity(message.sender);
                     if (message.msg.ToLower() == "collision")
                     {
                         if (collidedWith.Tag.ToLower() == "platform")
                         {
-                            transform.Position += new Vector3(0,
-                    physics.Gravity * (float)gameTime.ElapsedGameTime.TotalSeconds, 0); //movement.Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            physics.InJump = false;
+                            var pass = componentManager.GetComponent<PassiveCollisionComponent>(collidedWith);
+                            float dist = pass.BoundingBox.Max.Y + ((ActiveCollisionComponent)aColl.Value).BoundingBox.Min.Y;
+
+                            if (physics.InAir && dist >= -0.1f) {
+                                physics.InAir = false;
+                                transform.Position = new Vector3(transform.Position.X, pass.BoundingBox.Max.Y, transform.Position.Z);//(physics.Velocity + movement.Velocity) * (float)gameTime.ElapsedGameTime.TotalSeconds; // new Vector3(0, 0.01f, 0);
+                            }
+                            else if (physics.InAir) {
+                                transform.Position -= (physics.Velocity + movement.Velocity) * new Vector3(1, 0, 1) * (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
+                                movement.Velocity = new Vector3(0, 0, 0);
+                            }
                         }
                         if (collidedWith.Tag.ToLower() == "player")
                         {
-                            
+                            messageManager.RegMessage(message.sender, message.receiver, 0, "knockback");
+                            transform.Position -= (physics.Velocity + movement.Velocity) * new Vector3(1, 0, 1) * (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
                         }
                     }
+                }
+                if(msg.Count() == 0) {
+                    physics.InAir = true;
                 }
             }
 

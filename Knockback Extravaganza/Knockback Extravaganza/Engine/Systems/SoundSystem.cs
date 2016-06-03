@@ -13,8 +13,8 @@ using System.Threading.Tasks;
 namespace ECS_Engine.Engine.Systems {
     public class SoundSystem : IUpdateSystem {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
-            Dictionary<Entity, IComponent> effectComponents = componentManager.GetComponents<SoundEffectComponent>();
-            Dictionary<Entity, IComponent> songComponents = componentManager.GetComponents<SongComponent>();
+            var effectComponents = componentManager.GetComponents<SoundEffectComponent>();
+            var songComponents = componentManager.GetComponents<SongComponent>();
             if (effectComponents != null) {
                 foreach (KeyValuePair<Entity, IComponent> component in effectComponents) {
 

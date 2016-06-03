@@ -15,16 +15,16 @@ using Microsoft.Xna.Framework.Graphics;
 namespace ECS_Engine.Engine.Systems {
     public class VertexRenderSystem<T> : IRenderSystem where T : struct, IVertexType{
         public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) {
-            Dictionary<Entity, IComponent> cam = componentManager.GetComponents<CameraComponent>();
+            var cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
 
-            Dictionary<Entity, IComponent> components = componentManager.GetComponents<VertexComponent<T>>();
+            var components = componentManager.GetComponents<VertexComponent<T>>();
             foreach(KeyValuePair<Entity, IComponent> component in components) {
                 VertexComponent<T> model = (VertexComponent<T>)component.Value;
                 TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                 if(transform != default(TransformComponent)) {
                     BasicEffect effect = model.Effect;
-                    effect.World = transform.World;
+                    effect.World = transform.GetWorld(transform.UpdateBuffer);
                     effect.View = camera.View;
                     effect.Projection = camera.Projection;
                     

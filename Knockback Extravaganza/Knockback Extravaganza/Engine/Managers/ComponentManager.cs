@@ -4,14 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ECS_Engine.Engine.Component.Interfaces;
-
+using ECS_Engine.Engine.Component.Abstract_Classes;
+using System.Collections.Concurrent;
 
 namespace ECS_Engine.Engine.Managers {
  
     public class ComponentManager {
 
         Entity[] entities = new Entity[10];
-        Dictionary<Type, Dictionary<Entity, IComponent>> componentList = new Dictionary<Type, Dictionary<Entity, IComponent>>();
+        ConcurrentDictionary<Type, ConcurrentDictionary<Entity, IComponent>> componentList = new ConcurrentDictionary<Type, ConcurrentDictionary<Entity, IComponent>>();
 
 
         public Entity MakeEntity() {
@@ -63,9 +64,9 @@ namespace ECS_Engine.Engine.Managers {
         public void AddComponent(Entity entity, IComponent component) {
             Type type = component.GetType();
             if (!componentList.ContainsKey(type)) {
-                componentList[type] = new Dictionary<Entity, IComponent>();
+                componentList.TryAdd(type, new ConcurrentDictionary<Entity, IComponent>());
             }
-            componentList[type][entity] = component;
+            componentList[type].TryAdd(entity, component); //[entity] = component;
         }
 
         public void AddComponent(Entity entity, params IComponent[] components) {
@@ -78,7 +79,8 @@ namespace ECS_Engine.Engine.Managers {
             Type type = typeof(T);
             if (componentList.ContainsKey(type)) {
                 if (componentList[type].ContainsKey(entity)) {
-                    componentList[type].Remove(entity);
+                    IComponent test;
+                    componentList[type].TryRemove(entity, out test);
                 }
             }
         }
@@ -86,7 +88,8 @@ namespace ECS_Engine.Engine.Managers {
             foreach(var dict in componentList) {
                 foreach(var value in dict.Value) {
                     if(value.Key == entity) {
-                        dict.Value.Remove(entity);
+                        IComponent test;
+                        dict.Value.TryRemove(entity, out test);
                         break;
                     }
                 }
@@ -117,23 +120,43 @@ namespace ECS_Engine.Engine.Managers {
         public Entity GetEntity<T>(IComponent component) where T : IComponent{
             Type type = typeof(T);
             if (componentList.ContainsKey(type)) {
-                if (componentList[type].ContainsValue(component)) {
-                    foreach (KeyValuePair<Entity, IComponent> kvp in componentList[type]) {
-                        if (kvp.Value == component) {
-                            return kvp.Key;
-                        }
+                ConcurrentDictionary<Entity, IComponent> typeList;
+                componentList.TryGetValue(type, out typeList);
+                foreach(var r in typeList.Keys) {
+                    IComponent comp;
+                    typeList.TryGetValue(r, out comp);
+                    if(comp == component) {
+                        return r;
                     }
                 }
             }
             return null;
         }
 
-        public Dictionary<Entity, IComponent> GetComponents<T>() where T : IComponent{
+        public ConcurrentDictionary<Entity, IComponent> GetComponents<T>() where T : IComponent{
             Type type = typeof(T);
             if (componentList.ContainsKey(type)) {
-                return componentList[type];
+                ConcurrentDictionary<Entity, IComponent> result;
+                componentList.TryGetValue(type, out result);
+                return result;
             }
             return null;
+        }
+
+        public List<ThreadedComponent> GetThreadedComponents() {
+            List<ThreadedComponent> result = new List<ThreadedComponent>();
+            foreach(var type in componentList.Keys) {
+                ConcurrentDictionary<Entity, IComponent> typeList;
+                componentList.TryGetValue(type, out typeList);
+                foreach(var components in typeList.Keys) {
+                    IComponent comp;
+                    typeList.TryGetValue(components, out comp);
+                    if(comp is ThreadedComponent) {
+                        result.Add(comp as ThreadedComponent);
+                    }
+                }
+            }
+            return result;
         }
     }
 }

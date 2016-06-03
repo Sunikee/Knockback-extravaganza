@@ -8,6 +8,7 @@ using ECS_Engine.Engine.Managers;
 using Microsoft.Xna.Framework;
 using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Component;
+using ECS_Engine.Engine.Component.Abstract_Classes;
 
 namespace ECS_Engine.Engine.Systems {
     public class TransformSystem : IUpdateSystem {
@@ -16,12 +17,12 @@ namespace ECS_Engine.Engine.Systems {
             var components = componentManager.GetComponents<TransformComponent>();
             if(components != null && sceneManager.GetCurrentScene().Name == "multiplayerScene"){
                 foreach(var component in components) {
-                   
+                    var threadData = component.Value as ThreadedComponent;
                     TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                     Quaternion rotation = Quaternion.CreateFromYawPitchRoll(transform.Rotation.Y, transform.Rotation.X, transform.Rotation.Z);
                     PhysicsComponent physics = componentManager.GetComponent<PhysicsComponent>(component.Key);
                     MovementComponent movement = componentManager.GetComponent<MovementComponent>(component.Key);
-                    transform.World = Matrix.CreateScale(transform.Scale) * Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(transform.Position);
+                    transform.SetWorld(threadData.UpdateBuffer, Matrix.CreateScale(transform.Scale) * Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(transform.Position));
                     transform.Forward = GetLocalDir(Vector3.Forward, rotation);
                     transform.Right = GetLocalDir(Vector3.Right, rotation);
                     transform.Up = GetLocalDir(Vector3.Up, rotation);
@@ -39,7 +40,7 @@ namespace ECS_Engine.Engine.Systems {
 
                         Matrix rot = Matrix.CreateTranslation(-mesh.ParentBone.Translation) * Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(mesh.ParentBone.Translation);
 
-                        mesh.World = Matrix.CreateScale(mesh.Scale) * rot * Matrix.CreateTranslation(mesh.Position);
+                        mesh.SetWorld(transform.UpdateBuffer, Matrix.CreateScale(mesh.Scale) * rot * Matrix.CreateTranslation(mesh.Position));
   
                         mesh.Forward = GetLocalDir(Vector3.Forward, rotation);
                         mesh.Right = GetLocalDir(Vector3.Right, rotation);

@@ -19,7 +19,7 @@ namespace ECS_Engine.Engine.Systems
     {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            Dictionary<Entity, IComponent> components = componentManager.GetComponents<MouseComponent>();
+            var components = componentManager.GetComponents<MouseComponent>();
             if (components != null)
             {
                 foreach (KeyValuePair<Entity, IComponent> component in components)

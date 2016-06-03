@@ -15,6 +15,7 @@ namespace ECS_Engine.Engine.Systems
     {
         public float DashTimer = 1;
         public float DashTime = 1500;
+        public float e = 0;
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
             if(sceneManager.GetCurrentScene().Name == "multiplayerScene")
@@ -23,7 +24,7 @@ namespace ECS_Engine.Engine.Systems
 
         public void HandleInput(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            Dictionary<Entity, IComponent> kComponents = componentManager.GetComponents<KeyBoardComponent>();
+            var kComponents = componentManager.GetComponents<KeyBoardComponent>();
 
             foreach (KeyValuePair<Entity, IComponent> component in kComponents)
             {
@@ -33,122 +34,45 @@ namespace ECS_Engine.Engine.Systems
                 PhysicsComponent pc = componentManager.GetComponent<PhysicsComponent>(component.Key);
                 SoundEffectComponent soundEffComp = componentManager.GetComponent<SoundEffectComponent>(component.Key);
 
-                foreach (KeyValuePair<string, BUTTON_STATE> actionState in keyboardComp.ActionStates)
-                {
-                    if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.PRESSED))
-                    {
-                        tc.Forward.Normalize();
-                        mc.Velocity = tc.Forward;
-                        tc.Position += mc.Velocity * mc.Speed;
-                        messageManager.RegMessage(component.Key.ID, component.Key.ID, 0, "START: footstep");
-                        //tc.Position += tc.Forward * mc.Speed;
-                    }
-                    //tc.Position += tc.Forward * mc.Speed;
-                    if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.HELD))
-                    {
-                        mc.Speed += (float)gametime.ElapsedGameTime.TotalSeconds * mc.Acceleration;
-                        if (mc.Speed > 6)
-                            mc.Speed = 6;
-                        tc.Forward.Normalize();
-                        mc.Velocity = tc.Forward;
-                        tc.Position += mc.Velocity * mc.Speed;
-                        messageManager.RegMessage(component.Key.ID, component.Key.ID, 0, "START: footstep");
-                        //tc.Position += tc.Forward * mc.Speed;
-                    }
-                    
-                    if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.RELEASED))
-                    {
-                        if (mc.Speed > 0)
-                            mc.Speed -= (float)gametime.ElapsedGameTime.TotalSeconds * mc.Acceleration;
-                        else
-                            mc.Speed = 0;
-                    }
-                    //if (actionState.Key.Equals("Forward") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED) && actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED) && actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED) && actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED))
-                    //{
-                    //    mc.Speed -= (float)gametime.ElapsedGameTime.TotalSeconds * mc.Acceleration;
-                    //    if (mc.Speed < 0)
-                    //        mc.Speed = 0;
-                    //    mc.Velocity = tc.Forward;
-                    //    tc.Position += mc.Velocity * mc.Speed;
-                    //}
+                if (tc != null && mc != null && pc != null) {
+                    float elapsedTime = (float)gametime.ElapsedGameTime.TotalSeconds;
 
-                    if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.HELD))
-                    {
-                        if (mc.Speed < 3)
-                            mc.Speed += (float)gametime.ElapsedGameTime.TotalSeconds * mc.Acceleration; 
-                        else
-                            mc.Speed = 3;
-                        mc.Velocity = -tc.Forward;
-                        tc.Position += mc.Velocity * mc.Speed;
-                        messageManager.RegMessage(component.Key.ID, component.Key.ID, 0, "START: footstep");
-                    }
-                    if (actionState.Key.Equals("Pause") && actionState.Value.Equals(BUTTON_STATE.PRESSED) && sceneManager.GetCurrentScene().Name != "startScene")
-                        sceneManager.SetCurrentScene(sceneManager.GetScene("pauseScene").Name);
-                    //if (actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.RELEASED) || actionState.Key.Equals("Backward") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED))
-                    //{
-                    //    if (mc.Speed < 0)
-                    //        mc.Speed -= (float)gametime.ElapsedGameTime.TotalSeconds * mc.Acceleration;
-                    //    else
-                    //        mc.Speed = 0;
-                    //    mc.Velocity = -tc.Forward;
-                    //    tc.Position += mc.Velocity * mc.Speed;
-                    //}
-                        if (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Right") && actionState.Value.Equals(BUTTON_STATE.HELD)))
-                    {
-                        //tc.Rotation += new Vector3(0, -.1f, 0);
-                        mc.Velocity = tc.Right;
-                        tc.Position += mc.Velocity * mc.Speed;
-                        messageManager.RegMessage(component.Key.ID, component.Key.ID, 0, "START: footstep");
-                    }
-                    if (actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Left") && actionState.Value.Equals(BUTTON_STATE.HELD)))
-                    {
-                        //tc.Rotation += new Vector3(0, .1f, 0);
-                        mc.Velocity = -tc.Right;
-                        tc.Position += mc.Velocity * mc.Speed;
-                        messageManager.RegMessage(component.Key.ID, component.Key.ID, 0, "START: footstep");
-                    }
-                    if (actionState.Key.Equals("RotateRight") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("RotateRight") && actionState.Value.Equals(BUTTON_STATE.HELD)))
-                    {
-                        tc.Rotation += new Vector3(0, -0.1f, 0f);
-                    }
-                    if (actionState.Key.Equals("RotateLeft") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("RotateLeft") && actionState.Value.Equals(BUTTON_STATE.HELD)))
-                    {
-                        tc.Rotation += new Vector3(0, 0.1f, 0f);
-                    }
-                    if ((actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.PRESSED)) && !pc.InJump || (actionState.Key.Equals("Jump") && actionState.Value.Equals(BUTTON_STATE.HELD) && !pc.InJump))
-                    {
-                        pc.InJump = true;
-                        //mc.Velocity += tc.Up * (float)gametime.ElapsedGameTime.TotalSeconds * 1000;
-                        tc.Position += tc.Up * 100;
-                    }
-                    if (actionState.Key.Equals("Reset") && actionState.Value.Equals(BUTTON_STATE.PRESSED) || (actionState.Key.Equals("Reset") && actionState.Value.Equals(BUTTON_STATE.HELD)))
-                    {
-                        tc.Position = new Vector3(0, 0, 0);
-                    }
-                    if (actionState.Key.Equals("Dash") && actionState.Value.Equals((BUTTON_STATE.HELD)))
-                    {
-                        DashTimer += (float)gametime.ElapsedGameTime.Milliseconds;
-                        if (DashTimer > 10000f )
-                        {
-                            DashTimer = 10000f;
-                        }
-                    }
-                    if (actionState.Key.Equals("Dash") && actionState.Value.Equals(BUTTON_STATE.RELEASED))
-                    {
-                        mc.Speed += mc.Acceleration * (DashTimer / 10);
-                        tc.Position += tc.Forward * mc.Speed;                        
-                    }
-                    if (actionState.Key.Equals("Dash") && actionState.Value.Equals(BUTTON_STATE.NOT_PRESSED))
-                    {
-                       
-                        //tc.Position += tc.Forward * mc.Speed;
+                    Vector3 MoveDir = Vector3.Zero;
 
-                        DashTime -= (float)gametime.ElapsedGameTime.Milliseconds;
-                        if (DashTime < 0)
-                        {
-                            DashTimer = 1;
-                            DashTime = 1500;
-                        }
+                    float tickAcc = mc.Acceleration;//1f * (float)Math.Pow((1 - 0.15), mc.Speed);
+                    if (keyboardComp.GetActionState("Forward") != BUTTON_STATE.NOT_PRESSED) {
+                        MoveDir += tc.Forward;
+                        mc.Velocity += tc.Forward * tickAcc;
+                    }
+                    else if (keyboardComp.GetActionState("Backward") != BUTTON_STATE.NOT_PRESSED) {
+                        MoveDir -= tc.Forward;
+                        mc.Velocity -= tc.Forward * tickAcc;
+                    }
+                    if (keyboardComp.GetActionState("Right") != BUTTON_STATE.NOT_PRESSED) {
+                        mc.Velocity += tc.Right * tickAcc;
+                    }
+                    else if (keyboardComp.GetActionState("Left") != BUTTON_STATE.NOT_PRESSED) {
+                        mc.Velocity -= tc.Right * tickAcc;
+                    }
+
+
+                    mc.Velocity -= mc.Velocity * elapsedTime * 3;
+
+
+
+                    if (keyboardComp.GetActionState("RotateLeft") != BUTTON_STATE.NOT_PRESSED) {
+                        tc.Rotation += new Vector3(0, 3 * elapsedTime, 0);
+                    }
+                    else if (keyboardComp.GetActionState("RotateRight") != BUTTON_STATE.NOT_PRESSED) {
+                        tc.Rotation -= new Vector3(0, 3 * elapsedTime, 0);
+                    }
+
+
+                    e += elapsedTime;
+                    float timeStep = 0.1f;
+                    if (e > timeStep) {
+                        e -= timeStep;
+                        //Console.WriteLine(mc.Velocity);
                     }
                 }
 

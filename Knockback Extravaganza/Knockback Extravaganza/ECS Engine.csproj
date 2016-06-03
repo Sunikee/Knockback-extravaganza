@@ -39,6 +39,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\Component\Abstract Classes\ThreadedComponent.cs" />
     <Compile Include="Engine\Component\ActiveCollisionComponent.cs" />
     <Compile Include="Engine\Component\AiComponent.cs" />
     <Compile Include="Engine\Component\AnimationComponent.cs" />

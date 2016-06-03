@@ -11,10 +11,15 @@ namespace ECS_Engine.Engine
 {
     public class MovementComponent : IComponent
     {
+        public Vector3 MoveDir { get; set; }
         public Vector3 Velocity {get; set;}
         public float AirTime { get; set; }
         public float Acceleration { get; set; }
         public float Speed { get; set; }
+
+        public MovementComponent() {
+            MoveDir = Vector3.Zero;
+        }
     
     }
 }

@@ -119,12 +119,31 @@ namespace Game
 
             Mouse.SetPosition(free.GraphicsDevice.Viewport.Width / 2, free.GraphicsDevice.Viewport.Height / 2);
 
+            Entity platformEntity = componentManager.MakeEntity();
+            platformEntity.Tag = "platform";
+
+            ModelComponent platformModelC = new ModelComponent {
+                Model = Content.Load<Model>("platform"),
+            };
+
+            TransformComponent platformTransformC = new TransformComponent {
+                Position = Vector3.Zero,
+                Scale = new Vector3(4, 4, 4)
+            };
+
+            PassiveCollisionComponent passColl = new PassiveCollisionComponent(platformModelC.Model, platformTransformC.GetWorld(platformTransformC.UpdateBuffer));
+
+            componentManager.AddComponent(platformEntity, platformModelC);
+            componentManager.AddComponent(platformEntity, platformTransformC);
+            componentManager.AddComponent(platformEntity, passColl);
+
+
             ModelComponent player1 = new ModelComponent();
             player1.Model = Content.Load<Model>("Player");
             ModelTransformComponent t1 = new ModelTransformComponent(player1.Model);
 
             TransformComponent tc1 = new TransformComponent() {
-                Position = new Vector3(0, 0, 0),
+                Position = new Vector3(0, 10, 0),
                 Rotation = new Vector3(0, 0, 0),
                 Scale = Vector3.One
             };
@@ -136,13 +155,12 @@ namespace Game
             kbc1.AddKeyToAction("Right", Keys.D);
             kbc1.AddKeyToAction("RotateLeft", Keys.Left);
             kbc1.AddKeyToAction("RotateRight", Keys.Right);
-            kbc1.AddKeyToAction("Jump", Keys.Space);
             kbc1.AddKeyToAction("Dash", Keys.Up);
             kbc1.AddKeyToAction("Reset", Keys.R);
             kbc1.AddKeyToAction("Pause", Keys.Escape);
 
             PhysicsComponent pc1 = new PhysicsComponent {
-                InJump = false,
+                InAir = true,
                 GravityStrength = 2,
                 Mass = 5
             };
@@ -160,13 +178,13 @@ namespace Game
             ModelTransformComponent t2 = new ModelTransformComponent(player2.Model);
 
             TransformComponent tc2 = new TransformComponent() {
-                Position = new Vector3(10, 0, -50),
+                Position = new Vector3(10, 10, -100),
                 Rotation = new Vector3(0, 0, 0),
                 Scale = Vector3.One
             };
 
             PhysicsComponent pc2 = new PhysicsComponent {
-                InJump = false,
+                InAir = false,
                 GravityStrength = 2,
                 Mass = 5
             };
@@ -179,17 +197,17 @@ namespace Game
             };
 
             MovementComponent moveCCamera = new MovementComponent {
-                Acceleration = 1.2f,
+                Acceleration = 50f,
                 Speed = 10,
                 Velocity = Vector3.Zero,
                 AirTime = 0f
             };
 
-            ActiveCollisionComponent actColl = new ActiveCollisionComponent(player1.Model, tc1.World);
-            ActiveCollisionComponent actColl2 = new ActiveCollisionComponent(player2.Model, tc2.World);
+            ActiveCollisionComponent actColl = new ActiveCollisionComponent(player1.Model, tc1.GetWorld(tc1.UpdateBuffer));
+            ActiveCollisionComponent actColl2 = new ActiveCollisionComponent(player2.Model, tc2.GetWorld(tc2.UpdateBuffer));
 
-            playerEntity1.Tag = "1";
-            playerEntity2.Tag = "2";
+            playerEntity1.Tag = "player";
+            playerEntity2.Tag = "player";
 
             var player1C = new PlayerComponent { knockBackResistance = 100 };
             var player2C = new PlayerComponent { knockBackResistance = 100 };
@@ -215,23 +233,7 @@ namespace Game
             componentManager.AddComponent(camera, moveCCamera);
             //componentManager.AddComponent(camera, kbc);
 
-            Entity platformEntity = componentManager.MakeEntity();
-            platformEntity.Tag = "platform";
-
-            ModelComponent platformModelC = new ModelComponent {
-                Model = Content.Load<Model>("platform"),
-            };
-
-            TransformComponent platformTransformC = new TransformComponent {
-                Position = Vector3.Zero,
-                Scale = new Vector3(4, 4, 4)
-            };
-
-            PassiveCollisionComponent passColl = new PassiveCollisionComponent(platformModelC.Model, platformTransformC.World);
-
-            componentManager.AddComponent(platformEntity, platformModelC);
-            componentManager.AddComponent(platformEntity, platformTransformC);
-            componentManager.AddComponent(platformEntity, passColl);
+            
 
             //Test PowerupBig
             Entity powerUpBigEntity = componentManager.MakeEntity();
@@ -245,7 +247,7 @@ namespace Game
                 Scale = new Vector3(0.5f)
             };
             var powerUpBigPhysicsC = new PhysicsComponent {
-                InJump = true,
+                InAir = true,
                 GravityStrength = 1,
             };
 
@@ -256,8 +258,7 @@ namespace Game
                 AirTime = 0f
             };
 
-
-            var powerUpBigPassiveCollC = new PassiveCollisionComponent(powerUpBigModelC.Model, powerUpBigTransC.World);
+            var powerUpBigPassiveCollC = new ActiveCollisionComponent(powerUpBigModelC.Model, powerUpBigTransC.GetWorld(powerUpBigTransC.UpdateBuffer));
 
             componentManager.AddComponent(powerUpBigEntity, powerUpBigModelC);
             componentManager.AddComponent(powerUpBigEntity, powerUpBigTransC);
@@ -279,7 +280,7 @@ namespace Game
                 Scale = new Vector3(0.5f)
             };
             var powerUpSmallPhysicsC = new PhysicsComponent {
-                InJump = true,
+                InAir = true,
                 GravityStrength = 1,
             };
 
@@ -290,7 +291,7 @@ namespace Game
                 AirTime = 0f
             };
 
-            var powerUpSmallPassiveCollC = new PassiveCollisionComponent(powerUpSmallModelC.Model, powerUpSmallTransC.World);
+            var powerUpSmallPassiveCollC = new ActiveCollisionComponent(powerUpSmallModelC.Model, powerUpSmallTransC.GetWorld(powerUpSmallTransC.UpdateBuffer));
 
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallModelC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallTransC);
@@ -310,7 +311,7 @@ namespace Game
                 Model = Content.Load<Model>("albin_sphere")
             };
             var aiPhysicsC = new PhysicsComponent {
-                GravityStrength = 0.5f, Mass = 5, InJump = true
+                GravityStrength = 0.5f, Mass = 5, InAir = true
             };
             var aimoveC = new MovementComponent
             {
@@ -461,6 +462,7 @@ namespace Game
         /// </summary>
         public void InitializeSystems()
         {
+            systemManager.EnableFrameCount = true;
             systemManager.AddSystem(new TransformSystem());
             systemManager.AddSystem(new CameraSystem());
             systemManager.AddSystem(new ModelRenderSystem());

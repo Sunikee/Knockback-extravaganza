@@ -1,4 +1,5 @@
-﻿using ECS_Engine.Engine.Component.Interfaces;
+﻿using ECS_Engine.Engine.Component.Abstract_Classes;
+using ECS_Engine.Engine.Component.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -17,7 +18,15 @@ namespace ECS_Engine.Engine.Component {
         public Vector3 Forward { get; set; }
         public Vector3 Right { get; set; }
         public Vector3 Up { get; set; }
-        public Matrix World { get; set; }
+
+        private Matrix[] world = new Matrix[3];
+
+        public Matrix GetWorld(int buffer) {
+            return world[buffer];
+        }
+        public void SetWorld(int buffer, Matrix world) {
+            this.world[buffer] = world;
+        }
 
         public MeshTransform(Matrix parentBone) {
             ParentBone = parentBone;
@@ -26,7 +35,7 @@ namespace ECS_Engine.Engine.Component {
             Scale = Vector3.One;
         }
     }
-    public class ModelTransformComponent : IComponent{
+    public class ModelTransformComponent : ThreadedComponent{
         
 
         Dictionary<string, MeshTransform> meshTransformations = new Dictionary<string, MeshTransform>();
@@ -37,10 +46,14 @@ namespace ECS_Engine.Engine.Component {
 
             foreach (ModelMesh mesh in model.Meshes) {
                 MeshTransform m = new MeshTransform(transforms[mesh.ParentBone.Index]);
-                //m.Position = mesh.ParentBone.ModelTransform.Translation;
-                //m.Scale = mesh.ParentBone.ModelTransform.Scale;
-                //m.Rotation = mesh.ParentBone.ModelTransform.Rotation;
                 meshTransformations.Add(mesh.Name, m);
+            }
+        }
+
+        public override void CopyThreadedData(int to, int from = 0) {
+            var transforms = GetTransforms();
+            foreach(var transform in transforms) {
+                transform.Value.SetWorld(to, transform.Value.GetWorld(from));
             }
         }
 

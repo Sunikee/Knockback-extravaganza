@@ -25,7 +25,7 @@ namespace ECS_Engine.Engine.Systems
        
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            Dictionary<Entity, IComponent> activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();
+            var activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();
             foreach (KeyValuePair<Entity, IComponent> component in activeComponents)
             {
                 var transform = componentManager.GetComponent<TransformComponent>(component.Key);

@@ -17,7 +17,7 @@ namespace ECS_Engine.Engine.Systems
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
 
-            Dictionary<Entity, IComponent> aiEntities = componentManager.GetComponents<AIComponent>();
+            var aiEntities = componentManager.GetComponents<AIComponent>();
      
             if (aiEntities != null)
             {
@@ -32,9 +32,10 @@ namespace ECS_Engine.Engine.Systems
                     var aiMovec = componentManager.GetComponent<MovementComponent>(ai.Key);
 
                     // Get target data
-                    Dictionary<Entity, IComponent> playerEntities = componentManager.GetComponents<PlayerComponent>();
-                    var targetEntity = playerEntities.First (x => x.Key.Tag == aiAiC.Target.ToString());
-                    var targetTransC = componentManager.GetComponent<TransformComponent>(targetEntity.Key);
+                    var playerEntities = componentManager.GetComponents<PlayerComponent>();
+                    Random rand = new Random();
+                    var targetEntity = playerEntities.Keys.ToArray()[rand.Next(0, playerEntities.Count())];
+                    var targetTransC = componentManager.GetComponent<TransformComponent>(targetEntity);
 
                     aiAiC.Duration -= gametime.ElapsedGameTime.Milliseconds;
                     if (aiAiC.Duration <= 0)

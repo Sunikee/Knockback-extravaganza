@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Content;
 using ECS_Engine.Engine.Managers;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 namespace ECS_Engine {
     /// <summary>
@@ -18,6 +19,7 @@ namespace ECS_Engine {
         protected MessageManager messageManager;
         protected SceneManager sceneManager;
 
+        Thread updateThread;
         Task[] tasks = new Task[2];
 
         double elapsedTime = 0;
@@ -55,6 +57,9 @@ namespace ECS_Engine {
             graphics.SynchronizeWithVerticalRetrace = false;
             this.IsFixedTimeStep = false;
             graphics.ApplyChanges();
+
+            
+
             base.Initialize();
         }
 
@@ -82,33 +87,23 @@ namespace ECS_Engine {
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        bool runOnce = true;
         protected override void Update(GameTime gameTime) {
             // TODO: Add your update logic here
             systemManager.GameTime = gameTime;
 
-            elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
-
-            if(elapsedTime > 1)
-            {
-                elapsedTime -= 1;
-                frameRate = frameCounter;
-                frameCounter = 0;
+            // Display FPS
+            if (systemManager.EnableFrameCount) {
+                this.Window.Title = "Update fps: " + systemManager.frameRateUpdate + ", Render fps: " + systemManager.frameRateRender;
             }
-            frameCounter++;
-            this.Window.Title = "FPS: " + frameRate;
 
-            systemManager.RunUpdateSystem();
+            //systemManager.RunUpdateSystem();
+            if (runOnce) {
+                updateThread = new Thread(systemManager.RunUpdateSystem);
+                updateThread.Start();
+                runOnce = false;
+            }
 
-            /*
-            tasks[0] = Task.Factory.StartNew(systemManager.RunUpdateSystem);
-            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-            tasks[1] = Task.Factory.StartNew(systemManager.RunRenderSystem);
-            
-
-            Task.WaitAll(tasks);
-
-            systemManager.flipBuffer();
-            */
             base.Update(gameTime);
         }
 
@@ -117,13 +112,17 @@ namespace ECS_Engine {
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime) {
-            //graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
             // TODO: Add your drawing code here
 
             graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
             systemManager.RunRenderSystem();
 
             base.Draw(gameTime);
+        }
+
+        protected override void OnExiting(object sender, EventArgs args) {
+            updateThread.Abort();
+            base.OnExiting(sender, args);
         }
     }
 }

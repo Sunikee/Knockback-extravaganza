@@ -12,7 +12,7 @@ using ECS_Engine.Engine.Component;
 namespace ECS_Engine.Engine.Systems {
     public class CameraSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
-            Dictionary<Entity, IComponent> components = componentManager.GetComponents<CameraComponent>();
+            var components = componentManager.GetComponents<CameraComponent>();
             if (components != null) {
                 foreach (KeyValuePair<Entity, IComponent> cam in components) {
                     TransformComponent transform = componentManager.GetComponent<TransformComponent>(cam.Key);

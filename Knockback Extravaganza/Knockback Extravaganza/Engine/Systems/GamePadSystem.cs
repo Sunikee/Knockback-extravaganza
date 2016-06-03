@@ -21,7 +21,7 @@ namespace ECS_Engine.Engine.Systems
 
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            Dictionary<Entity, IComponent> components = componentManager.GetComponents<GamePadComponent>();
+            var components = componentManager.GetComponents<GamePadComponent>();
             if (components == null) {
                 foreach (KeyValuePair<Entity, IComponent> component in components) {
                     GamePadComponent gamePadComp = (GamePadComponent)component.Value;

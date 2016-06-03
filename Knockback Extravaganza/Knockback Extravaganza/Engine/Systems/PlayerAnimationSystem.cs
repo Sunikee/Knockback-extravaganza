@@ -17,7 +17,7 @@ namespace ECS_Engine.Engine.Systems
     {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            Dictionary<Entity, IComponent> animationComponents = componentManager.GetComponents<AnimationComponent>();
+            var animationComponents = componentManager.GetComponents<AnimationComponent>();
 
             foreach (KeyValuePair<Entity, IComponent> component in animationComponents)
             {

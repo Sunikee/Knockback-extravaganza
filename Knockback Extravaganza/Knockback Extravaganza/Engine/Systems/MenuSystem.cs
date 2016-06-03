@@ -16,7 +16,7 @@ namespace ECS_Engine.Engine.Systems
     {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            Dictionary<Entity, IComponent> menuComponents = componentManager.GetComponents<MenuComponent>();
+            var menuComponents = componentManager.GetComponents<MenuComponent>();
 
             var currScene = sceneManager.GetCurrentScene();
             if (menuComponents != null && currScene.Name != "multiplayerScene")

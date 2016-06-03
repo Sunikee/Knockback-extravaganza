@@ -31,7 +31,7 @@ namespace ECS_Engine.Engine.Systems
         }
         public void RenderScenes(GraphicsDevice graphicsDevice, SceneManager sceneManager, Scene currScene, ComponentManager componentManager)
         {
-            Dictionary<Entity, IComponent> menuComponents = componentManager.GetComponents<MenuComponent>();
+            var menuComponents = componentManager.GetComponents<MenuComponent>();
             if (menuComponents != null)
             {
                 foreach (KeyValuePair<Entity, IComponent> component in menuComponents)
@@ -73,10 +73,10 @@ namespace ECS_Engine.Engine.Systems
         }
         public void RenderModels(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager)
         {
-            Dictionary<Entity, IComponent> cam = componentManager.GetComponents<CameraComponent>();
+            var cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
 
-            Dictionary<Entity, IComponent> components = componentManager.GetComponents<ModelComponent>();
+            var components = componentManager.GetComponents<ModelComponent>();
             foreach (KeyValuePair<Entity, IComponent> component in components)
             {
                 ModelComponent model = (ModelComponent)component.Value;
@@ -94,7 +94,7 @@ namespace ECS_Engine.Engine.Systems
                             effect.EnableDefaultLighting();
                             effect.View = camera.View;
                             effect.Projection = camera.Projection;
-                            effect.World = MeshTransform.GetTransform(mesh.Name).ParentBone * MeshTransform.GetTransform(mesh.Name).World * transform.World;
+                            effect.World = MeshTransform.GetTransform(mesh.Name).ParentBone * MeshTransform.GetTransform(mesh.Name).GetWorld(MeshTransform.CurrentRenderBuffer) * transform.GetWorld(transform.CurrentRenderBuffer);
                         }
                         mesh.Draw();
                     }
@@ -112,7 +112,7 @@ namespace ECS_Engine.Engine.Systems
                             effect.EnableDefaultLighting();
                             effect.View = camera.View;
                             effect.Projection = camera.Projection;
-                            effect.World = transforms[mesh.ParentBone.Index] * transform.World;
+                            effect.World = transforms[mesh.ParentBone.Index] * transform.GetWorld(transform.CurrentRenderBuffer);
                         }
                         mesh.Draw();
                     }

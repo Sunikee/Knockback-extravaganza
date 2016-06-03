@@ -18,7 +18,7 @@ namespace ECS_Engine.Engine.Systems
     {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            Dictionary<Entity, IComponent> components = componentManager.GetComponents<KeyBoardComponent>();
+            var components = componentManager.GetComponents<KeyBoardComponent>();
 
             if (components == null) return;
             foreach (KeyValuePair<Entity, IComponent> component in components)
