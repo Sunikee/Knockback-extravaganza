@@ -49,6 +49,7 @@ namespace ECS_Engine.Engine.Systems
 
 
 
+
                     //Chase in Pos X and pos Z
                     if (aiTransformC.Position.X <= targetTransC.Position.X && aiTransformC.Position.Z <= targetTransC.Position.Z)
                         aiTransformC.Position = new Vector3(aiTransformC.Position.X + 1, aiTransformC.Position.Y, aiTransformC.Position.Z + 1);
