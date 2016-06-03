@@ -14,7 +14,7 @@ namespace ECS_Engine.Engine.Systems
     public class AISystem : IUpdateSystem
     {
         public List<Entity> aiEntitiesToRemove = new List<Entity>();
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager)
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
 
             Dictionary<Entity, IComponent> aiEntities = componentManager.GetComponents<AIComponent>();
@@ -29,6 +29,7 @@ namespace ECS_Engine.Engine.Systems
                     var aiTransformC = componentManager.GetComponent<TransformComponent>(ai.Key);
                     var aiModelTransC = componentManager.GetComponent<ModelTransformComponent>(ai.Key);
                     var aiPhysicsC = componentManager.GetComponent<PhysicsComponent>(ai.Key);
+                    var aiMovec = componentManager.GetComponent<MovementComponent>(ai.Key);
 
                     // Get target data
                     Dictionary<Entity, IComponent> playerEntities = componentManager.GetComponents<PlayerComponent>();
@@ -39,7 +40,16 @@ namespace ECS_Engine.Engine.Systems
                     if (aiAiC.Duration <= 0)
                         aiEntitiesToRemove.Add(ai.Key);
 
-                    // Chase in Pos X and pos Z
+
+                    //USE THIS WHEN VELOCITY WORKS!!!!!!!!!!!!!!
+
+                    //var diff =  targetTransC.Position - aiTransformC.Position;
+                    //diff.Normalize();
+                    //aiMovec.Velocity += diff;
+
+
+
+                    //Chase in Pos X and pos Z
                     if (aiTransformC.Position.X <= targetTransC.Position.X && aiTransformC.Position.Z <= targetTransC.Position.Z)
                         aiTransformC.Position = new Vector3(aiTransformC.Position.X + 1, aiTransformC.Position.Y, aiTransformC.Position.Z + 1);
 
@@ -48,11 +58,11 @@ namespace ECS_Engine.Engine.Systems
                         aiTransformC.Position = new Vector3(aiTransformC.Position.X - 1, aiTransformC.Position.Y, aiTransformC.Position.Z - 1);
 
                     // Chase in Pos X and neg Z
-                    else if(aiTransformC.Position.X <= targetTransC.Position.X && aiTransformC.Position.Z >= targetTransC.Position.Z)
+                    else if (aiTransformC.Position.X <= targetTransC.Position.X && aiTransformC.Position.Z >= targetTransC.Position.Z)
                         aiTransformC.Position = new Vector3(aiTransformC.Position.X + 1, aiTransformC.Position.Y, aiTransformC.Position.Z - 1);
 
                     // Chase in neg X and pos Z
-                    else if(aiTransformC.Position.X >= targetTransC.Position.X && aiTransformC.Position.Z <= targetTransC.Position.Z)
+                    else if (aiTransformC.Position.X >= targetTransC.Position.X && aiTransformC.Position.Z <= targetTransC.Position.Z)
                         aiTransformC.Position = new Vector3(aiTransformC.Position.X - 1, aiTransformC.Position.Y, aiTransformC.Position.Z + 1);
 
                     //// Chase in only X

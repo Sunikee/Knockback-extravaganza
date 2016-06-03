@@ -58,9 +58,7 @@ namespace ECS_Engine.Engine.Managers {
             if(updateSystems.Count > 0) {
                 foreach (IUpdateSystem system in updateSystems) {
                     
-                    system.Update(GameTime, ComponentManager, MessageManager, SceneManager);
-
-                    
+                    system.Update(GameTime, ComponentManager, MessageManager, SceneManager);     
                 }
                 
             }

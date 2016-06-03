@@ -47,6 +47,7 @@ namespace ECS_Engine.Engine.Systems
                     case 0:
                         break;
                     case 1:
+                        sceneManager.SetCurrentScene(sceneManager.GetScene("hostScene").Name);
                         break;
                     case 2:
                         break;
@@ -57,6 +58,23 @@ namespace ECS_Engine.Engine.Systems
                 }
             }
             if (currScene.Name == "pauseScene")
+            {
+                switch (menu.ActiveChoice)
+                {
+                    case 0:
+                        sceneManager.SetCurrentScene(sceneManager.GetScene("multiplayerScene").Name);
+                        menu.ActiveChoice = 0;
+                        break;
+                    case 1:
+
+                        break;
+                    case 2:
+                        sceneManager.SetCurrentScene(sceneManager.GetScene("startScene").Name);
+                        menu.ActiveChoice = 0;
+                        break;
+                }
+            }
+            if(currScene.Name == "hostScene")
             {
                 switch (menu.ActiveChoice)
                 {

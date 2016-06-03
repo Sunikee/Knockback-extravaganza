@@ -37,7 +37,7 @@ namespace Game
             //Initialise Scenes
 
             //Init startmenu
-            var startScene = new Scene {Name = "startScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Join Game", "Host Game", "Single Player", "Multiplayer"} };
+            var startScene = new Scene { Name = "startScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Join Game", "Host Game", "Single Player", "Multiplayer" } };
             sceneManager.AddScene(startScene);
 
             //Init multiplayer
@@ -48,14 +48,18 @@ namespace Game
             var pauseScene = new Scene { Name = "pauseScene", Font = startFont, Background = pauseBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Continue", "Settings", "Exit to main menu" } };
             sceneManager.AddScene(pauseScene);
 
+            //Init hostScene
+            var hostScene = new Scene { Name = "hostScene", Background = pauseBackground, SpriteBatch = spriteBatch, Font = startFont, menuChoices = new List<string> { "Host Game", "", "Exit to main menu" }};
+            sceneManager.AddScene(hostScene);
+
             //Set start scene
-            sceneManager.SetCurrentScene("startScene");
+            sceneManager.SetCurrentScene("multiplayerScene");
         }
 
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            CreateEntities();
+            
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
 
@@ -63,6 +67,7 @@ namespace Game
              startBackground = Content.Load<Texture2D>("Scenes/startBackground2");
              startFont = Content.Load<SpriteFont>("Scenes/Font1");
             pauseBackground = Content.Load<Texture2D>("Scenes/pauseBackground");
+            CreateEntities();
         }
 
         protected override void UnloadContent()
@@ -183,8 +188,11 @@ namespace Game
             ActiveCollisionComponent actColl = new ActiveCollisionComponent(player1.Model, tc1.World);
             ActiveCollisionComponent actColl2 = new ActiveCollisionComponent(player2.Model, tc2.World);
 
-            playerEntity1.Tag = "player";
-            playerEntity2.Tag = "player";
+            playerEntity1.Tag = "1";
+            playerEntity2.Tag = "2";
+
+            var player1C = new PlayerComponent { knockBackResistance = 100 };
+            var player2C = new PlayerComponent { knockBackResistance = 100 };
 
             componentManager.AddComponent(playerEntity1, moveC1);
             componentManager.AddComponent(playerEntity1, pc1);
@@ -193,6 +201,7 @@ namespace Game
             componentManager.AddComponent(playerEntity1, actColl);
             componentManager.AddComponent(playerEntity1, t1);
             componentManager.AddComponent(playerEntity1, player1);
+            componentManager.AddComponent(playerEntity1, player1C);
 
             componentManager.AddComponent(playerEntity2, moveC2);
             componentManager.AddComponent(playerEntity2, pc2);
@@ -200,6 +209,7 @@ namespace Game
             componentManager.AddComponent(playerEntity2, actColl2);
             componentManager.AddComponent(playerEntity2, t2);
             componentManager.AddComponent(playerEntity2, player2);
+            componentManager.AddComponent(playerEntity2, player2C);
 
 
             componentManager.AddComponent(camera, moveCCamera);
@@ -288,11 +298,36 @@ namespace Game
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallPassiveCollC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallMovementC);
 
+            var aiEntity = componentManager.MakeEntity();
+            var aiAiC = new AIComponent { Duration = 10000, Target = 1 };
+            var aiTransformC = new TransformComponent
+            {
+                Position = new Vector3(-0, 60, -200),
+                Rotation = Vector3.Zero,
+                Scale = new Vector3(1)
+            };
+            var aiModelTransC = new ModelComponent {
+                Model = Content.Load<Model>("albin_sphere")
+            };
+            var aiPhysicsC = new PhysicsComponent {
+                GravityStrength = 1, Mass = 5, InJump = true
+            };
+            var aimoveC = new MovementComponent
+            {
+                //Acceleration = 0f,
+                //Speed = 5,
+                Velocity = Vector3.Zero,
+                AirTime = 0f
+            };
+
+            componentManager.AddComponent(aiEntity, aiAiC, aiTransformC, aimoveC, aiModelTransC, aiPhysicsC);
+          
+
             //Test of particle on powerup
 
             //var smokeParticleEntity = componentManager.MakeEntity();
-          //  InitiateParticleSettings(smokeParticleEntity);
-            
+            //  InitiateParticleSettings(smokeParticleEntity);
+
             Entity soundEntity = componentManager.MakeEntity();
             SoundEffectComponent soundEffComp = new SoundEffectComponent();
 
@@ -419,6 +454,7 @@ namespace Game
         }
 
 
+
         /// <summary>
         /// Initializes all needed systems
         /// </summary>
@@ -438,6 +474,7 @@ namespace Game
             systemManager.AddSystem(new PowerUpSystem());
             systemManager.AddSystem(new SoundSystem());
             systemManager.AddSystem(new MenuSystem());
+            systemManager.AddSystem(new AISystem());
         }
     }
 }

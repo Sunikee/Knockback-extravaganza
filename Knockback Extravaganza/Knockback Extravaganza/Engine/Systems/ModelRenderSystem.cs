@@ -21,9 +21,6 @@ namespace ECS_Engine.Engine.Systems
 
         public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager)
         {
-            //spriteBatch = new SpriteBatch(graphicsDevice);
-            //renderTarget = new RenderTarget2D(graphicsDevice, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight);
-
             Scene currScene = sceneManager.GetCurrentScene();
 
             if (currScene.Name == "multiplayerScene")
@@ -47,16 +44,30 @@ namespace ECS_Engine.Engine.Systems
 
                     var spacing = menu.MenuChoicesSpacing;
                     var color = menu.InactiveColor;
-
-                    foreach (var choice in currScene.menuChoices)
+                    if (currScene.Name != "hostScene")
                     {
-                        if (menu.ActiveChoice == currScene.menuChoices.FindIndex(i => i == choice))
-                            color = menu.ActiveColor;
-                        currScene.SpriteBatch.DrawString(currScene.Font, choice, new Vector2(graphicsDevice.PresentationParameters.BackBufferWidth * 0.5f - currScene.Font.MeasureString(choice).X * 0.5f, spacing),color );
-                        color = menu.InactiveColor;
-                        spacing += menu.MenuChoicesSpacing;
+                        foreach (var choice in currScene.menuChoices)
+                        {
+                            if (menu.ActiveChoice == currScene.menuChoices.FindIndex(i => i == choice))
+                                color = menu.ActiveColor;
+                            currScene.SpriteBatch.DrawString(currScene.Font, choice, new Vector2(graphicsDevice.PresentationParameters.BackBufferWidth * 0.5f - currScene.Font.MeasureString(choice).X * 0.5f, spacing), color);
+                            color = menu.InactiveColor;
+                            spacing += menu.MenuChoicesSpacing;
+                        }
+                        currScene.SpriteBatch.End();
                     }
-                    currScene.SpriteBatch.End();
+                    else
+                    {
+                        foreach (var choice in currScene.menuChoices)
+                        {
+                            if (menu.ActiveChoice == currScene.menuChoices.FindIndex(i => i == choice))
+                                color = menu.ActiveColor;
+                            currScene.SpriteBatch.DrawString(currScene.Font, choice, new Vector2(graphicsDevice.PresentationParameters.BackBufferWidth * 0.5f - currScene.Font.MeasureString(choice).X * 0.5f, spacing), color);
+                            color = menu.InactiveColor;
+                            spacing += menu.MenuChoicesSpacing;
+                        }
+                        currScene.SpriteBatch.End();
+                    }
                 }
             }
         }
@@ -71,6 +82,8 @@ namespace ECS_Engine.Engine.Systems
                 ModelComponent model = (ModelComponent)component.Value;
                 ModelTransformComponent MeshTransform = componentManager.GetComponent<ModelTransformComponent>(component.Key);
                 TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
+                MenuComponent menuC = componentManager.GetComponent<MenuComponent>(component.Key);
+       
                 if (MeshTransform != default(ModelTransformComponent) && transform != default(TransformComponent))
                 {
                     foreach (ModelMesh mesh in model.Model.Meshes)
