@@ -30,9 +30,9 @@
 //        /// <param name="port"></param>
 //        public void Start(ComponentManager componentManager, string hostIp, int port)
 //        {
-           
-//          Entity serverEntity = new Entity();
-//          ServerNetworkComponent serverC = new ServerNetworkComponent
+
+//            Entity serverEntity = new Entity();
+//            ServerNetworkComponent serverC = new ServerNetworkComponent
 //            {
 
 //                HostIp = GetLocalIP(),
@@ -43,7 +43,7 @@
 //            serverC.Config.EnableMessageType(NetIncomingMessageType.DiscoveryRequest);
 //            serverC.Server = new NetServer(serverC.Config);
 //            serverC.Server.Start();
-            
+
 //            Console.WriteLine("Server started");
 //            componentManager.AddComponent(serverEntity, serverC);
 //        }
@@ -54,7 +54,7 @@
 //        /// <param name="componentManager"></param>
 //        public void Run(ComponentManager componentManager)
 //        {
-//            Dictionary<Entity, IComponent> components = componentManager.GetComponents<ServerNetworkComponent>();
+//            var components = componentManager.GetComponents<ServerNetworkComponent>();
 //            if (components != null)
 //            {
 //                foreach (KeyValuePair<Entity, IComponent> comp in components)
@@ -76,10 +76,11 @@
 //                                break;
 
 //                            case NetIncomingMessageType.StatusChanged:
-                          
+
 //                            case NetIncomingMessageType.DiscoveryRequest:
 //                                NetOutgoingMessage response = server.Server.CreateMessage();
 //                                response.Write("My server name");
+//                                //Handle connection
 
 //                                // Send the response to the sender of the request
 //                                server.Server.SendDiscoveryResponse(response, message.SenderEndPoint);

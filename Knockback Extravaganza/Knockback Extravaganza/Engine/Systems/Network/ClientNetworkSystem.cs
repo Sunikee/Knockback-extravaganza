@@ -32,20 +32,8 @@
 
 //            clientC.Client = new NetClient(clientC.Config);
 //            clientC.Client.DiscoverLocalPeers(14242);
-
-//            NetIncomingMessage inc;
-//            while ((inc = clientC.Client.ReadMessage()) != null)
-//            {
-//                switch (inc.MessageType)
-//                {
-//                    case NetIncomingMessageType.DiscoveryResponse:
-//                        Console.WriteLine("Found server at " + inc.SenderEndPoint + " name: " + inc.ReadString());
-//                        break;
-//                }
-//            }           
-         
 //            componentManager.AddComponent(ClientEntity, clientC);
-//            clientC.Client.Connect(inc.SenderEndPoint);
+            
 //        }
 
 //        /// <summary>
@@ -54,15 +42,17 @@
 //        /// <param name="componentManager"></param>
 //        public void Run(ComponentManager componentManager)
 //        {
-//            Dictionary<Entity, IComponent> components = componentManager.GetComponents<ClientNetworkComponent>();
-//            if (components != null)
-//            {
-//                foreach (KeyValuePair<Entity, IComponent> comp in components)
-//                {
+//            var clientComponents = componentManager.GetComponents<ClientNetworkComponent>();
 
+
+//            if (clientComponents != null)
+//            {
+//                foreach (KeyValuePair<Entity, IComponent> component in clientComponents)
+//                {
+//                    var clientC = componentManager.GetComponent<ClientNetworkComponent>(component.Key);
 
 //                    NetIncomingMessage message;
-//                    while ((message = client.Client.ReadMessage()) != null)
+//                    while ((message = clientC.Client.ReadMessage()) != null)
 //                    {
 //                        switch (message.MessageType)
 //                        {
@@ -87,12 +77,20 @@
 
 //                                Console.WriteLine(message.ReadString());
 //                                break;
+//                                switch (message.MessageType)
+//                                {
+//                                    case NetIncomingMessageType.DiscoveryResponse:
+//                                        Console.WriteLine("Found server at " + message.SenderEndPoint + " name: " + message.ReadString());
+//                                        clientC.Client.Connect(message.SenderEndPoint);
+//                                        //Handle connection
+//                                        break;
 
 
-//                            default:
-//                                Console.WriteLine("unhandled message with type: "
-//                                    + message.MessageType);
-//                                break;
+//                                    default:
+//                                        Console.WriteLine("unhandled message with type: "
+//                                            + message.MessageType);
+//                                        break;
+//                                }
 //                        }
 //                    }
 //                }
