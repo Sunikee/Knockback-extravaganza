@@ -17,6 +17,7 @@ namespace ECS_Engine.Engine.Systems
         public float DashTime = 1500;
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
+            if(sceneManager.GetCurrentScene().Name == "multiplayerScene")
             HandleInput(gametime, componentManager, messageManager, sceneManager);     
         }
 

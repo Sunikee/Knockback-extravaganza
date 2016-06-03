@@ -40,6 +40,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\Component\ActiveCollisionComponent.cs" />
+    <Compile Include="Engine\Component\AiComponent.cs" />
     <Compile Include="Engine\Component\AnimationComponent.cs" />
     <Compile Include="Engine\Component\CameraComponent.cs" />
     <Compile Include="Engine\Component\ChaseCameraComponent.cs" />
@@ -75,12 +76,10 @@
     <Compile Include="Engine\Managers\SceneManager.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
     <Compile Include="Engine\Component\MovementComponent.cs" />
-    <Compile Include="Engine\Scenes\MultiplayerScene.cs" />
-    <Compile Include="Engine\Scenes\PauseScene.cs" />
     <Compile Include="Engine\Scenes\Scene.cs" />
-    <Compile Include="Engine\Scenes\StartScene.cs" />
     <Compile Include="Engine\SongPiece.cs" />
     <Compile Include="Engine\SoundEffectPiece.cs" />
+    <Compile Include="Engine\Systems\AISystem.cs" />
     <Compile Include="Engine\Systems\CollisionHandleSystem.cs" />
     <Compile Include="Engine\Systems\FreeCameraSystem.cs" />
     <Compile Include="Engine\Systems\MenuSystem.cs" />

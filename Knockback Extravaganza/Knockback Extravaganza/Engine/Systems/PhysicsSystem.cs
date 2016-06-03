@@ -17,20 +17,23 @@ namespace ECS_Engine.Engine.Systems
     {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            Dictionary<Entity, IComponent> components = componentManager.GetComponents<PhysicsComponent>();
-            if (components != null) 
+            if (sceneManager.GetCurrentScene().Name == "multiplayerScene")
             {
-                foreach (KeyValuePair<Entity, IComponent> comp in components)
+                Dictionary<Entity, IComponent> components = componentManager.GetComponents<PhysicsComponent>();
+                if (components != null)
                 {
-                    var msg = messageManager.GetMessages(comp.Key.ID);
+                    foreach (KeyValuePair<Entity, IComponent> comp in components)
+                    {
+                        var msg = messageManager.GetMessages(comp.Key.ID);
 
-                    ActiveCollisionComponent activeCollisionComponent = componentManager.GetComponent<ActiveCollisionComponent>(comp.Key);
-                    PhysicsComponent physicsComponent = componentManager.GetComponent<PhysicsComponent>(comp.Key);
-                    TransformComponent transformComponent = componentManager.GetComponent<TransformComponent>(comp.Key);
-                    MovementComponent movementComponent = componentManager.GetComponent<MovementComponent>(comp.Key);
-                    PlayerComponent playerComponent = componentManager.GetComponent<PlayerComponent>(comp.Key);
-                   
-                    ApplyGravity(gameTime, physicsComponent, transformComponent, movementComponent);
+                        ActiveCollisionComponent activeCollisionComponent = componentManager.GetComponent<ActiveCollisionComponent>(comp.Key);
+                        PhysicsComponent physicsComponent = componentManager.GetComponent<PhysicsComponent>(comp.Key);
+                        TransformComponent transformComponent = componentManager.GetComponent<TransformComponent>(comp.Key);
+                        MovementComponent movementComponent = componentManager.GetComponent<MovementComponent>(comp.Key);
+                        PlayerComponent playerComponent = componentManager.GetComponent<PlayerComponent>(comp.Key);
+
+                        ApplyGravity(gameTime, physicsComponent, transformComponent, movementComponent);
+                    }
                 }
             }
         }

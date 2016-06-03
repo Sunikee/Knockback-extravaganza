@@ -53,7 +53,7 @@ namespace Game
             sceneManager.AddScene(hostScene);
 
             //Set start scene
-            sceneManager.SetCurrentScene("multiplayerScene");
+            sceneManager.SetCurrentScene("hostScene");
         }
 
         protected override void LoadContent()
@@ -310,7 +310,7 @@ namespace Game
                 Model = Content.Load<Model>("albin_sphere")
             };
             var aiPhysicsC = new PhysicsComponent {
-                GravityStrength = 1, Mass = 5, InJump = true
+                GravityStrength = 0.5f, Mass = 5, InJump = true
             };
             var aimoveC = new MovementComponent
             {
@@ -319,6 +319,7 @@ namespace Game
                 Velocity = Vector3.Zero,
                 AirTime = 0f
             };
+
 
             componentManager.AddComponent(aiEntity, aiAiC, aiTransformC, aimoveC, aiModelTransC, aiPhysicsC);
           
