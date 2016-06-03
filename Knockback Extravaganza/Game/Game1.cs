@@ -37,7 +37,7 @@ namespace Game
             //Initialise Scenes
 
             //Init startmenu
-            var startScene = new Scene { Name = "startScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Join Game", "Host Game", "Single Player", "Multiplayer" } };
+            var startScene = new Scene { Name = "startScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Start Game", "Host Game", "Single Player", "Multiplayer" } };
             sceneManager.AddScene(startScene);
 
             //Init multiplayer
@@ -49,11 +49,11 @@ namespace Game
             sceneManager.AddScene(pauseScene);
 
             //Init hostScene
-            var hostScene = new Scene { Name = "hostScene", Background = pauseBackground, SpriteBatch = spriteBatch, Font = startFont, menuChoices = new List<string> { "Host Game", "", "Exit to main menu" }};
+            var hostScene = new Scene { Name = "connectionScene", Background = pauseBackground, SpriteBatch = spriteBatch, Font = startFont, menuChoices = new List<string> { "Host Game", "Join Game", "Exit to main menu" }};
             sceneManager.AddScene(hostScene);
 
             //Set start scene
-            sceneManager.SetCurrentScene("hostScene");
+            sceneManager.SetCurrentScene("connectionScene");
         }
 
         protected override void LoadContent()

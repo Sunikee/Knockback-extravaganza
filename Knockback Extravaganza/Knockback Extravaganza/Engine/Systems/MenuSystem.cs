@@ -47,7 +47,7 @@ namespace ECS_Engine.Engine.Systems
                     case 0:
                         break;
                     case 1:
-                        sceneManager.SetCurrentScene(sceneManager.GetScene("hostScene").Name);
+                        sceneManager.SetCurrentScene(sceneManager.GetScene("connectionScene").Name);
                         break;
                     case 2:
                         break;
@@ -74,16 +74,16 @@ namespace ECS_Engine.Engine.Systems
                         break;
                 }
             }
-            if(currScene.Name == "hostScene")
+            if(currScene.Name == "connectionScene")
             {
                 switch (menu.ActiveChoice)
                 {
                     case 0:
-                        sceneManager.SetCurrentScene(sceneManager.GetScene("multiplayerScene").Name);
-                        menu.ActiveChoice = 0;
+                       //Host game
                         break;
                     case 1:
-
+                        //Join Game
+                        //menu.ActiveChoice = 0;
                         break;
                     case 2:
                         sceneManager.SetCurrentScene(sceneManager.GetScene("startScene").Name);

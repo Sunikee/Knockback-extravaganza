@@ -30,7 +30,7 @@ namespace ECS_Engine.Engine.Managers
 
         public Scene GetScene(string name)
         {
-            return _scenes.First(s => s.Name == name);
+                return _scenes.First(s => s.Name == name);
         }
 
         public List<Scene> GetAllScenes()
