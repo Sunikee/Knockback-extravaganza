@@ -337,7 +337,7 @@ namespace ECS_Engine.Engine.Component
 
             public void InitializeExplosionSmoke()
             {
-                TextureName = "smoke";
+                TextureName = "smoke2";
 
                 MaxParticles = 200;
 
@@ -399,7 +399,7 @@ namespace ECS_Engine.Engine.Component
 
             public void InitializeProjectileTrail()
             {
-                TextureName = "smoke";
+                TextureName = "smoke2";
 
                 MaxParticles = 1000;
 
@@ -430,9 +430,9 @@ namespace ECS_Engine.Engine.Component
 
             public void InitializeSmokePlume()
             {
-                TextureName = "smoke";
+                TextureName = "smoke3";
 
-                MaxParticles = 400;
+                MaxParticles = 50;
 
                 Duration = TimeSpan.FromSeconds(10);
 
@@ -442,7 +442,7 @@ namespace ECS_Engine.Engine.Component
                 MinVerticalVelocity = 10;
                 MaxVerticalVelocity = 20;
 
-                Gravity = new Vector3(-20, 0, 0);
+                Gravity = new Vector3(-20, -5, 0);
 
                 EndVelocity = 0.75f;
 
@@ -452,8 +452,8 @@ namespace ECS_Engine.Engine.Component
                 MinStartSize = 40;
                 MaxStartSize = 70;
 
-                MinEndSize = 150;
-                MaxEndSize = 250;
+                MinEndSize = 100;
+                MaxEndSize = 170;
             }
         }
     }

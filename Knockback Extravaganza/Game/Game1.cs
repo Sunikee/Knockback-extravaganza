@@ -359,12 +359,6 @@ namespace Game
 
             componentManager.AddComponent(aiEntity, aiAiC, aiTransformC, aimoveC, aiModelTransC, aiPhysicsC);
 
-
-            //Test of particle on powerup
-
-            //var smokeParticleEntity = componentManager.MakeEntity();
-            //  InitiateParticleSettings(smokeParticleEntity);
-
             Entity soundEntity = componentManager.MakeEntity();
             SoundEffectComponent soundEffComp = new SoundEffectComponent();
 
@@ -400,8 +394,6 @@ namespace Game
         public void InitializeSystems()
         {
             systemManager.EnableFrameCount = true;
-            systemManager.AddSystem(new ParticleSystem());
-            systemManager.AddSystem(new ParticleRenderSystem());
             systemManager.AddSystem(new TransformSystem());
             systemManager.AddSystem(new CameraSystem());
             systemManager.AddSystem(new ModelRenderSystem());
@@ -417,6 +409,8 @@ namespace Game
             systemManager.AddSystem(new SoundSystem());
             systemManager.AddSystem(new MenuSystem());
             systemManager.AddSystem(new AISystem());
+            systemManager.AddSystem(new ParticleSystem());
+            systemManager.AddSystem(new ParticleRenderSystem());
         }
     }
 }

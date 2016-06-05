@@ -146,7 +146,7 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
         }
         public void UpdateSmokePlume(ParticleComponent particleComponent)
         {
-            AddParticle(Vector3.Zero, Vector3.Zero, particleComponent.SmokePlumeParticleSystemSettings, particleComponent.SmokePlumeParticleSystemSettings.ParticleSettings);
+            AddParticle(new Vector3(500, 0,500), Vector3.Zero, particleComponent.SmokePlumeParticleSystemSettings, particleComponent.SmokePlumeParticleSystemSettings.ParticleSettings);
         }
 
         public void UpdateProjectiles(GameTime gametime, ParticleComponent particleComponent)
