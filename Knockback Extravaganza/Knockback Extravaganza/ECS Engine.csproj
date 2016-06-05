@@ -57,7 +57,7 @@
     <Compile Include="Engine\Component\MouseComponent.cs" />
     <Compile Include="Engine\Component\Network\ClientNetworkComponent.cs" />
     <Compile Include="Engine\Component\Network\ServerNetworkComponent.cs" />
-    <Compile Include="Engine\Component\ParticleComponent.cs" />
+    <Compile Include="Engine\Component\ParticleComponents\ParticleComponent.cs" />
     <Compile Include="Engine\Component\PassiveCollisionComponent.cs" />
     <Compile Include="Engine\Component\PhysicsComponent.cs" />
     <Compile Include="Engine\Component\PlayerComponent.cs" />
@@ -87,6 +87,8 @@
     <Compile Include="Engine\Systems\Network\ClientNetworkSystem.cs" />
     <Compile Include="Engine\Systems\Network\INetworkSystem.cs" />
     <Compile Include="Engine\Systems\Network\ServerNetworkSystem.cs" />
+    <Compile Include="Engine\Systems\ParticleSystems\ParticleRenderSystem.cs" />
+    <Compile Include="Engine\Systems\ParticleSystems\ParticleSystem.cs" />
     <Compile Include="Engine\Systems\PhysicsSystem.cs" />
     <Compile Include="Engine\Systems\CameraSystem.cs" />
     <Compile Include="Engine\Systems\ChaseCameraSystem.cs" />
@@ -126,9 +128,7 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Engine\Systems\ParticleSystems\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>

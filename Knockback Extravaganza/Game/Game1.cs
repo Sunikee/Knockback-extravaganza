@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
 using ECS_Engine.Engine.Scenes;
+using ECS_Engine.Engine.Systems.ParticleSystems;
 
 namespace Game
 {
@@ -74,14 +75,22 @@ namespace Game
         {
 
         }
+
         /// <summary>
         /// Create all entities for the game
         /// </summary>
-        public void CreateEntities() {
+        public void CreateEntities()
+        {
 
             //Creates a menu entity
             Entity menuEntity = componentManager.MakeEntity();
-            var menuC = new MenuComponent { ActiveChoice = 0, ActiveColor = Color.Yellow, InactiveColor = Color.Red, MenuChoicesSpacing = 150 };
+            var menuC = new MenuComponent
+            {
+                ActiveChoice = 0,
+                ActiveColor = Color.Yellow,
+                InactiveColor = Color.Red,
+                MenuChoicesSpacing = 150
+            };
             KeyBoardComponent menukeysC = new KeyBoardComponent();
             menukeysC.AddKeyToAction("Up", Keys.Up);
             menukeysC.AddKeyToAction("Down", Keys.Down);
@@ -107,7 +116,7 @@ namespace Game
             tranformC.Position = new Vector3(0f, 0f, 25f);
             ChaseCameraComponent chase = new ChaseCameraComponent();
             chase.Target = playerEntity1;
-            chase.Offset = new Vector3(0f, 100, 200);
+            chase.Offset = new Vector3(0f, 200, 400);
             FreeCameraComponent free = new FreeCameraComponent();
             free.GraphicsDevice = graphics.GraphicsDevice;
             free.Game = this;
@@ -117,21 +126,24 @@ namespace Game
             componentManager.AddComponent(camera, tranformC);
             componentManager.AddComponent(camera, mouse);
 
-            Mouse.SetPosition(free.GraphicsDevice.Viewport.Width / 2, free.GraphicsDevice.Viewport.Height / 2);
+            Mouse.SetPosition(free.GraphicsDevice.Viewport.Width/2, free.GraphicsDevice.Viewport.Height/2);
 
             Entity platformEntity = componentManager.MakeEntity();
             platformEntity.Tag = "platform";
 
-            ModelComponent platformModelC = new ModelComponent {
+            ModelComponent platformModelC = new ModelComponent
+            {
                 Model = Content.Load<Model>("platform"),
             };
 
-            TransformComponent platformTransformC = new TransformComponent {
+            TransformComponent platformTransformC = new TransformComponent
+            {
                 Position = Vector3.Zero,
                 Scale = new Vector3(4, 4, 4)
             };
 
-            PassiveCollisionComponent passColl = new PassiveCollisionComponent(platformModelC.Model, platformTransformC.GetWorld(platformTransformC.UpdateBuffer));
+            PassiveCollisionComponent passColl = new PassiveCollisionComponent(platformModelC.Model,
+                platformTransformC.GetWorld(platformTransformC.UpdateBuffer));
 
             componentManager.AddComponent(platformEntity, platformModelC);
             componentManager.AddComponent(platformEntity, platformTransformC);
@@ -142,7 +154,8 @@ namespace Game
             player1.Model = Content.Load<Model>("Player");
             ModelTransformComponent t1 = new ModelTransformComponent(player1.Model);
 
-            TransformComponent tc1 = new TransformComponent() {
+            TransformComponent tc1 = new TransformComponent()
+            {
                 Position = new Vector3(0, 10, 0),
                 Rotation = new Vector3(0, 0, 0),
                 Scale = Vector3.One
@@ -159,13 +172,15 @@ namespace Game
             kbc1.AddKeyToAction("Reset", Keys.R);
             kbc1.AddKeyToAction("Pause", Keys.Escape);
 
-            PhysicsComponent pc1 = new PhysicsComponent {
+            PhysicsComponent pc1 = new PhysicsComponent
+            {
                 InAir = true,
                 GravityStrength = 2,
                 Mass = 5
             };
 
-            MovementComponent moveC1 = new MovementComponent {
+            MovementComponent moveC1 = new MovementComponent
+            {
                 Acceleration = 2f,
                 Speed = 0,
                 Velocity = Vector3.Zero,
@@ -177,40 +192,46 @@ namespace Game
 
             ModelTransformComponent t2 = new ModelTransformComponent(player2.Model);
 
-            TransformComponent tc2 = new TransformComponent() {
+            TransformComponent tc2 = new TransformComponent()
+            {
                 Position = new Vector3(10, 10, -100),
                 Rotation = new Vector3(0, 0, 0),
                 Scale = Vector3.One
             };
 
-            PhysicsComponent pc2 = new PhysicsComponent {
+            PhysicsComponent pc2 = new PhysicsComponent
+            {
                 InAir = false,
                 GravityStrength = 2,
                 Mass = 5
             };
 
-            MovementComponent moveC2 = new MovementComponent {
+            MovementComponent moveC2 = new MovementComponent
+            {
                 Acceleration = 1.2f,
                 Speed = 10,
                 Velocity = Vector3.Zero,
                 AirTime = 0f
             };
 
-            MovementComponent moveCCamera = new MovementComponent {
+            MovementComponent moveCCamera = new MovementComponent
+            {
                 Acceleration = 50f,
                 Speed = 10,
                 Velocity = Vector3.Zero,
                 AirTime = 0f
             };
 
-            ActiveCollisionComponent actColl = new ActiveCollisionComponent(player1.Model, tc1.GetWorld(tc1.UpdateBuffer));
-            ActiveCollisionComponent actColl2 = new ActiveCollisionComponent(player2.Model, tc2.GetWorld(tc2.UpdateBuffer));
+            ActiveCollisionComponent actColl = new ActiveCollisionComponent(player1.Model,
+                tc1.GetWorld(tc1.UpdateBuffer));
+            ActiveCollisionComponent actColl2 = new ActiveCollisionComponent(player2.Model,
+                tc2.GetWorld(tc2.UpdateBuffer));
 
             playerEntity1.Tag = "player";
             playerEntity2.Tag = "player";
 
-            var player1C = new PlayerComponent { knockBackResistance = 100 };
-            var player2C = new PlayerComponent { knockBackResistance = 100 };
+            var player1C = new PlayerComponent {knockBackResistance = 100};
+            var player2C = new PlayerComponent {knockBackResistance = 100};
 
             componentManager.AddComponent(playerEntity1, moveC1);
             componentManager.AddComponent(playerEntity1, pc1);
@@ -233,32 +254,37 @@ namespace Game
             componentManager.AddComponent(camera, moveCCamera);
             //componentManager.AddComponent(camera, kbc);
 
-            
+
 
             //Test PowerupBig
             Entity powerUpBigEntity = componentManager.MakeEntity();
             powerUpBigEntity.Tag = "powerUp";
-            var powerUpBigModelC = new ModelComponent {
+            var powerUpBigModelC = new ModelComponent
+            {
                 Model = Content.Load<Model>("box")
             };
-            var powerUpBigTransC = new TransformComponent {
+            var powerUpBigTransC = new TransformComponent
+            {
                 Position = new Vector3(50, 60, -80),
                 Rotation = Vector3.Zero,
                 Scale = new Vector3(0.5f)
             };
-            var powerUpBigPhysicsC = new PhysicsComponent {
+            var powerUpBigPhysicsC = new PhysicsComponent
+            {
                 InAir = true,
                 GravityStrength = 1,
             };
 
-            var powerUpBigMovementC = new MovementComponent {
+            var powerUpBigMovementC = new MovementComponent
+            {
                 Acceleration = 1f,
                 Speed = 0,
                 Velocity = Vector3.Zero,
                 AirTime = 0f
             };
 
-            var powerUpBigPassiveCollC = new ActiveCollisionComponent(powerUpBigModelC.Model, powerUpBigTransC.GetWorld(powerUpBigTransC.UpdateBuffer));
+            var powerUpBigPassiveCollC = new ActiveCollisionComponent(powerUpBigModelC.Model,
+                powerUpBigTransC.GetWorld(powerUpBigTransC.UpdateBuffer));
 
             componentManager.AddComponent(powerUpBigEntity, powerUpBigModelC);
             componentManager.AddComponent(powerUpBigEntity, powerUpBigTransC);
@@ -271,27 +297,32 @@ namespace Game
             Entity powerUpSmallEntity = componentManager.MakeEntity();
             powerUpSmallEntity.Tag = "powerUp";
 
-            var powerUpSmallModelC = new ModelComponent {
+            var powerUpSmallModelC = new ModelComponent
+            {
                 Model = Content.Load<Model>("box")
             };
-            var powerUpSmallTransC = new TransformComponent {
+            var powerUpSmallTransC = new TransformComponent
+            {
                 Position = new Vector3(-50, 60, -80),
                 Rotation = Vector3.Zero,
                 Scale = new Vector3(0.5f)
             };
-            var powerUpSmallPhysicsC = new PhysicsComponent {
+            var powerUpSmallPhysicsC = new PhysicsComponent
+            {
                 InAir = true,
                 GravityStrength = 1,
             };
 
-            var powerUpSmallMovementC = new MovementComponent {
+            var powerUpSmallMovementC = new MovementComponent
+            {
                 Acceleration = 1f,
                 Speed = 0,
                 Velocity = Vector3.Zero,
                 AirTime = 0f
             };
 
-            var powerUpSmallPassiveCollC = new ActiveCollisionComponent(powerUpSmallModelC.Model, powerUpSmallTransC.GetWorld(powerUpSmallTransC.UpdateBuffer));
+            var powerUpSmallPassiveCollC = new ActiveCollisionComponent(powerUpSmallModelC.Model,
+                powerUpSmallTransC.GetWorld(powerUpSmallTransC.UpdateBuffer));
 
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallModelC);
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallTransC);
@@ -300,18 +331,22 @@ namespace Game
             componentManager.AddComponent(powerUpSmallEntity, powerUpSmallMovementC);
 
             var aiEntity = componentManager.MakeEntity();
-            var aiAiC = new AIComponent { Duration = 10000, Target = 1 };
+            var aiAiC = new AIComponent {Duration = 10000, Target = 1};
             var aiTransformC = new TransformComponent
             {
                 Position = new Vector3(-0, 60, -200),
                 Rotation = Vector3.Zero,
                 Scale = new Vector3(1)
             };
-            var aiModelTransC = new ModelComponent {
+            var aiModelTransC = new ModelComponent
+            {
                 Model = Content.Load<Model>("albin_sphere")
             };
-            var aiPhysicsC = new PhysicsComponent {
-                GravityStrength = 0.5f, Mass = 5, InAir = true
+            var aiPhysicsC = new PhysicsComponent
+            {
+                GravityStrength = 0.5f,
+                Mass = 5,
+                InAir = true
             };
             var aimoveC = new MovementComponent
             {
@@ -323,7 +358,7 @@ namespace Game
 
 
             componentManager.AddComponent(aiEntity, aiAiC, aiTransformC, aimoveC, aiModelTransC, aiPhysicsC);
-          
+
 
             //Test of particle on powerup
 
@@ -333,136 +368,40 @@ namespace Game
             Entity soundEntity = componentManager.MakeEntity();
             SoundEffectComponent soundEffComp = new SoundEffectComponent();
 
-            SoundEffectPiece soundEffect1 = new SoundEffectPiece(Content.Load<SoundEffect>("Sound/fs_general_dirt_01")) {
+            SoundEffectPiece soundEffect1 = new SoundEffectPiece(Content.Load<SoundEffect>("Sound/fs_general_dirt_01"))
+            {
                 ActiveTime = 50f,
                 CurrentActiveTime = 0f
-                
+
             };
             soundEffComp.AddSoundEffect("footstep1", soundEffect1);
-            SoundEffectPiece soundEffect2 = new SoundEffectPiece(Content.Load<SoundEffect>("Sound/fs_general_dirt_03")) {
+            SoundEffectPiece soundEffect2 = new SoundEffectPiece(Content.Load<SoundEffect>("Sound/fs_general_dirt_03"))
+            {
                 ActiveTime = 50f,
                 CurrentActiveTime = 50f
             };
             soundEffComp.AddSoundEffect("footstep2", soundEffect2);
-            SongComponent songComponent = new SongComponent {
+            SongComponent songComponent = new SongComponent
+            {
                 NewActiveSong = Content.Load<Song>("Sound/AfternoonAmbienceSimple_01")
             };
             SongPiece song = new SongPiece(Content.Load<Song>("Sound/AfternoonAmbienceSimple_01"), true);
             songComponent.AddSong("background", song);
             componentManager.AddComponent(playerEntity1, soundEffComp);
             componentManager.AddComponent(soundEntity, songComponent);
+
+            Entity particleSystem = componentManager.MakeEntity();
+            ParticleComponent particleComponent = new ParticleComponent(Content, graphics.GraphicsDevice);
+
+            componentManager.AddComponent(particleSystem, particleComponent);
+            particleComponent.ActivateSmoke = true;
         }
 
-        public void InitiateParticleSettings(Entity smokeParticleEntity)
-        {
-            //Create ParticleSettings 
-            var particleSettings = new ParticleSettings
-            {
-                TextureName = "smoke",
-                MaxParticles = 600,
-                Duration = TimeSpan.FromSeconds(10),
-                DurationRandomness = 0,
-                MinHorizontalVelocity = 0,
-                MaxHorizontalVelocity = 15,
-                MinVerticalVelocity = 10,
-                MaxVerticalVelocity = 20,
-                Gravity = new Vector3(-20, -5, 0),
-                EndVelocity = 0.75f,
-                MinRotateSpeed = -1,
-                MaxRotateSpeed = 1,
-                MinStartSize = 4,
-                MaxStartSize = 7,
-                MinEndSize = 35,
-                MaxEndSize = 140,
-                Type = ParticleType.Smoke,
-                MinColor = Color.White,
-                MaxColor = Color.White,
-            };
-
-            //Create ParticleSystemSettings
-            ushort[] indices = new ushort[particleSettings.MaxParticles * 6];
-            for(int i = 0; i<particleSettings.MaxParticles; i++)
-            {
-                indices[i * 6 * 0] = (ushort)(i * 4 * 0);
-                indices[i * 6 * 1] = (ushort)(i * 4 * 1);
-                indices[i * 6 * 2] = (ushort)(i * 4 * 2);
-                indices[i * 6 * 3] = (ushort)(i * 4 * 0);
-                indices[i * 6 * 4] = (ushort)(i * 4 * 2);
-                indices[i * 6 * 5] = (ushort)(i * 4 * 3);
-            }
-
-            Effect effect = Content.Load<Effect>("Effects/ParticleEffect");
-            Effect particleEffectClone = effect.Clone();
-            EffectParameterCollection parameters = particleEffectClone.Parameters;
-            var particleSystemSettings = new ParticleSystemSettings
-            {
-                particles = new ParticleVertex[particleSettings.MaxParticles * 4],
-                indexBuffer = new IndexBuffer(graphics.GraphicsDevice, typeof(ushort), indices.Length, BufferUsage.WriteOnly),
-                particleEffect = particleEffectClone,
-                effectViewParameter = parameters["View"],
-                effectProjectionParameter = parameters["Projection"],
-                effectViewportScaleParameter = parameters["ViewportScale"],
-                effectTimeParameter = parameters["CurrentTime"],
-        };
-            parameters["Duration"].SetValue((float)particleSettings.Duration.TotalSeconds);
-            parameters["DurationRandomness"].SetValue(particleSettings.DurationRandomness);
-            parameters["Gravity"].SetValue(particleSettings.Gravity);
-            parameters["EndVelocity"].SetValue(particleSettings.EndVelocity);
-            parameters["MinColor"].SetValue(particleSettings.MinColor.ToVector4());
-            parameters["MaxColor"].SetValue(particleSettings.MaxColor.ToVector4());
-            parameters["RotateSpeed"].SetValue(new Vector2(particleSettings.MinRotateSpeed, particleSettings.MaxRotateSpeed));
-            parameters["StarSize"].SetValue(new Vector2(particleSettings.MinStartSize, particleSettings.MaxStartSize));
-            parameters["EndSize"].SetValue(new Vector2(particleSettings.MinEndSize, particleSettings.MaxEndSize));
-            Texture2D texture = Content.Load<Texture2D>(particleSettings.TextureName);
-
-            particleSystemSettings.indexBuffer.SetData(indices);
-
-            //Create ParticleVertex
-            var particleVertex = new ParticleVertex
-            {
-                SizeInBytes = 40,
-                vertexDeclaration = new VertexDeclaration(
-                new VertexElement(0, VertexElementFormat.Vector3, VertexElementUsage.Position, 0),
-                new VertexElement(12, VertexElementFormat.Vector2, VertexElementUsage.Normal, 0),
-                new VertexElement(20, VertexElementFormat.Vector3, VertexElementUsage.Normal, 1),
-                new VertexElement(32, VertexElementFormat.Color, VertexElementUsage.Color, 0),
-                new VertexElement(36, VertexElementFormat.Single, VertexElementUsage.TextureCoordinate, 0)
-                )
-            };
-
-            //Create ParticleProjectile
-            var particleProjectileC = new ParticleProjectile
-            {
-                TrailParticlesPerSecond = 200,
-                NumExplosionParticles = 30,
-                NumExplosionSmokeParticles = 50,
-                ProjectileLifeSpan = 1.5f,
-                SidewaysVelocityRange = 60,
-                VerticalVelocityRange = 40,
-                Gravity = 15
-            };
-
-            //Create ParticleComponent
-            var particleComponent = new ParticleComponent
-            {
-                ParticleSettings = particleSettings,
-                ParticleVertex = particleVertex,
-                ParticlesPerSecond = 200,
-                Projectile = particleProjectileC,
-            };
-            particleComponent.TimeBetweenParticles = 1.0f / particleComponent.ParticlesPerSecond;
-
-            componentManager.AddComponent(smokeParticleEntity, particleComponent);
-        }
-
-
-
-        /// <summary>
-        /// Initializes all needed systems
-        /// </summary>
         public void InitializeSystems()
         {
             systemManager.EnableFrameCount = true;
+            systemManager.AddSystem(new ParticleSystem());
+            systemManager.AddSystem(new ParticleRenderSystem());
             systemManager.AddSystem(new TransformSystem());
             systemManager.AddSystem(new CameraSystem());
             systemManager.AddSystem(new ModelRenderSystem());
