@@ -9,6 +9,7 @@ using ECS_Engine.Engine.Managers;
 using ECS_Engine.Engine.Systems.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ECS_Engine.Engine.Scenes;
 
 namespace ECS_Engine.Engine.Systems.ParticleSystems
 {
@@ -17,21 +18,23 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
 
         public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager)
         {
-            var particleComponents = componentManager.GetComponents<ParticleComponent>();
-            var cameraComponents = componentManager.GetComponents<CameraComponent>();
-            CameraComponent camera = (CameraComponent)cameraComponents.First().Value;
+            Scene currScene = sceneManager.GetCurrentScene();
+            if (currScene.Name == "multiplayerScene") {
+                var particleComponents = componentManager.GetComponents<ParticleComponent>();
+                var cameraComponents = componentManager.GetComponents<CameraComponent>();
+                CameraComponent camera = (CameraComponent)cameraComponents.First().Value;
 
-            foreach (KeyValuePair<Entity, IComponent> component in particleComponents)
-            {
-                ParticleComponent particleComponent = (ParticleComponent)component.Value;
+                foreach (KeyValuePair<Entity, IComponent> component in particleComponents) {
+                    ParticleComponent particleComponent = (ParticleComponent)component.Value;
 
-                if (particleComponents != null)
-                {
-                    SetCamera(camera.View, camera.Projection, particleComponent);
-                    DrawAllParticleSystems(gameTime, graphicsDevice, particleComponent);
+                    if (particleComponents != null) {
+                        SetCamera(camera.View, camera.Projection, particleComponent);
+                        DrawAllParticleSystems(gameTime, graphicsDevice, particleComponent);
 
+                    }
                 }
             }
+            
         }
 
         public void SetCamera(Matrix view, Matrix projection, ParticleComponent particleComponent)

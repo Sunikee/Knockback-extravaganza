@@ -16,9 +16,12 @@ namespace ECS_Engine.Engine.Systems {
             if (components != null) {
                 foreach (KeyValuePair<Entity, IComponent> cam in components) {
                     TransformComponent transform = componentManager.GetComponent<TransformComponent>(cam.Key);
+                    
                     if (transform != default(TransformComponent)) {
                         CameraComponent camera = (CameraComponent)cam.Value;
+                        
                         camera.View = Matrix.CreateLookAt(transform.Position, camera.Target, camera.Up);
+                        
                     }
                 }
             }

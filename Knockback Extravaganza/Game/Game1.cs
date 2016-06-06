@@ -54,7 +54,7 @@ namespace Game
             sceneManager.AddScene(hostScene);
 
             //Set start scene
-            sceneManager.SetCurrentScene("connectionScene");
+            sceneManager.SetCurrentScene("startScene");
         }
 
         protected override void LoadContent()
@@ -79,13 +79,11 @@ namespace Game
         /// <summary>
         /// Create all entities for the game
         /// </summary>
-        public void CreateEntities()
-        {
+        public void CreateEntities() {
 
             //Creates a menu entity
             Entity menuEntity = componentManager.MakeEntity();
-            var menuC = new MenuComponent
-            {
+            var menuC = new MenuComponent {
                 ActiveChoice = 0,
                 ActiveColor = Color.Yellow,
                 InactiveColor = Color.Red,
@@ -110,18 +108,20 @@ namespace Game
             cameraC.FarPlaneDistace = 10000f;
             cameraC.NearPlaneDistace = .1f;
             cameraC.Target = Vector3.Zero;
+            //cameraC.Target = new Vector3(0, 100, 0);
             cameraC.Up = Vector3.Up;
             TransformComponent tranformC = new TransformComponent();
             //tranformC.Position = new Vector3(0f, 20, -10f);
-            tranformC.Position = new Vector3(0f, 0f, 25f);
+            tranformC.Position = new Vector3(0f, 1000f, 2000f);
             ChaseCameraComponent chase = new ChaseCameraComponent();
             chase.Target = playerEntity1;
             chase.Offset = new Vector3(0f, 200, 400);
-            FreeCameraComponent free = new FreeCameraComponent();
-            free.GraphicsDevice = graphics.GraphicsDevice;
-            free.Game = this;
-
-            componentManager.AddComponent(camera, chase);
+            FreeCameraComponent free = new FreeCameraComponent()
+            {
+                GraphicsDevice = graphics.GraphicsDevice,
+                Game = this,
+            };
+            //componentManager.AddComponent(camera, chase);
             componentManager.AddComponent(camera, cameraC);
             componentManager.AddComponent(camera, tranformC);
             componentManager.AddComponent(camera, mouse);
@@ -166,11 +166,10 @@ namespace Game
             player1.Model = Content.Load<Model>("Player");
             ModelTransformComponent t1 = new ModelTransformComponent(player1.Model);
 
-            TransformComponent tc1 = new TransformComponent()
-            {
+            TransformComponent tc1 = new TransformComponent() {
                 Position = new Vector3(0, 10, 0),
                 Rotation = new Vector3(0, 0, 0),
-                Scale = Vector3.One
+                Scale = new Vector3(7, 7, 7),
             };
 
             KeyBoardComponent kbc1 = new KeyBoardComponent();
@@ -208,7 +207,7 @@ namespace Game
             {
                 Position = new Vector3(10, 10, -100),
                 Rotation = new Vector3(0, 0, 0),
-                Scale = Vector3.One
+                Scale = new Vector3(7, 7, 7)
             };
 
             PhysicsComponent pc2 = new PhysicsComponent

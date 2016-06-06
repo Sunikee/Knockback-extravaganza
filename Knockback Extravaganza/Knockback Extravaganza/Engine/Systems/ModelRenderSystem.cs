@@ -75,7 +75,7 @@ namespace ECS_Engine.Engine.Systems
         {
             var cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
-
+            BoundingFrustum frustum = new BoundingFrustum(camera.View * camera.Projection);
             var components = componentManager.GetComponents<ModelComponent>();
             foreach (KeyValuePair<Entity, IComponent> component in components)
             {
@@ -83,38 +83,38 @@ namespace ECS_Engine.Engine.Systems
                 ModelTransformComponent MeshTransform = componentManager.GetComponent<ModelTransformComponent>(component.Key);
                 TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                 MenuComponent menuC = componentManager.GetComponent<MenuComponent>(component.Key);
-
-                if (MeshTransform != default(ModelTransformComponent) && transform != default(TransformComponent))
-                {
-                    foreach (ModelMesh mesh in model.Model.Meshes)
-                    {
-                        foreach (BasicEffect effect in mesh.Effects)
-                        {
-                            CheckForTexture(model, effect);
-                            effect.EnableDefaultLighting();
-                            effect.View = camera.View;
-                            effect.Projection = camera.Projection;
-                            effect.World = MeshTransform.GetTransform(mesh.Name).ParentBone * MeshTransform.GetTransform(mesh.Name).GetWorld(MeshTransform.CurrentRenderBuffer) * transform.GetWorld(transform.CurrentRenderBuffer);
-                        }
-                        mesh.Draw();
-                    }
+                CollisionComponent collisionC = componentManager.GetComponent<ActiveCollisionComponent>(component.Key);
+                if(collisionC == null) {
+                    collisionC = componentManager.GetComponent<PassiveCollisionComponent>(component.Key);
                 }
-                else if (transform != default(TransformComponent))
-                {
 
-                    Matrix[] transforms = new Matrix[model.Model.Bones.Count()];
-                    model.Model.CopyAbsoluteBoneTransformsTo(transforms);
-                    foreach (ModelMesh mesh in model.Model.Meshes)
-                    {
-                        foreach (BasicEffect effect in mesh.Effects)
-                        {
-                            CheckForTexture(model, effect);
-                            effect.EnableDefaultLighting();
-                            effect.View = camera.View;
-                            effect.Projection = camera.Projection;
-                            effect.World = transforms[mesh.ParentBone.Index] * transform.GetWorld(transform.CurrentRenderBuffer);
+                if (collisionC == null || frustum.Intersects(collisionC.BoundingBox)) {
+
+                    if (MeshTransform != default(ModelTransformComponent) && transform != default(TransformComponent)) {
+                        foreach (ModelMesh mesh in model.Model.Meshes) {
+                            foreach (BasicEffect effect in mesh.Effects) {
+                                CheckForTexture(model, effect);
+                                effect.EnableDefaultLighting();
+                                effect.View = camera.View;
+                                effect.Projection = camera.Projection;
+                                effect.World = MeshTransform.GetTransform(mesh.Name).ParentBone * MeshTransform.GetTransform(mesh.Name).GetWorld(MeshTransform.CurrentRenderBuffer) * transform.GetWorld(transform.CurrentRenderBuffer);
+                            }
+                            mesh.Draw();
                         }
-                        mesh.Draw();
+                    } else if (transform != default(TransformComponent)) {
+
+                        Matrix[] transforms = new Matrix[model.Model.Bones.Count()];
+                        model.Model.CopyAbsoluteBoneTransformsTo(transforms);
+                        foreach (ModelMesh mesh in model.Model.Meshes) {
+                            foreach (BasicEffect effect in mesh.Effects) {
+                                CheckForTexture(model, effect);
+                                effect.EnableDefaultLighting();
+                                effect.View = camera.View;
+                                effect.Projection = camera.Projection;
+                                effect.World = transforms[mesh.ParentBone.Index] * transform.GetWorld(transform.CurrentRenderBuffer);
+                            }
+                            mesh.Draw();
+                        }
                     }
                 }
             }

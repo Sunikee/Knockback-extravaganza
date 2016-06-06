@@ -57,7 +57,7 @@ namespace ECS_Engine.Engine.Systems
                     powerUp.ActiveTime -= gameTime.ElapsedGameTime.Milliseconds;
                     if (powerUp.ActiveTime <= 0)
                     {
-                        transform.Scale = new Vector3(1, 1, 1);
+                        transform.Scale = new Vector3(10, 10, 10);
                         physics.Mass = 5;
                         componentManager.RemoveComponent<PowerUpComponent>(component.Key);
                     }
