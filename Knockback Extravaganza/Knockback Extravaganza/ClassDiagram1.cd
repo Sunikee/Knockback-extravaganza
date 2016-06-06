@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ECS_Engine.ECSEngine" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASAEEAAAQAAAwAAAAAAAAAACAECIAkAAAAABABAAAQ=</HashCode>
+      <FileName>ECSEngine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ECS_Engine.Engine.Managers.ComponentManager" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAJAEAAAAEBBAAgAAAAAQAEAAAAAAAIAAA=</HashCode>
+      <FileName>Engine\Managers\ComponentManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ECSEngine" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ECS_Engine.Engine.Managers.MessageManager" Collapsed="true">
+    <Position X="13.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAEAAAAAgAAAAAAAAEAABAAAAAAEAAAA=</HashCode>
+      <FileName>Engine\Managers\MessageManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ECSEngine" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ECS_Engine.Engine.Managers.SceneManager" Collapsed="true">
+    <Position X="11.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAkAgAAAAAAAAAAAQAAAACAAAEIAAAAA=</HashCode>
+      <FileName>Engine\Managers\SceneManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ECSEngine" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ECS_Engine.Engine.Managers.SystemManager" Collapsed="true">
+    <Position X="9.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABACgAAEEAAkEAABCAMEAAAEQAAAAIACAAkAAAAgBQ=</HashCode>
+      <FileName>Engine\Managers\SystemManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ECSEngine" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ECS_Engine.Engine.Scenes.Scene" Collapsed="true">
+    <Position X="11.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAABAAAQAAgAAASAAQ=</HashCode>
+      <FileName>Engine\Scenes\Scene.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SceneManager" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="ECS_Engine.Engine.Component.Interfaces.IComponent" Collapsed="true">
+    <Position X="7.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Component\Interfaces\IComponent.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ComponentManager" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="ECS_Engine.Engine.Systems.Interfaces.IRenderSystem" Collapsed="true">
+    <Position X="8.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
+      <FileName>Engine\Systems\Interfaces\IRenderSystem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ECS_Engine.Engine.Systems.Interfaces.ISystem" Collapsed="true">
+    <Position X="9.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Engine\Systems\Interfaces\ISystem.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="SystemManager" />
+    </ShowAsAssociation>
+  </Interface>
+  <Interface Name="ECS_Engine.Engine.Systems.Interfaces.IUpdateSystem" Collapsed="true">
+    <Position X="10.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Engine\Systems\Interfaces\IUpdateSystem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
