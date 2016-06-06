@@ -9,9 +9,13 @@ using Microsoft.Xna.Framework;
 using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Scenes;
+using ECS_Engine.Engine;
 
-namespace ECS_Engine.Engine.Systems
+namespace Game.Source.Systems
 {
+    /// <summary>
+    /// Handles updaing and moving between the different menues and their options.
+    /// </summary>
     public class MenuSystem : IUpdateSystem
     {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)

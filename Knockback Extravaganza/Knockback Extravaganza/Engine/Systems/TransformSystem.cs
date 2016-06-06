@@ -11,6 +11,9 @@ using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Component.Abstract_Classes;
 
 namespace ECS_Engine.Engine.Systems {
+    /// <summary>
+    /// Updates all the transforms components their World and directional vectors.
+    /// </summary>
     public class TransformSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
 

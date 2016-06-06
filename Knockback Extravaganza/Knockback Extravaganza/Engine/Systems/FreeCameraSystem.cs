@@ -11,12 +11,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/* System description
- * This system defines a free-roaming camera that is able to move in any
- * direction using the mouse and keyboard.
- * */
+
 
 namespace ECS_Engine.Engine.Systems {
+    /// <summary>
+    ///System description
+    ///This system defines a free-roaming camera that is able to move in any
+    ///direction using the mouse and keyboard.
+    /// </summary>
     public class FreeCameraSystem : IUpdateSystem {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
             var components = componentManager.GetComponents<CameraComponent>();

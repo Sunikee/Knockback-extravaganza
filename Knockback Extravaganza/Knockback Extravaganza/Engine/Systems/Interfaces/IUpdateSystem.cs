@@ -7,6 +7,9 @@ using Microsoft.Xna.Framework;
 using ECS_Engine.Engine.Managers;
 
 namespace ECS_Engine.Engine.Systems.Interfaces {
+    /// <summary>
+    /// Interface for all update systems.
+    /// </summary>
     public interface IUpdateSystem : ISystem{
         void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager);
     }

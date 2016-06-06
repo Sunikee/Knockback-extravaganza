@@ -11,6 +11,9 @@ using Microsoft.Xna.Framework;
 using ECS_Engine.Engine;
 
 namespace Game.Source.Systems {
+    /// <summary>
+    /// Handles the collissions messages and parse them and send new messages depending on the collission types that happend.
+    /// </summary>
     public class CollisionHandlingSystem : IUpdateSystem
     {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)

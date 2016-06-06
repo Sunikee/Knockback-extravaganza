@@ -10,6 +10,9 @@ using Microsoft.Xna.Framework.Graphics;
 using ECS_Engine.Engine.Scenes;
 
 namespace ECS_Engine.Engine.Systems {
+    /// <summary>
+    /// Acts a split for the different render systems.
+    /// </summary>
     public class RenderSystem : IRenderSystem {
 
         ModelRenderSystem modelRender = new ModelRenderSystem();

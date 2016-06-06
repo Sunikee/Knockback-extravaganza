@@ -13,6 +13,9 @@ using ECS_Engine.Engine;
 using Game.Source.Components;
 
 namespace Game.Source.Systems.AI {
+    /// <summary>
+    /// Updates the AI and their states to follow the players around.
+    /// </summary>
     public class AISystem : IUpdateSystem
     {
         public List<Entity> aiEntitiesToRemove = new List<Entity>();

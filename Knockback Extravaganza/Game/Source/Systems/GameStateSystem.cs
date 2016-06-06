@@ -12,6 +12,9 @@ using Game.Source.Components;
 using ECS_Engine.Engine;
 
 namespace Game.Source.Systems {
+    /// <summary>
+    /// Handles the different states that game can end in.
+    /// </summary>
     public class GameStateSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
 

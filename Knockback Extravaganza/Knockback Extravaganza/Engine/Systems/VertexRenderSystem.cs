@@ -13,6 +13,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 //TODO: HANDLES TEXTURES DAMN IT!
 namespace ECS_Engine.Engine.Systems {
+    /// <summary>
+    /// Handles rendering for the Vertex.
+    /// </summary>
+    /// <typeparam name="T">Is of type IVertexType</typeparam>
     public class VertexRenderSystem<T> : IRenderSystem where T : struct, IVertexType{
         public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) {
             var cam = componentManager.GetComponents<CameraComponent>();

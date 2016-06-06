@@ -12,6 +12,9 @@ using ECS_Engine.Engine;
 using Game.Source.Components;
 
 namespace Game.Source.Systems {
+    /// <summary>
+    /// Update the players movement depending on input. Also applies frictions to the current momentum.
+    /// </summary>
     public class MovementSystem : IUpdateSystem
     {
         public float DashTimer = 1;

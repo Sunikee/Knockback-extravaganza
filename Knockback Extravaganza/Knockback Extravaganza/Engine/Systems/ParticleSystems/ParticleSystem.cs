@@ -13,6 +13,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS_Engine.Engine.Systems.ParticleSystems
 {
+    /// <summary>
+    /// Handles all the update for the particles and their emitters.
+    /// </summary>
     public class ParticleSystem: IUpdateSystem
     {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager,

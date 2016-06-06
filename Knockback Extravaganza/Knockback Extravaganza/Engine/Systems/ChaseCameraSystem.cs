@@ -10,6 +10,10 @@ using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Component.Interfaces;
 
 namespace ECS_Engine.Engine.Systems {
+    /// <summary>
+    /// Chase camera system updates the position and target for the camera by tracking the target around, offsetting itself
+    /// but the set vales as well apply target offset if set.
+    /// </summary>
     public class ChaseCameraSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManage, SceneManager sceneManager) {
             var components = componentManager.GetComponents<CameraComponent>();

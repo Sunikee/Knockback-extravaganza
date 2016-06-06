@@ -13,6 +13,9 @@ using ECS_Engine.Engine.Scenes;
 
 namespace ECS_Engine.Engine.Systems.ParticleSystems
 {
+    /// <summary>
+    /// Handles all the rendering for the particles and their emitters.
+    /// </summary>
     public class ParticleRenderSystem : IRenderSystem
     {
 

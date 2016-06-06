@@ -14,6 +14,9 @@ using ECS_Engine.Engine;
 using Game.Source.Components;
 
 namespace Game.Source.Systems {
+    /// <summary>
+    /// Handles animations for the players.
+    /// </summary>
     public class PlayerAnimationSystem : IUpdateSystem
     {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)

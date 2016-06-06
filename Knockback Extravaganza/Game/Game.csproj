@@ -53,6 +53,7 @@
     <Compile Include="Source\Systems\AI\AISystem.cs" />
     <Compile Include="Source\Systems\CollisionHandleSystem.cs" />
     <Compile Include="Source\Systems\GameStateSystem.cs" />
+    <Compile Include="Source\Systems\MenuSystem.cs" />
     <Compile Include="Source\Systems\MovementSystem.cs" />
     <Compile Include="Source\Systems\PlayerAnimationSystem.cs" />
     <Compile Include="Source\Systems\PowerUpSystem.cs" />

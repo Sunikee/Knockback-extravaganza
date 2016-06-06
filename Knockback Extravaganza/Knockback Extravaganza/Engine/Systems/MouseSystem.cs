@@ -15,6 +15,9 @@ using GameEngine;
 
 namespace ECS_Engine.Engine.Systems
 {
+    /// <summary>
+    /// Gets input from the mouse.
+    /// </summary>
     public class MouseSystem : IUpdateSystem
     {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)

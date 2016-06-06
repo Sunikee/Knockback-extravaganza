@@ -6,13 +6,14 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
-/* System Description
- * This system handles the physics of the game, more specifically the 
- * different forces that acts on the game.
- * */
 
 namespace ECS_Engine.Engine.Systems
 {
+    /// <summary>
+    /// System Description
+    /// This system handles the physics of the game, more specifically the
+    /// different forces that acts on the game.
+    /// </summary>
     public class PhysicsSystem : IUpdateSystem
     {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)

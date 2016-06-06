@@ -11,6 +11,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Systems {
+    /// <summary>
+    /// Handles rendering for a indexed Vertex.
+    /// </summary>
+    /// <typeparam name="T">Is of type IVertexType</typeparam>
     public class VertexIndexRenderSystem<T> : IRenderSystem where T : struct, IVertexType {
         public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) {
             var cam = componentManager.GetComponents<CameraComponent>();

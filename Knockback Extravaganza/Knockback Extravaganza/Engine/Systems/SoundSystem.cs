@@ -11,6 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Systems {
+    /// <summary>
+    /// Plays sounds stored in components using the message system to trigger them.
+    /// </summary>
     public class SoundSystem : IUpdateSystem {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
             var effectComponents = componentManager.GetComponents<SoundEffectComponent>();

@@ -13,14 +13,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-/* System Description
- * This system handles all power ups. When a player picks up a power up, a message is saved.
- * This system gets that message and applies a random power. It removes the
- * powerup from the map and starts a powerup timer for the player. When the timer hits 0,
- * the player loses the power up.
- * */
 
 namespace Game.Source.Systems {
+    /// <summary>
+    /// System Description
+    /// This system handles all power ups. When a player picks up a power up, a message is saved.
+    /// This system gets that message and applies a random power. It removes the
+    /// powerup from the map and starts a powerup timer for the player. When the timer hits 0,
+    /// the player loses the power up.
+    /// </summary>
     public class PowerUpSystem : IUpdateSystem
     {
         public ContentManager content;

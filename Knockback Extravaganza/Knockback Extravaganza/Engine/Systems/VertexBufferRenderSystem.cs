@@ -12,6 +12,10 @@ using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Component.Abstract_Classes;
 
 namespace ECS_Engine.Engine.Systems {
+    /// <summary>
+    /// Handles rendering for the VertexBuffer.
+    /// </summary>
+    /// <typeparam name="T">Is of type IVertexType</typeparam>
     public class VertexBufferRenderSystem<T> : IRenderSystem where T : struct, IVertexType{
         public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) {
             var cam = componentManager.GetComponents<CameraComponent>();

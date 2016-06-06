@@ -15,6 +15,10 @@ using GameEngine;
 
 namespace ECS_Engine.Engine.Systems
 {
+    /// <summary>
+    /// Handles input from a gamepad, stores states of the previous frame and current so one can see if a button was pressed, held or released.
+    /// It also binds actions to buttons.
+    /// </summary>
     public class GamePadSystem : IUpdateSystem
     {
         

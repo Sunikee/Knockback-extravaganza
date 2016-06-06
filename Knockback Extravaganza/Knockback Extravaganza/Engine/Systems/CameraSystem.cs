@@ -10,6 +10,10 @@ using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Component;
 
 namespace ECS_Engine.Engine.Systems {
+    /// <summary>
+    /// This systems handles the updating of the camera used for making the view matrix, mainly it updates the look at by using it's
+    /// target and position.
+    /// </summary>
     public class CameraSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
             var components = componentManager.GetComponents<CameraComponent>();

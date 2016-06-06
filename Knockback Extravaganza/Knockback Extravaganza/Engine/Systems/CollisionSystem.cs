@@ -14,6 +14,10 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS_Engine.Engine.Systems
 {
+    /// <summary>
+    /// Checks for collissions between active against active and active against passive. It sends messages about collissions that have happened through the
+    /// messageManager.
+    /// </summary>
     public class CollisionDetectionSystem : IUpdateSystem
     {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)

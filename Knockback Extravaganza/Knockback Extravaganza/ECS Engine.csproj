@@ -77,7 +77,6 @@
     <Compile Include="Engine\SongPiece.cs" />
     <Compile Include="Engine\SoundEffectPiece.cs" />
     <Compile Include="Engine\Systems\FreeCameraSystem.cs" />
-    <Compile Include="Engine\Systems\MenuSystem.cs" />
     <Compile Include="Engine\Systems\Network\ClientNetworkSystem.cs" />
     <Compile Include="Engine\Systems\Network\INetworkSystem.cs" />
     <Compile Include="Engine\Systems\Network\ServerNetworkSystem.cs" />

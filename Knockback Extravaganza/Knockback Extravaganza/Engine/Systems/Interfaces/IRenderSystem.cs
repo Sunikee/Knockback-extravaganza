@@ -8,6 +8,9 @@ using ECS_Engine.Engine.Managers;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace ECS_Engine.Engine.Systems.Interfaces {
+    /// <summary>
+    /// Interface for the Render systems
+    /// </summary>
     public interface IRenderSystem : ISystem{
         void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManagers);
 
