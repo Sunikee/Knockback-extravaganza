@@ -1,9 +1,10 @@
-﻿
-using ECS_Engine.Engine.Component;
+﻿using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Managers;
 using ECS_Engine.Engine.Systems.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 /* System Description
  * This system handles all power ups. When a player picks up a power up, a message is saved.
- * This system gets that message and applies a random power. It removes the 
+ * This system gets that message and applies a random power. It removes the
  * powerup from the map and starts a powerup timer for the player. When the timer hits 0,
  * the player loses the power up.
  * */
@@ -21,10 +22,27 @@ namespace ECS_Engine.Engine.Systems
 {
     public class PowerUpSystem : IUpdateSystem
     {
+        public ContentManager content;
         public List<Entity> powerUpsToRemove = new List<Entity>();
-       
+
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
+            var powerUpSettingsEntities = componentManager.GetComponents<PowerUpSettingsComponent>();
+            var powerUpSettingsEntity = powerUpSettingsEntities.First().Key;
+            var powerUpSettingsComponent = componentManager.GetComponent<PowerUpSettingsComponent>(powerUpSettingsEntity);
+
+            if (powerUpSettingsComponent.powerUpSpawnTimer == 0)
+                powerUpSettingsComponent.randomSpawnTimerInt = powerUpSettingsComponent.random.Next(5000, 10000);
+
+            if (powerUpSettingsComponent.powerUpSpawnTimer >= powerUpSettingsComponent.randomSpawnTimerInt)
+            {
+                //Spawna powerUpp på random position på platformen.
+                SpawnPowerUp(componentManager, powerUpSettingsComponent);
+                powerUpSettingsComponent.randomSpawnTimerInt = powerUpSettingsComponent.random.Next(5000, 10000);
+                powerUpSettingsComponent.powerUpSpawnTimer = 0;
+            }
+            powerUpSettingsComponent.powerUpSpawnTimer += 0.5f;
+
             var activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();
             foreach (KeyValuePair<Entity, IComponent> component in activeComponents)
             {
@@ -59,7 +77,7 @@ namespace ECS_Engine.Engine.Systems
                             physics.Mass *= 2;
                             if (physics.Mass >= 10)
                                 physics.Mass = 10;
-                          
+
                             var powerupC = new PowerUpComponent { ActiveTime = 10000, PowerUpType = power };
                             componentManager.AddComponent(component.Key, powerupC);
 
@@ -73,7 +91,7 @@ namespace ECS_Engine.Engine.Systems
                             physics.Mass *= 0.5f;
                             if (physics.Mass >= 2.5f)
                                 physics.Mass = 2.5f;
-                           
+
                             var powerupC = new PowerUpComponent { ActiveTime = 10000, PowerUpType = power };
                             componentManager.AddComponent(component.Key, powerupC);
 
@@ -86,6 +104,55 @@ namespace ECS_Engine.Engine.Systems
             }
             RemovePowerUps(componentManager);
         }
+        public void SpawnPowerUp(ComponentManager componentManager, PowerUpSettingsComponent powerUpSettingsComponent)
+        {
+
+            Random rnd = new Random();
+            int multiplier = rnd.Next(-1, 2);
+            float newSpawnCoordinateX = powerUpSettingsComponent.randomSpawnTimerInt * multiplier;
+            float newSpawnCoordinateZ = powerUpSettingsComponent.randomSpawnTimerInt * multiplier;
+
+            if (newSpawnCoordinateX > powerUpSettingsComponent.maxCoordX)
+                newSpawnCoordinateX = powerUpSettingsComponent.maxCoordX;
+
+            if (newSpawnCoordinateX < powerUpSettingsComponent.minCoordX)
+                newSpawnCoordinateX = powerUpSettingsComponent.minCoordX;
+
+            if (newSpawnCoordinateZ > powerUpSettingsComponent.maxCoordZ)
+                newSpawnCoordinateZ = powerUpSettingsComponent.maxCoordZ;
+
+            if (newSpawnCoordinateZ < powerUpSettingsComponent.minCoordZ)
+                newSpawnCoordinateZ = powerUpSettingsComponent.minCoordZ;
+
+            var newPowerUpEntity = componentManager.MakeEntity();
+            newPowerUpEntity.Tag = "powerUp";
+            var newTransformComponent = new TransformComponent
+            {
+                Position = new Vector3(newSpawnCoordinateX, 0, newSpawnCoordinateZ),
+                Rotation = Vector3.Zero,
+                Scale = new Vector3(0.5f)
+            };
+
+            var newModelComponent = new ModelComponent
+            {
+                Model = content.Load<Model>("box")
+            };
+
+            var newPhysicsComponent = new PhysicsComponent
+            {
+                InAir = true,
+                GravityStrength = 0
+            };
+            var newMovementComponent = new MovementComponent
+            {
+                Acceleration = 1f,
+                Speed = 0,
+                Velocity = Vector3.Zero,
+                AirTime = 0f
+            };
+            var newActivecollisionComponent = new ActiveCollisionComponent(newModelComponent.Model, newTransformComponent.GetWorld(newTransformComponent.UpdateBuffer));
+            componentManager.AddComponent(newPowerUpEntity, newMovementComponent, newTransformComponent, newPhysicsComponent, newActivecollisionComponent, newModelComponent);
+        }
 
         public void RemovePowerUps(ComponentManager componentManager)
         {
@@ -95,5 +162,6 @@ namespace ECS_Engine.Engine.Systems
                 componentManager.RemoveEntity(entity);
             }
         }
+
     }
 }

@@ -149,6 +149,18 @@ namespace Game
             componentManager.AddComponent(platformEntity, platformTransformC);
             componentManager.AddComponent(platformEntity, passColl);
 
+            var powerUpSettingsEntity = componentManager.MakeEntity();
+            var powerUpSettingsComponent = new PowerUpSettingsComponent
+            {
+                maxCoordX = passColl.BoundingBox.Max.X,
+                minCoordX = passColl.BoundingBox.Min.X,
+                maxCoordZ = passColl.BoundingBox.Max.Z,
+                minCoordZ = passColl.BoundingBox.Min.Z,
+                random = new Random(),
+                powerUpSpawnTimer = 0
+            };
+
+            componentManager.AddComponent(powerUpSettingsEntity, powerUpSettingsComponent);
 
             ModelComponent player1 = new ModelComponent();
             player1.Model = Content.Load<Model>("Player");
@@ -393,6 +405,8 @@ namespace Game
 
         public void InitializeSystems()
         {
+            var powerUpSystem = new PowerUpSystem();
+            powerUpSystem.content = Content;
             systemManager.EnableFrameCount = true;
             systemManager.AddSystem(new TransformSystem());
             systemManager.AddSystem(new CameraSystem());
@@ -405,7 +419,7 @@ namespace Game
             systemManager.AddSystem(new PhysicsSystem());
             systemManager.AddSystem(new MouseSystem());
             systemManager.AddSystem(new FreeCameraSystem());
-            systemManager.AddSystem(new PowerUpSystem());
+            systemManager.AddSystem(powerUpSystem);
             systemManager.AddSystem(new SoundSystem());
             systemManager.AddSystem(new MenuSystem());
             systemManager.AddSystem(new AISystem());
