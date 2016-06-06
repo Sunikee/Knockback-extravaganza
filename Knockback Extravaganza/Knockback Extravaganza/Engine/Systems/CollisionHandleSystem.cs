@@ -15,9 +15,12 @@ namespace ECS_Engine.Engine.Systems
     {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            //Make character moveback to prior frame when colliding
-            HandleCollision(gameTime, componentManager, messageManager);
-            //Implement type of collision and put on colliding units
+            if (sceneManager.GetCurrentScene().Name == "singlePlayerScene")
+            {
+                //Make character moveback to prior frame when colliding
+                HandleCollision(gameTime, componentManager, messageManager);
+                //Implement type of collision and put on colliding units
+            }
         }
 
         public void HandleCollision(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)

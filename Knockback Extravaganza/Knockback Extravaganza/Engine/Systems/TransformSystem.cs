@@ -15,7 +15,8 @@ namespace ECS_Engine.Engine.Systems {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
 
             var components = componentManager.GetComponents<TransformComponent>();
-            if(components != null && sceneManager.GetCurrentScene().Name == "multiplayerScene"){
+            if(components != null && sceneManager.GetCurrentScene().Name == "singlePlayerScene")
+            {
                 foreach(var component in components) {
                     var threadData = component.Value as ThreadedComponent;
                     TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);

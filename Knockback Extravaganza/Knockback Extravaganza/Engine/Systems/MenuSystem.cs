@@ -19,7 +19,7 @@ namespace ECS_Engine.Engine.Systems
             var menuComponents = componentManager.GetComponents<MenuComponent>();
 
             var currScene = sceneManager.GetCurrentScene();
-            if (menuComponents != null && currScene.Name != "multiplayerScene")
+            if (menuComponents != null && currScene.Name != "singlePlayerScene")
             {
                 foreach (KeyValuePair<Entity, IComponent> component in menuComponents)
                 {
@@ -45,14 +45,11 @@ namespace ECS_Engine.Engine.Systems
                 switch (menu.ActiveChoice)
                 {
                     case 0:
+                        sceneManager.SetCurrentScene(sceneManager.GetScene("singlePlayerScene").Name);
+                        menu.ActiveChoice = 0;
                         break;
                     case 1:
                         sceneManager.SetCurrentScene(sceneManager.GetScene("connectionScene").Name);
-                        break;
-                    case 2:
-                        break;
-                    case 3:
-                        sceneManager.SetCurrentScene(sceneManager.GetScene("multiplayerScene").Name);
                         menu.ActiveChoice = 0;
                         break;
                 }
@@ -62,7 +59,7 @@ namespace ECS_Engine.Engine.Systems
                 switch (menu.ActiveChoice)
                 {
                     case 0:
-                        sceneManager.SetCurrentScene(sceneManager.GetScene("multiplayerScene").Name);
+                        sceneManager.SetCurrentScene(sceneManager.GetScene("singlePlayerScene").Name);
                         menu.ActiveChoice = 0;
                         break;
                     case 1:

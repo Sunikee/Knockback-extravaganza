@@ -19,7 +19,7 @@ namespace ECS_Engine.Engine.Systems
 
             var aiEntities = componentManager.GetComponents<AIComponent>();
      
-            if (aiEntities != null)
+            if (aiEntities != null && sceneManager.GetCurrentScene().Name == "singlePlayerScene")
             {
                 foreach (KeyValuePair<Entity, IComponent> ai in aiEntities)
                 {
@@ -44,7 +44,7 @@ namespace ECS_Engine.Engine.Systems
 
                     //USE THIS WHEN VELOCITY WORKS!!!!!!!!!!!!!!
 
-                    //var diff =  targetTransC.Position - aiTransformC.Position;
+                    //var diff = targetTransC.Position - aiTransformC.Position;
                     //diff.Normalize();
                     //aiMovec.Velocity += diff;
 
@@ -53,33 +53,19 @@ namespace ECS_Engine.Engine.Systems
 
                     //Chase in Pos X and pos Z
                     if (aiTransformC.Position.X <= targetTransC.Position.X && aiTransformC.Position.Z <= targetTransC.Position.Z)
-                        aiTransformC.Position = new Vector3(aiTransformC.Position.X + 1, aiTransformC.Position.Y, aiTransformC.Position.Z + 1);
+                        aiTransformC.Position = new Vector3(aiTransformC.Position.X + 0.2f, aiTransformC.Position.Y, aiTransformC.Position.Z + 0.2f);
 
                     // Chase in neg X and neg Z
                     else if (aiTransformC.Position.X >= targetTransC.Position.X && aiTransformC.Position.Z >= targetTransC.Position.Z)
-                        aiTransformC.Position = new Vector3(aiTransformC.Position.X - 1, aiTransformC.Position.Y, aiTransformC.Position.Z - 1);
+                        aiTransformC.Position = new Vector3(aiTransformC.Position.X - 0.2f, aiTransformC.Position.Y, aiTransformC.Position.Z - 0.2f);
 
                     // Chase in Pos X and neg Z
                     else if (aiTransformC.Position.X <= targetTransC.Position.X && aiTransformC.Position.Z >= targetTransC.Position.Z)
-                        aiTransformC.Position = new Vector3(aiTransformC.Position.X + 1, aiTransformC.Position.Y, aiTransformC.Position.Z - 1);
+                        aiTransformC.Position = new Vector3(aiTransformC.Position.X + 0.2f, aiTransformC.Position.Y, aiTransformC.Position.Z - 0.2f);
 
                     // Chase in neg X and pos Z
                     else if (aiTransformC.Position.X >= targetTransC.Position.X && aiTransformC.Position.Z <= targetTransC.Position.Z)
-                        aiTransformC.Position = new Vector3(aiTransformC.Position.X - 1, aiTransformC.Position.Y, aiTransformC.Position.Z + 1);
-
-                    //// Chase in only X
-                    //else if (aiTransformC.Position.X <= targetTransC.Position.X)
-                    //    aiTransformC.Position = new Vector3(aiTransformC.Position.X + 1, aiTransformC.Position.Y, aiTransformC.Position.Z);
-                    //else if (aiTransformC.Position.X >= targetTransC.Position.X)
-                    //    aiTransformC.Position = new Vector3(aiTransformC.Position.X - 1, aiTransformC.Position.Y, aiTransformC.Position.Z);
-
-                    ////Chase in only Z
-                    //else if (aiTransformC.Position.Z <= targetTransC.Position.X)
-                    //    aiTransformC.Position = new Vector3(aiTransformC.Position.X, aiTransformC.Position.Y, aiTransformC.Position.Z + 1);
-                    //else if (aiTransformC.Position.Z >= targetTransC.Position.X)
-                    //    aiTransformC.Position = new Vector3(aiTransformC.Position.X, aiTransformC.Position.Y, aiTransformC.Position.Z - 1);
-
-
+                        aiTransformC.Position = new Vector3(aiTransformC.Position.X - 0.2f, aiTransformC.Position.Y, aiTransformC.Position.Z + 0.2f);
                 }
             }
             RemoveAIEntity(componentManager);

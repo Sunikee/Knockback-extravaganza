@@ -32,13 +32,13 @@ namespace ECS_Engine.Engine.Systems
             var powerUpSettingsComponent = componentManager.GetComponent<PowerUpSettingsComponent>(powerUpSettingsEntity);
 
             if (powerUpSettingsComponent.powerUpSpawnTimer == 0)
-                powerUpSettingsComponent.randomSpawnTimerInt = powerUpSettingsComponent.random.Next(5000, 10000);
+                powerUpSettingsComponent.randomSpawnTimerInt = powerUpSettingsComponent.random.Next(1000, 2000);
 
             if (powerUpSettingsComponent.powerUpSpawnTimer >= powerUpSettingsComponent.randomSpawnTimerInt)
             {
                 //Spawna powerUpp på random position på platformen.
                 SpawnPowerUp(componentManager, powerUpSettingsComponent, messageManager);
-                powerUpSettingsComponent.randomSpawnTimerInt = powerUpSettingsComponent.random.Next(5000, 10000);
+                powerUpSettingsComponent.randomSpawnTimerInt = powerUpSettingsComponent.random.Next(1000, 2000);
                 powerUpSettingsComponent.powerUpSpawnTimer = 0;
             }
             powerUpSettingsComponent.powerUpSpawnTimer += 0.5f;
@@ -128,7 +128,7 @@ namespace ECS_Engine.Engine.Systems
             newPowerUpEntity.Tag = "powerUp";
             var newTransformComponent = new TransformComponent
             {
-                Position = new Vector3(newSpawnCoordinateX, 0, newSpawnCoordinateZ),
+                Position = new Vector3(newSpawnCoordinateX, 150, newSpawnCoordinateZ),
                 Rotation = Vector3.Zero,
                 Scale = new Vector3(0.5f)
             };
@@ -141,7 +141,7 @@ namespace ECS_Engine.Engine.Systems
             var newPhysicsComponent = new PhysicsComponent
             {
                 InAir = true,
-                GravityStrength = 0
+                GravityStrength = 0.7f
             };
             var newMovementComponent = new MovementComponent
             {

@@ -96,55 +96,5 @@
 //                }
 //            }
 //        }
-//        /// <summary>
-//        /// Send a message to the server
-//        /// </summary>
-//        /// <param name="message"></param>
-//        /// <param name="clientId"></param>
-//        public void SendMessage(ComponentManager componentManager, string message, int clientId)
-//        {
-//            var clientE = componentManager.GetEntity(clientId);
-//            var clientC = componentManager.GetComponent<ClientNetworkComponent>(clientE);
-
-//            var peerMessage = clientC.Client.CreateMessage();
-//            peerMessage.Write(message);
-
-//            clientC.Client.SendMessage(peerMessage, NetDeliveryMethod.ReliableOrdered);
-//        }
-
-//        /// <summary>
-//        /// Parses a message from the server to 
-//        /// the correct format
-//        /// </summary>
-//        /// <param name="messageManager"></param>
-//        /// <param name="message"></param>
-//        public void ParseToMessage(MessageManager messageManager, string message)
-//        {
-//            string[] parameters = message.Split(',');
-
-//            var sender = parameters[0];
-//            var receiver = parameters[1];
-//            var activateInSeconds = parameters[2];
-//            var msg = parameters[3];
-//            messageManager.RegMessage(int.Parse(sender), int.Parse(receiver), int.Parse(activateInSeconds), msg);
-//        }
-
-//        /// <summary>
-//        /// Parses a message to send to the server
-//        /// </summary>
-//        /// <param name="msg"></param>
-//        /// <returns></returns>
-//        public string ParseToString(Message msg)
-//        {
-//            var sendMessage = msg.sender.ToString() + ",";
-//            sendMessage = string.Concat(sendMessage, msg.receiver.ToString() + ",");
-//            sendMessage = string.Concat(sendMessage, msg.receiver.ToString() + ",");
-//            sendMessage = string.Concat(sendMessage, msg.msg + ",");
-
-//            //sendMessage = msg.sender + "," + msg.receiver + "," + msg.activateInSeconds + "," + msg.msg;
-
-//            return sendMessage;
-
-//        }
 //    }
 //}

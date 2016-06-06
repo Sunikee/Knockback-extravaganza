@@ -23,14 +23,15 @@ namespace ECS_Engine.Engine.Systems
         {
             Scene currScene = sceneManager.GetCurrentScene();
 
-            if (currScene.Name == "multiplayerScene")
+            if (currScene.Name == "singlePlayerScene")
             {
-                RenderModels(gameTime, graphicsDevice, componentManager);
+                RenderModels(gameTime, graphicsDevice, componentManager, sceneManager);
             }
-            else RenderScenes(graphicsDevice, sceneManager, currScene, componentManager);
+            else RenderScenes(graphicsDevice, componentManager, sceneManager);
         }
-        public void RenderScenes(GraphicsDevice graphicsDevice, SceneManager sceneManager, Scene currScene, ComponentManager componentManager)
+        public void RenderScenes(GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager)
         {
+            Scene currScene = sceneManager.GetCurrentScene();
             var menuComponents = componentManager.GetComponents<MenuComponent>();
             if (menuComponents != null)
             {
@@ -44,8 +45,7 @@ namespace ECS_Engine.Engine.Systems
 
                     var spacing = menu.MenuChoicesSpacing;
                     var color = menu.InactiveColor;
-                    //  if (currScene.Name != "hostScene")
-                    //     {
+           
                     foreach (var choice in currScene.menuChoices)
                     {
                         if (menu.ActiveChoice == currScene.menuChoices.FindIndex(i => i == choice))
@@ -56,22 +56,11 @@ namespace ECS_Engine.Engine.Systems
                     }
                     currScene.SpriteBatch.End();
                     graphicsDevice.DepthStencilState = DepthStencilState.Default;
-                    /*else
-                    {
-                        foreach (var choice in currScene.menuChoices)
-                        {
-                            if (menu.ActiveChoice == currScene.menuChoices.FindIndex(i => i == choice))
-                                color = menu.ActiveColor;
-                            currScene.SpriteBatch.DrawString(currScene.Font, choice, new Vector2(graphicsDevice.PresentationParameters.BackBufferWidth * 0.5f - currScene.Font.MeasureString(choice).X * 0.5f, spacing), color);
-                            color = menu.InactiveColor;
-                            spacing += menu.MenuChoicesSpacing;
-                        }
-                        
-                    }*/
+      
                 }
             }
         }
-        public void RenderModels(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager)
+        public void RenderModels(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager)
         {
             var cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
@@ -117,6 +106,14 @@ namespace ECS_Engine.Engine.Systems
                         }
                     }
                 }
+            }
+            var currScene = sceneManager.GetCurrentScene();
+            if (sceneManager.GetCurrentScene().Name == "singlePlayerScene")
+            {
+                currScene.TimePlayed += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                currScene.SpriteBatch.Begin();
+                currScene.SpriteBatch.DrawString(currScene.Font, "Time: " + (int)currScene.TimePlayed, new Vector2(10), Color.White);
+                currScene.SpriteBatch.End();
             }
         }
 

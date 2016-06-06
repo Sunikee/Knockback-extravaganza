@@ -38,11 +38,11 @@ namespace Game
             //Initialise Scenes
 
             //Init startmenu
-            var startScene = new Scene { Name = "startScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Start Game", "Host Game", "Single Player", "Multiplayer" } };
+            var startScene = new Scene { Name = "startScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Single Player", "Multiplayer"} };
             sceneManager.AddScene(startScene);
 
             //Init multiplayer
-            var multiplayerScene = new Scene { Name = "multiplayerScene", Font = startFont, Background = startBackground };
+            var multiplayerScene = new Scene { Name = "singlePlayerScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, TimePlayed = 0 };
             sceneManager.AddScene(multiplayerScene);
 
             //Init pause
@@ -345,9 +345,9 @@ namespace Game
             var aiAiC = new AIComponent {Duration = 10000, Target = 1};
             var aiTransformC = new TransformComponent
             {
-                Position = new Vector3(-0, 60, -200),
+                Position = new Vector3(-0, 20, -600),
                 Rotation = Vector3.Zero,
-                Scale = new Vector3(1)
+                Scale = new Vector3(2)
             };
             var aiModelTransC = new ModelComponent
             {
@@ -355,9 +355,9 @@ namespace Game
             };
             var aiPhysicsC = new PhysicsComponent
             {
-                GravityStrength = 0.5f,
+                GravityStrength = 0f,
                 Mass = 5,
-                InAir = true
+                InAir = false
             };
             var aimoveC = new MovementComponent
             {
@@ -366,9 +366,10 @@ namespace Game
                 Velocity = Vector3.Zero,
                 AirTime = 0f
             };
+           var aiActiveCollC = new ActiveCollisionComponent(aiModelTransC.Model,
+                aiTransformC.GetWorld(aiTransformC.UpdateBuffer));
 
-
-            componentManager.AddComponent(aiEntity, aiAiC, aiTransformC, aimoveC, aiModelTransC, aiPhysicsC);
+            componentManager.AddComponent(aiEntity, aiAiC, aiTransformC, aimoveC, aiModelTransC, aiPhysicsC, aiModelTransC, aiActiveCollC);
 
             Entity soundEntity = componentManager.MakeEntity();
             SoundEffectComponent soundEffComp = new SoundEffectComponent();

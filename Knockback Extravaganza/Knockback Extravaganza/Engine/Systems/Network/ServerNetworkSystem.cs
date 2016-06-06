@@ -38,7 +38,6 @@
 //                HostIp = GetLocalIP(),
 //                Port = 14242,
 //                Config = new NetPeerConfiguration("KnockbackGame") { Port = port, MaximumConnections = 4 },
-//                ClientConnections = new List<IPEndPoint>()
 //            };
 //            serverC.Config.EnableMessageType(NetIncomingMessageType.DiscoveryRequest);
 //            serverC.Server = new NetServer(serverC.Config);
@@ -131,42 +130,6 @@
 //            var host = Dns.GetHostEntry(Dns.GetHostName());
 
 //            return host.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
-//        }
-
-
-
-//        /// <summary>
-//        /// Sends a message to a specific client
-//        /// </summary>
-//        /// <param name="message"></param>
-//        /// <param name="serverId"></param>
-//        /// <param name="clientConnection"></param>
-//        public void SendMessage(ComponentManager componentManager, string message, int serverId, NetConnection clientConnection)
-//        {
-//            var serverEntity = componentManager.GetEntity(serverId);
-//            var serverC = componentManager.GetComponent<ServerNetworkComponent>(serverEntity);
-
-//            var peerMessage = serverC.Server.CreateMessage();
-//            peerMessage.Write(message);
-
-//            serverC.Server.SendMessage(peerMessage, clientConnection, NetDeliveryMethod.ReliableOrdered);
-//        }
-
-//        /// <summary>
-//        /// Sends a message to all clients
-//        /// </summary>
-//        /// <param name="message"></param>
-//        /// <param name="serverId"></param>
-//        /// <param name="clientConnections"></param>
-//        public void SendMessage(ComponentManager componentManager, string message, int serverId, List<NetConnection> clientConnections)
-//        {
-//            var serverEntity = componentManager.GetEntity(serverId);
-//            var serverC = componentManager.GetComponent<ServerNetworkComponent>(serverEntity);
-
-//            var peerMessage = serverC.Server.CreateMessage();
-//            peerMessage.Write(message);
-
-//            serverC.Server.SendMessage(peerMessage, clientConnections, NetDeliveryMethod.ReliableOrdered, 0);
 //        }
 //    }
 //}

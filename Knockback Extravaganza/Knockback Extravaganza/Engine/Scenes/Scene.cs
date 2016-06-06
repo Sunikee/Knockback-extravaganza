@@ -14,5 +14,6 @@ namespace ECS_Engine.Engine.Scenes
         public SpriteFont Font { get; set; }
         public SpriteBatch SpriteBatch { get; set; }
         public List<string> menuChoices { get; set; }
+        public float TimePlayed { get; set; }
     }
 }

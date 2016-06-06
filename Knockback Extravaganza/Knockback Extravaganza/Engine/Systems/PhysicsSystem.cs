@@ -17,7 +17,7 @@ namespace ECS_Engine.Engine.Systems
     {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            if (sceneManager.GetCurrentScene().Name == "multiplayerScene")
+            if (sceneManager.GetCurrentScene().Name == "singlePlayerScene")
             {
                 var components = componentManager.GetComponents<PhysicsComponent>();
                 if (components != null)

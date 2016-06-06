@@ -18,7 +18,7 @@ namespace ECS_Engine.Engine.Systems
         public float e = 0;
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
         {
-            if(sceneManager.GetCurrentScene().Name == "multiplayerScene")
+            if(sceneManager.GetCurrentScene().Name == "singlePlayerScene")
             HandleInput(gametime, componentManager, messageManager, sceneManager);     
         }
 
@@ -48,15 +48,21 @@ namespace ECS_Engine.Engine.Systems
                         MoveDir -= tc.Forward;
                         mc.Velocity -= tc.Forward * tickAcc;
                     }
-                    if (keyboardComp.GetActionState("Right") != BUTTON_STATE.NOT_PRESSED) {
+                    if (keyboardComp.GetActionState("Right") != BUTTON_STATE.NOT_PRESSED)
+                    {
                         mc.Velocity += tc.Right * tickAcc;
                     }
-                    else if (keyboardComp.GetActionState("Left") != BUTTON_STATE.NOT_PRESSED) {
+                    else if (keyboardComp.GetActionState("Left") != BUTTON_STATE.NOT_PRESSED)
+                    {
                         mc.Velocity -= tc.Right * tickAcc;
+                    }
+                    else if (keyboardComp.GetActionState("Pause") != BUTTON_STATE.NOT_PRESSED)
+                    {
+                        sceneManager.SetCurrentScene("pauseScene");
                     }
 
 
-                    mc.Velocity -= mc.Velocity * elapsedTime * 3;
+                        mc.Velocity -= mc.Velocity * elapsedTime * 3;
 
 
 
