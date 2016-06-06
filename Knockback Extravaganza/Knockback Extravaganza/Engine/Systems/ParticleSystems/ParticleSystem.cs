@@ -15,9 +15,10 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
 {
     public class ParticleSystem: IUpdateSystem
     {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager,
+            SceneManager sceneManager)
         {
-            if(gametime == null)
+            if (gametime == null)
                 throw new ArgumentNullException("Gametime is null!");
 
             var particleComponents = componentManager.GetComponents<ParticleComponent>();
@@ -26,27 +27,26 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
                 foreach (KeyValuePair<Entity, IComponent> component in particleComponents)
                 {
                     ParticleComponent particleComponent = (ParticleComponent) component.Value;
-                    
-                    float elapsedTime = (float) gametime.ElapsedGameTime.TotalSeconds;
-                   
+
+                    Random random = particleComponent.Random;
+
+                    foreach (ParticleComponent.ParticleSystemSettings smoke in particleComponent.SmokeParticlesList)
+                    {
+                        if (smoke.IsActive)
+                        {
+                            UpdateSmokePlume(smoke, smoke.ParticleSettings.Position);
+                        }
+                    }
                     if (particleComponent.ActivateExplosion)
-                    {
                         UpdateExplosions(gametime, particleComponent);
-                    }
                     if (particleComponent.ActivateFire)
-                    {
                         UpdateFire(gametime, particleComponent);
-                    }
-                    if (particleComponent.ActivateSmoke)
-                    {
-                        UpdateSmokePlume(particleComponent);
-                    }
+
                     UpdateProjectiles(gametime, particleComponent);
 
                     UpdateAllParticleSystems(gametime, particleComponent);
                 }
             }
-   
         }
 
         public void UpdateAllParticleSystems(GameTime gametime, ParticleComponent particleComponent)
@@ -58,12 +58,13 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
                     UpdateParticleSystem(gametime, projectile.TrailEmitter.ParticleSystem);
                 }
 
-                UpdateParticleSystem(gametime, particleComponent.ExplosionParticleSystemSettings);
-                UpdateParticleSystem(gametime, particleComponent.ExplosionSmokeParticleSystemSettings);
-           
-                UpdateParticleSystem(gametime, particleComponent.FireParticleSystemSettings);
+                    UpdateParticleSystem(gametime, particleComponent.ExplosionParticleSystemSettings);
+                    UpdateParticleSystem(gametime, particleComponent.ExplosionSmokeParticleSystemSettings);
+               
+                    UpdateParticleSystem(gametime,particleComponent.FireParticleSystemSettings);
 
-                UpdateParticleSystem(gametime, particleComponent.SmokePlumeParticleSystemSettings);
+                foreach(ParticleComponent.ParticleSystemSettings smoke in particleComponent.SmokeParticlesList)
+                    UpdateParticleSystem(gametime, smoke);
         }
 
         public void UpdateParticleSystem(GameTime gametime, ParticleComponent.ParticleSystemSettings particleSystem)
@@ -144,9 +145,9 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
                 particleComponent.TimeToNextProjectile += TimeSpan.FromSeconds(1);
             }
         }
-        public void UpdateSmokePlume(ParticleComponent particleComponent)
+        public void UpdateSmokePlume(ParticleComponent.ParticleSystemSettings smoke, Vector3 position)
         {
-            AddParticle(new Vector3(500, 0,500), Vector3.Zero, particleComponent.SmokePlumeParticleSystemSettings, particleComponent.SmokePlumeParticleSystemSettings.ParticleSettings);
+            AddParticle(position, Vector3.Zero, smoke, smoke.ParticleSettings);
         }
 
         public void UpdateProjectiles(GameTime gametime, ParticleComponent particleComponent)
@@ -167,13 +168,12 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
         public void UpdateFire(GameTime gametime, ParticleComponent particleComponent)
         {
             const int fireParticlesPerFrame = 20;
+                for (int i = 0; i < fireParticlesPerFrame; i++)
+                {
+                    AddParticle(RandomPointCircle(particleComponent), Vector3.Zero, particleComponent.FireParticleSystemSettings,particleComponent.FireParticleSystemSettings.ParticleSettings);
+                }
+                AddParticle(RandomPointCircle(particleComponent), Vector3.Zero, particleComponent.SmokePlumeParticleSystemSettings, particleComponent.SmokePlumeParticleSystemSettings.ParticleSettings);
 
-            for (int i = 0; i < fireParticlesPerFrame; i++)
-            {
-                AddParticle(RandomPointCircle(particleComponent), Vector3.Zero, particleComponent.FireParticleSystemSettings, particleComponent.FireParticleSystemSettings.ParticleSettings);
-            }
-
-            AddParticle(RandomPointCircle(particleComponent), Vector3.Zero, particleComponent.SmokePlumeParticleSystemSettings, particleComponent.SmokePlumeParticleSystemSettings.ParticleSettings);
         }
 
         public void AddParticle(Vector3 position, Vector3 velocity, ParticleComponent.ParticleSystemSettings particleSystem, ParticleComponent.ParticleSettings particleSettings)

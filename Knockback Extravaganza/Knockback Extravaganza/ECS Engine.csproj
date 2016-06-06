@@ -48,6 +48,7 @@
     <Compile Include="Engine\Component\CollisionComponent.cs" />
     <Compile Include="Engine\Component\FreeCameraComponent.cs" />
     <Compile Include="Engine\Component\GamePadComponent.cs" />
+    <Compile Include="Engine\Component\GameSceneComponent.cs" />
     <Compile Include="Engine\Component\InputDefines.cs" />
     <Compile Include="Engine\Component\Interfaces\IComponent.cs" />
     <Compile Include="Engine\Component\KeyBoardComponent.cs" />
@@ -63,7 +64,9 @@
     <Compile Include="Engine\Component\PlayerComponent.cs" />
     <Compile Include="Engine\Component\PlayerStateDefines.cs" />
     <Compile Include="Engine\Component\PowerUpComponent.cs" />
-    <Compile Include="Engine\Component\PowerUpSettingsComponent.cs" />
+<<<<<<< .mine    <Compile Include="Engine\Component\PowerUpSettingsComponent.cs" />
+=======    <Compile Include="Engine\Component\PowerUpSettingsComponent.cs" />
+>>>>>>> .theirs    <Compile Include="Engine\Component\SceneComponent.cs" />
     <Compile Include="Engine\Component\SongComponent.cs" />
     <Compile Include="Engine\Component\SoundComponent.cs" />
     <Compile Include="Engine\Component\SoundEffectComponent.cs" />

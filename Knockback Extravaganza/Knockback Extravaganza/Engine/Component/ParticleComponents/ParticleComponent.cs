@@ -17,23 +17,23 @@ namespace ECS_Engine.Engine.Component
         public ParticleSystemSettings FireParticleSystemSettings { get; set; }
         public ParticleSystemSettings ProjectileParticleSystemSettings { get; set; }
         public ParticleSystemSettings SmokePlumeParticleSystemSettings { get; set; }
+        public List<ParticleSystemSettings> SmokeParticlesList { get; set; } = new List<ParticleSystemSettings>();
         public ParticleProjectile ParticleProjectileSettings { get; set; }
         public List<ParticleProjectile> Projectiles { get; set; } = new List<ParticleProjectile>();
         public Random Random { get; set; } = new Random();
-        public bool ActivateFire { get; set; } = false;
         public bool ActivateSmoke { get; set; } = false;
         public bool ActivateExplosion { get; set; } = false;
+        public bool ActivateFire { get; set; } = false;
         public TimeSpan TimeToNextProjectile { get; set; }
+
         public ParticleComponent(ContentManager contentManager, GraphicsDevice graphicsDevice)
         {
             TimeToNextProjectile = TimeSpan.Zero;
-            ExplosionSmokeParticleSystemSettings = new ParticleSystemSettings(contentManager, graphicsDevice, "explosionsmoke");
-            ExplosionParticleSystemSettings = new ParticleSystemSettings(contentManager, graphicsDevice,"explosion");
-            FireParticleSystemSettings = new ParticleSystemSettings(contentManager, graphicsDevice, "fire");
-            ProjectileParticleSystemSettings = new ParticleSystemSettings(contentManager, graphicsDevice, "projecttrail");
-            SmokePlumeParticleSystemSettings = new ParticleSystemSettings(contentManager, graphicsDevice, "smokeplume");
-            ParticleProjectileSettings = new ParticleProjectile(ExplosionParticleSystemSettings, ExplosionSmokeParticleSystemSettings,
-                                                                ProjectileParticleSystemSettings);
+            SmokePlumeParticleSystemSettings = new ParticleSystemSettings(contentManager, graphicsDevice, "smoke", "smoke");
+            FireParticleSystemSettings = new ParticleSystemSettings(contentManager, graphicsDevice, "fire", "fire");
+            ExplosionParticleSystemSettings = new ParticleSystemSettings(contentManager, graphicsDevice, "explosion", "explosion");
+            ExplosionSmokeParticleSystemSettings = new ParticleSystemSettings(contentManager, graphicsDevice, "explosionsmoke", "smoke");
+
         }
         public class ParticleEmitter
         {
@@ -56,7 +56,7 @@ namespace ECS_Engine.Engine.Component
             public ContentManager Content;
 
             public Effect ParticleEffect;
-
+            public bool IsActive { get; set; } = true;
             public EffectParameter EffectViewParameter;
             public EffectParameter EffectProjectionParameter;
             public EffectParameter EffectViewportScaleParameter;
@@ -80,12 +80,12 @@ namespace ECS_Engine.Engine.Component
             public Random Random { get; set; } 
 
             public ParticleSystemSettings(ContentManager contentManager, GraphicsDevice graphicsDevice, 
-                                          string typeOfParticleSystem)
+                                          string typeOfParticleSystem, string textureName)
             {
 
                 this.Content = contentManager;
                 
-                ParticleSettings = new ParticleSettings(typeOfParticleSystem);
+                ParticleSettings = new ParticleSettings(typeOfParticleSystem, textureName);
 
                 Random = new Random();
 
@@ -233,37 +233,37 @@ namespace ECS_Engine.Engine.Component
             public float MaxStartSize { get; set; }
             public float MinEndSize { get; set; }
             public float MaxEndSize { get; set; }
-
+            public Vector3 Position { get; set; } = Vector3.Zero;
             public Vector3 Gravity { get; set; }
             public float EmitterVelocitySensitivity { get; set; }
             public BlendState BlendState { get; set; }
 
 
 //INIT for all types of particlesettings
-            public ParticleSettings(string typeOfParticleSystem)
+            public ParticleSettings(string typeOfParticleSystem, string textureName)
             {
                 typeOfParticleSystem = typeOfParticleSystem.ToLower();
                 InitializeStandardValues();
 
                 if (typeOfParticleSystem == "explosion")
                 {
-                    InitializeExplosion();
+                    InitializeExplosion(textureName);
                 }
                 else if (typeOfParticleSystem == "explosionsmoke")
                 {
-                    InitializeExplosionSmoke();    
+                    InitializeExplosionSmoke(textureName);    
                 }
                 else if (typeOfParticleSystem == "fire")
                 {
-                    InitializeFire();
+                    InitializeFire(textureName);
                 }
                 else if (typeOfParticleSystem == "projecttrail")
                 {
-                    InitializeProjectileTrail();
+                    InitializeProjectileTrail(textureName);
                 }
-                else if (typeOfParticleSystem == "smokeplume")
+                else if (typeOfParticleSystem == "smoke")
                 {
-                    InitializeSmokePlume();
+                    InitializeSmokePlume(textureName);
                 }
             }
 
@@ -303,9 +303,9 @@ namespace ECS_Engine.Engine.Component
 
                 BlendState = BlendState.NonPremultiplied;
             }
-            public void InitializeExplosion()
+            public void InitializeExplosion(string textureName)
             {
-                TextureName = "explosion";
+                TextureName = textureName;
 
                 MaxParticles = 100;
 
@@ -335,9 +335,9 @@ namespace ECS_Engine.Engine.Component
                 BlendState = BlendState.Additive;
             }
 
-            public void InitializeExplosionSmoke()
+            public void InitializeExplosionSmoke(string textureName)
             {
-                TextureName = "smoke2";
+                TextureName = textureName;
 
                 MaxParticles = 200;
 
@@ -366,40 +366,40 @@ namespace ECS_Engine.Engine.Component
                 MaxEndSize = 140;
             }
 
-            public void InitializeFire()
+            public void InitializeFire(string textureName)
             {
 
-                TextureName = "fire";
+                TextureName = textureName;
 
-                MaxParticles = 2400;
+                MaxParticles = 300;
 
-                Duration = TimeSpan.FromSeconds(2);
+                Duration = TimeSpan.FromSeconds(5);
 
                 DurationRandomness = 1;
 
                 MinHorizontalVelocity = 0;
-                MaxHorizontalVelocity = 15;
+                MaxHorizontalVelocity = -15;
 
-                MinVerticalVelocity = -10;
-                MaxVerticalVelocity = 10;
+                MinVerticalVelocity = -20;
+                MaxVerticalVelocity = 20;
 
-                Gravity = new Vector3(0, 15, 0);
+                Gravity = new Vector3(0, -15, 0);
 
                 MinColor = new Color(255, 255, 255, 10);
                 MaxColor = new Color(255, 255, 255, 40);
 
-                MinStartSize = 5;
-                MaxStartSize = 10;
+                MinStartSize = 15;
+                MaxStartSize = 40;
 
-                MinEndSize = 10;
-                MaxEndSize = 40;
+                MinEndSize = 65;
+                MaxEndSize = 90;
 
                 BlendState = BlendState.Additive;
             }
 
-            public void InitializeProjectileTrail()
+            public void InitializeProjectileTrail(string textureName)
             {
-                TextureName = "smoke2";
+                TextureName = textureName;
 
                 MaxParticles = 1000;
 
@@ -428,19 +428,19 @@ namespace ECS_Engine.Engine.Component
                 MaxEndSize = 11;
             }
 
-            public void InitializeSmokePlume()
+            public void InitializeSmokePlume(string textureName)
             {
-                TextureName = "smoke3";
+                TextureName = textureName;
 
-                MaxParticles = 50;
+                MaxParticles = 75;
 
-                Duration = TimeSpan.FromSeconds(10);
+                Duration = TimeSpan.FromSeconds(5);
 
                 MinHorizontalVelocity = 0;
-                MaxHorizontalVelocity = 15;
+                MaxHorizontalVelocity = 1;
 
-                MinVerticalVelocity = 10;
-                MaxVerticalVelocity = 20;
+                MinVerticalVelocity = -10;
+                MaxVerticalVelocity = 10;
 
                 Gravity = new Vector3(-20, -5, 0);
 
@@ -449,11 +449,11 @@ namespace ECS_Engine.Engine.Component
                 MinRotateSpeed = -1;
                 MaxRotateSpeed = 1;
 
-                MinStartSize = 40;
-                MaxStartSize = 70;
+                MinStartSize = 15;
+                MaxStartSize = 35;
 
-                MinEndSize = 100;
-                MaxEndSize = 170;
+                MinEndSize = 50;
+                MaxEndSize = 70;
             }
         }
     }

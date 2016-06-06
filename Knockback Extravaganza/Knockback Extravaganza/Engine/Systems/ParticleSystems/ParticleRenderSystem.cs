@@ -61,8 +61,11 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
                 particleComponent.FireParticleSystemSettings.EffectProjectionParameter.SetValue(projection);
 
 
-                particleComponent.SmokePlumeParticleSystemSettings.EffectViewParameter.SetValue(view);
-                particleComponent.SmokePlumeParticleSystemSettings.EffectProjectionParameter.SetValue(projection);
+            foreach (ParticleComponent.ParticleSystemSettings smoke in particleComponent.SmokeParticlesList)
+            {
+                smoke.EffectViewParameter.SetValue(view);
+                smoke.EffectProjectionParameter.SetValue(projection);
+            }
 
         }
 
@@ -79,11 +82,10 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
             DrawParticleSystem(gametime, graphicsDevice, particleComponent.ExplosionParticleSystemSettings);
             DrawParticleSystem(gametime, graphicsDevice, particleComponent.ExplosionSmokeParticleSystemSettings);
 
-
             DrawParticleSystem(gametime, graphicsDevice, particleComponent.FireParticleSystemSettings);
 
-
-            DrawParticleSystem(gametime, graphicsDevice, particleComponent.SmokePlumeParticleSystemSettings);
+            foreach(ParticleComponent.ParticleSystemSettings smoke in particleComponent.SmokeParticlesList)
+                DrawParticleSystem(gametime, graphicsDevice, smoke);
         }
 
         public void DrawParticleSystem(GameTime gametime, GraphicsDevice graphicsDevice, ParticleComponent.ParticleSystemSettings particleSystem)
@@ -116,18 +118,15 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
 
                     if (particleSystem.FirstActiveParticle < particleSystem.FirstFreeParticle)
                     {
-
                         graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
                                                      particleSystem.FirstActiveParticle * 4, (particleSystem.FirstFreeParticle - particleSystem.FirstActiveParticle) * 4,
                                                      particleSystem.FirstActiveParticle * 6, (particleSystem.FirstFreeParticle - particleSystem.FirstActiveParticle) * 2);
                     }
                     else
                     {
-
                         graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
                                                      particleSystem.FirstActiveParticle * 4, (particleSystem.ParticleSettings.MaxParticles - particleSystem.FirstActiveParticle) * 4,
                                                      particleSystem.FirstActiveParticle * 6, (particleSystem.ParticleSettings.MaxParticles - particleSystem.FirstActiveParticle) * 2);
-
                         if (particleSystem.FirstFreeParticle > 0)
                         {
                             graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0,
@@ -136,7 +135,6 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
                         }
                     }
                 }
-
                 graphicsDevice.DepthStencilState = DepthStencilState.Default;
             }
             particleSystem.DrawCounter++;

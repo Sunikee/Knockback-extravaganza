@@ -37,7 +37,7 @@ namespace ECS_Engine.Engine.Systems
             if (powerUpSettingsComponent.powerUpSpawnTimer >= powerUpSettingsComponent.randomSpawnTimerInt)
             {
                 //Spawna powerUpp på random position på platformen.
-                SpawnPowerUp(componentManager, powerUpSettingsComponent);
+                SpawnPowerUp(componentManager, powerUpSettingsComponent, messageManager);
                 powerUpSettingsComponent.randomSpawnTimerInt = powerUpSettingsComponent.random.Next(5000, 10000);
                 powerUpSettingsComponent.powerUpSpawnTimer = 0;
             }
@@ -102,9 +102,9 @@ namespace ECS_Engine.Engine.Systems
                     }
                 }
             }
-            RemovePowerUps(componentManager);
+            RemovePowerUps(componentManager,messageManager);
         }
-        public void SpawnPowerUp(ComponentManager componentManager, PowerUpSettingsComponent powerUpSettingsComponent)
+        public void SpawnPowerUp(ComponentManager componentManager, PowerUpSettingsComponent powerUpSettingsComponent, MessageManager messageManager)
         {
 
             Random rnd = new Random();
@@ -154,14 +154,14 @@ namespace ECS_Engine.Engine.Systems
             componentManager.AddComponent(newPowerUpEntity, newMovementComponent, newTransformComponent, newPhysicsComponent, newActivecollisionComponent, newModelComponent);
         }
 
-        public void RemovePowerUps(ComponentManager componentManager)
+        public void RemovePowerUps(ComponentManager componentManager, MessageManager messageManager)
         {
             foreach (var entity in powerUpsToRemove)
             {
                 componentManager.RemoveAllComponents(entity);
                 componentManager.RemoveEntity(entity);
+                
             }
         }
-
     }
 }

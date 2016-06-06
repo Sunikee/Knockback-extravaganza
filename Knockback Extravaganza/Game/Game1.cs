@@ -399,7 +399,35 @@ namespace Game
             ParticleComponent particleComponent = new ParticleComponent(Content, graphics.GraphicsDevice);
 
             componentManager.AddComponent(particleSystem, particleComponent);
-            particleComponent.ActivateSmoke = true;
+            ParticleComponent.ParticleSystemSettings smoke = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice, "smoke","smoke");
+            ParticleComponent.ParticleSystemSettings smoke2 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice, "smoke", "smoke");
+            ParticleComponent.ParticleSystemSettings smoke3 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice, "smoke", "smoke");
+            ParticleComponent.ParticleSystemSettings smoke4 = new ParticleComponent.ParticleSystemSettings(Content,graphics.GraphicsDevice,"smoke", "smoke");
+            ParticleComponent.ParticleSystemSettings smoke5 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice, "smoke", "smoke");
+            ParticleComponent.ParticleSystemSettings smoke6 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice, "smoke", "smoke");
+            
+            smoke.IsActive = true;
+            smoke2.IsActive = true;
+            smoke3.IsActive = true;
+            smoke4.IsActive = true;
+            smoke5.IsActive = true;
+            smoke6.IsActive = true;
+
+            smoke.ParticleSettings.Position = new Vector3(650,0,700);
+            smoke2.ParticleSettings.Position = new Vector3(-700,0,650);
+            smoke3.ParticleSettings.Position = new Vector3(550,0,-700);
+            smoke4.ParticleSettings.Position = new Vector3(-700,0, -450);
+            smoke5.ParticleSettings.Position = new Vector3(0,0, -300);
+            smoke6.ParticleSettings.Position = new Vector3(0, 0, 300);
+
+            particleComponent.SmokeParticlesList.Add(smoke);
+            particleComponent.SmokeParticlesList.Add(smoke2);
+            particleComponent.SmokeParticlesList.Add(smoke3);
+            particleComponent.SmokeParticlesList.Add(smoke4);
+            particleComponent.SmokeParticlesList.Add(smoke5);
+            particleComponent.SmokeParticlesList.Add(smoke6);
+
+
         }
 
         public void InitializeSystems()
