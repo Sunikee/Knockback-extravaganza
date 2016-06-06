@@ -11,69 +11,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECS_Engine.Engine.Systems
-{
-    public class ModelRenderSystem : IRenderSystem
-    {
+namespace ECS_Engine.Engine.Systems {
+
+    /// <summary>
+    /// Renders all object with models on them
+    /// </summary>
+    public class ModelRenderSystem {
+
         public static float r = 0.1f;
 
-
-
-        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager)
-        {
-            Scene currScene = sceneManager.GetCurrentScene();
-
-            if (currScene.Name == "singlePlayerScene")
-            {
-                RenderModels(gameTime, graphicsDevice, componentManager, sceneManager);
-            }
-            else RenderScenes(graphicsDevice, componentManager, sceneManager);
-        }
-        public void RenderScenes(GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager)
-        {
-            Scene currScene = sceneManager.GetCurrentScene();
-            var menuComponents = componentManager.GetComponents<MenuComponent>();
-            if (menuComponents != null)
-            {
-                foreach (KeyValuePair<Entity, IComponent> component in menuComponents)
-                {
-                    KeyBoardComponent menuKeys = componentManager.GetComponent<KeyBoardComponent>(component.Key);
-                    MenuComponent menu = component.Value as MenuComponent;
-
-                    currScene.SpriteBatch.Begin();
-                    currScene.SpriteBatch.Draw(currScene.Background, new Vector2(0), Color.Green);
-
-                    var spacing = menu.MenuChoicesSpacing;
-                    var color = menu.InactiveColor;
-           
-                    foreach (var choice in currScene.menuChoices)
-                    {
-                        if (menu.ActiveChoice == currScene.menuChoices.FindIndex(i => i == choice))
-                            color = menu.ActiveColor;
-                        currScene.SpriteBatch.DrawString(currScene.Font, choice, new Vector2(graphicsDevice.PresentationParameters.BackBufferWidth * 0.5f - currScene.Font.MeasureString(choice).X * 0.5f, spacing), color);
-                        color = menu.InactiveColor;
-                        spacing += menu.MenuChoicesSpacing;
-                    }
-                    currScene.SpriteBatch.End();
-                    graphicsDevice.DepthStencilState = DepthStencilState.Default;
-      
-                }
-            }
-        }
-        public void RenderModels(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager)
-        {
+            public void RenderModels(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) {
             var cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
             BoundingFrustum frustum = new BoundingFrustum(camera.View * camera.Projection);
             var components = componentManager.GetComponents<ModelComponent>();
-            foreach (KeyValuePair<Entity, IComponent> component in components)
-            {
+            foreach (KeyValuePair<Entity, IComponent> component in components) {
                 ModelComponent model = (ModelComponent)component.Value;
                 ModelTransformComponent MeshTransform = componentManager.GetComponent<ModelTransformComponent>(component.Key);
                 TransformComponent transform = componentManager.GetComponent<TransformComponent>(component.Key);
                 MenuComponent menuC = componentManager.GetComponent<MenuComponent>(component.Key);
                 CollisionComponent collisionC = componentManager.GetComponent<ActiveCollisionComponent>(component.Key);
-                if(collisionC == null) {
+                if (collisionC == null) {
                     collisionC = componentManager.GetComponent<PassiveCollisionComponent>(component.Key);
                 }
 
@@ -90,7 +48,8 @@ namespace ECS_Engine.Engine.Systems
                             }
                             mesh.Draw();
                         }
-                    } else if (transform != default(TransformComponent)) {
+                    }
+                    else if (transform != default(TransformComponent)) {
 
                         Matrix[] transforms = new Matrix[model.Model.Bones.Count()];
                         model.Model.CopyAbsoluteBoneTransformsTo(transforms);
@@ -108,19 +67,17 @@ namespace ECS_Engine.Engine.Systems
                 }
             }
             var currScene = sceneManager.GetCurrentScene();
-            if (sceneManager.GetCurrentScene().Name == "singlePlayerScene")
-            {
+            if (sceneManager.GetCurrentScene().Name == "singlePlayerScene") {
                 currScene.TimePlayed += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 currScene.SpriteBatch.Begin();
                 currScene.SpriteBatch.DrawString(currScene.Font, "Time: " + (int)currScene.TimePlayed, new Vector2(10), Color.White);
                 currScene.SpriteBatch.End();
+                graphicsDevice.DepthStencilState = DepthStencilState.Default;
             }
         }
 
-        private void CheckForTexture(ModelComponent model, BasicEffect effect)
-        {
-            if (model.Texture != null)
-            {
+        private void CheckForTexture(ModelComponent model, BasicEffect effect) {
+            if (model.Texture != null) {
                 effect.TextureEnabled = true;
                 effect.Texture = model.Texture;
             }

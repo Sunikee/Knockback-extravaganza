@@ -57,7 +57,7 @@ namespace ECS_Engine.Engine.Systems
                     powerUp.ActiveTime -= gameTime.ElapsedGameTime.Milliseconds;
                     if (powerUp.ActiveTime <= 0)
                     {
-                        transform.Scale = new Vector3(10, 10, 10);
+                        transform.Scale = new Vector3(1, 1, 1);
                         physics.Mass = 5;
                         componentManager.RemoveComponent<PowerUpComponent>(component.Key);
                     }
@@ -108,8 +108,10 @@ namespace ECS_Engine.Engine.Systems
         {
 
             Random rnd = new Random();
-            int multiplier = rnd.Next(-1, 2);
-            float newSpawnCoordinateX = powerUpSettingsComponent.randomSpawnTimerInt * multiplier;
+            float X = (rnd.Next((int)powerUpSettingsComponent.minCoordX, (int)powerUpSettingsComponent.maxCoordX));
+            float Z = (rnd.Next((int)powerUpSettingsComponent.minCoordZ, (int)powerUpSettingsComponent.maxCoordZ));
+
+            /*float newSpawnCoordinateX = powerUpSettingsComponent.randomSpawnTimerInt * multiplier;
             float newSpawnCoordinateZ = powerUpSettingsComponent.randomSpawnTimerInt * multiplier;
 
             if (newSpawnCoordinateX > powerUpSettingsComponent.maxCoordX)
@@ -123,12 +125,13 @@ namespace ECS_Engine.Engine.Systems
 
             if (newSpawnCoordinateZ < powerUpSettingsComponent.minCoordZ)
                 newSpawnCoordinateZ = powerUpSettingsComponent.minCoordZ;
+                */
 
             var newPowerUpEntity = componentManager.MakeEntity();
             newPowerUpEntity.Tag = "powerUp";
             var newTransformComponent = new TransformComponent
             {
-                Position = new Vector3(newSpawnCoordinateX, 150, newSpawnCoordinateZ),
+                Position = new Vector3(X, 150, Z),
                 Rotation = Vector3.Zero,
                 Scale = new Vector3(0.5f)
             };

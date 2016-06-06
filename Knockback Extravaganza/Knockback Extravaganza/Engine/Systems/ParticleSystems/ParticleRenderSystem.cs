@@ -19,7 +19,7 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
         public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager)
         {
             Scene currScene = sceneManager.GetCurrentScene();
-            if (currScene.Name == "multiplayerScene") {
+            if (currScene.Name == "singlePlayerScene") {
                 var particleComponents = componentManager.GetComponents<ParticleComponent>();
                 var cameraComponents = componentManager.GetComponents<CameraComponent>();
                 CameraComponent camera = (CameraComponent)cameraComponents.First().Value;

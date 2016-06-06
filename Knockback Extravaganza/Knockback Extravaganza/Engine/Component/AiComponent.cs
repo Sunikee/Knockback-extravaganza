@@ -12,5 +12,6 @@ namespace ECS_Engine.Engine
         public int Target { get; set; }
         public int Duration { get; set; }
 
+        public string State { get; set; } = "follow";
     }
 }

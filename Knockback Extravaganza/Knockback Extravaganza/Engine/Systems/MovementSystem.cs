@@ -29,6 +29,7 @@ namespace ECS_Engine.Engine.Systems
             foreach (KeyValuePair<Entity, IComponent> component in kComponents)
             {
                 KeyBoardComponent keyboardComp = (KeyBoardComponent)component.Value;
+                PlayerComponent player = componentManager.GetComponent<PlayerComponent>(component.Key);
                 TransformComponent tc = componentManager.GetComponent<TransformComponent>(component.Key);
                 MovementComponent mc = componentManager.GetComponent<MovementComponent>(component.Key);
                 PhysicsComponent pc = componentManager.GetComponent<PhysicsComponent>(component.Key);
@@ -61,6 +62,15 @@ namespace ECS_Engine.Engine.Systems
                         sceneManager.SetCurrentScene("pauseScene");
                     }
 
+                    if(keyboardComp.GetActionState("Dash") == BUTTON_STATE.HELD) {
+                        player.ChargeTime += elapsedTime;
+                        if(player.ChargeTime > 3) {
+                            player.ChargeTime = 3;
+                        }
+                    }
+                    else if(keyboardComp.GetActionState("Dash") == BUTTON_STATE.RELEASED) {
+                        mc.Velocity += tc.Forward * player.ChargeTime * 1000;
+                    }
 
                         mc.Velocity -= mc.Velocity * elapsedTime * 3;
 

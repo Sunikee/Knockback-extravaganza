@@ -11,5 +11,6 @@ namespace ECS_Engine.Engine.Component
     {
         public float Health { get; set; }
         public float knockBackResistance { get; set; }
+        public float ChargeTime { get; set; } = 0;
     }
 }

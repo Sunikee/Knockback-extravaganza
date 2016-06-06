@@ -34,7 +34,7 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
                     {
                         if (smoke.IsActive)
                         {
-                            UpdateSmokePlume(smoke, smoke.ParticleSettings.Position);
+                            UpdateSmokePlume(smoke);
                         }
                     }
                     if (particleComponent.ActivateExplosion)
@@ -145,9 +145,9 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
                 particleComponent.TimeToNextProjectile += TimeSpan.FromSeconds(1);
             }
         }
-        public void UpdateSmokePlume(ParticleComponent.ParticleSystemSettings smoke, Vector3 position)
+        public void UpdateSmokePlume(ParticleComponent.ParticleSystemSettings smoke)
         {
-            AddParticle(position, Vector3.Zero, smoke, smoke.ParticleSettings);
+            AddParticle(smoke.ParticleSettings.Position, Vector3.Zero, smoke, smoke.ParticleSettings);
         }
 
         public void UpdateProjectiles(GameTime gametime, ParticleComponent particleComponent)

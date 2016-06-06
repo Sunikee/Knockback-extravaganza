@@ -73,9 +73,10 @@ namespace ECS_Engine.Engine.Managers {
                 start = watch.Elapsed;
                 
                 if (currentSteps > runSteps) {
+                    //Console.WriteLine(currentSteps);
                     updateGameTime.ElapsedGameTime = TimeSpan.FromMilliseconds(currentSteps);
                     updateGameTime.TotalGameTime += TimeSpan.FromMilliseconds(currentSteps);
-                    currentSteps -= runSteps;
+                    currentSteps = 0;
 
                     //FPS Counter
                     if (EnableFrameCount) {

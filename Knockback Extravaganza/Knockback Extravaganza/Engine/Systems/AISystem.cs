@@ -33,39 +33,40 @@ namespace ECS_Engine.Engine.Systems
 
                     // Get target data
                     var playerEntities = componentManager.GetComponents<PlayerComponent>();
-                    Random rand = new Random();
-                    var targetEntity = playerEntities.Keys.ToArray()[rand.Next(0, playerEntities.Count())];
+                    //Random rand = new Random();
+                    //var targetEntity = playerEntities.Keys.ToArray()[rand.Next(0, playerEntities.Count())];
+                    var targetEntity = playerEntities.First().Key;
                     var targetTransC = componentManager.GetComponent<TransformComponent>(targetEntity);
-
+                    var targetMoveC = componentManager.GetComponent<MovementComponent>(targetEntity);
                     aiAiC.Duration -= gametime.ElapsedGameTime.Milliseconds;
-                    if (aiAiC.Duration <= 0)
-                        aiEntitiesToRemove.Add(ai.Key);
+                    //if (aiAiC.Duration <= 0)
+                    //    aiEntitiesToRemove.Add(ai.Key);
 
 
                     //USE THIS WHEN VELOCITY WORKS!!!!!!!!!!!!!!
+                    float distance = Vector3.DistanceSquared(targetTransC.Position, aiTransformC.Position);
+                    if((distance > 400*400 && aiAiC.State == "follow")) {
+                        aiAiC.State = "stop";
+                    }
+                    else if(distance < 300 * 300) {
+                        aiAiC.State = "follow";
+                    }
 
-                    //var diff = targetTransC.Position - aiTransformC.Position;
-                    //diff.Normalize();
-                    //aiMovec.Velocity += diff;
-
-
-
-
-                    //Chase in Pos X and pos Z
-                    if (aiTransformC.Position.X <= targetTransC.Position.X && aiTransformC.Position.Z <= targetTransC.Position.Z)
-                        aiTransformC.Position = new Vector3(aiTransformC.Position.X + 0.2f, aiTransformC.Position.Y, aiTransformC.Position.Z + 0.2f);
-
-                    // Chase in neg X and neg Z
-                    else if (aiTransformC.Position.X >= targetTransC.Position.X && aiTransformC.Position.Z >= targetTransC.Position.Z)
-                        aiTransformC.Position = new Vector3(aiTransformC.Position.X - 0.2f, aiTransformC.Position.Y, aiTransformC.Position.Z - 0.2f);
-
-                    // Chase in Pos X and neg Z
-                    else if (aiTransformC.Position.X <= targetTransC.Position.X && aiTransformC.Position.Z >= targetTransC.Position.Z)
-                        aiTransformC.Position = new Vector3(aiTransformC.Position.X + 0.2f, aiTransformC.Position.Y, aiTransformC.Position.Z - 0.2f);
-
-                    // Chase in neg X and pos Z
-                    else if (aiTransformC.Position.X >= targetTransC.Position.X && aiTransformC.Position.Z <= targetTransC.Position.Z)
-                        aiTransformC.Position = new Vector3(aiTransformC.Position.X - 0.2f, aiTransformC.Position.Y, aiTransformC.Position.Z + 0.2f);
+                    if(aiAiC.State == "charge") {
+                        var diff = targetTransC.Position - aiTransformC.Position;
+                        diff.Normalize();
+                        aiMovec.Velocity += diff * new Vector3(2, 0, 2);
+                        //aiAiC.State = "follow";
+                    }
+                    else if(aiAiC.State == "stop") {
+                        aiMovec.Velocity = aiMovec.Velocity * 0.1f;
+                        aiAiC.State = "charge";
+                    }
+                    else if (aiAiC.State == "follow") {
+                        var diff = targetTransC.Position - aiTransformC.Position;
+                        diff.Normalize();
+                        aiMovec.Velocity += diff * new Vector3(1, 0, 1);
+                    }
                 }
             }
             RemoveAIEntity(componentManager);

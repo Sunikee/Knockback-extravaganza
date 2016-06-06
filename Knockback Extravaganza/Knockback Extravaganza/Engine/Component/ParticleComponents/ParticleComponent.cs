@@ -432,17 +432,17 @@ namespace ECS_Engine.Engine.Component
             {
                 TextureName = textureName;
 
-                MaxParticles = 75;
+                MaxParticles = 50;
 
-                Duration = TimeSpan.FromSeconds(5);
+                Duration = TimeSpan.FromSeconds(10);
 
-                MinHorizontalVelocity = 0;
+                MinHorizontalVelocity = 0.1f;
                 MaxHorizontalVelocity = 1;
 
-                MinVerticalVelocity = -10;
-                MaxVerticalVelocity = 10;
+                MinVerticalVelocity = -25;
+                MaxVerticalVelocity = 25;
 
-                Gravity = new Vector3(-20, -5, 0);
+                Gravity = new Vector3(-20, 5, 0);
 
                 EndVelocity = 0.75f;
 
@@ -452,8 +452,8 @@ namespace ECS_Engine.Engine.Component
                 MinStartSize = 15;
                 MaxStartSize = 35;
 
-                MinEndSize = 50;
-                MaxEndSize = 70;
+                MinEndSize = 70;
+                MaxEndSize = 150;
             }
         }
     }

@@ -75,7 +75,7 @@ namespace ECS_Engine.Engine.Managers {
             }
         }
         public List<Message> GetMessages(int id) {
-            return messages.Where(x => x.activateInSeconds <= 0 && x.receiver == id).ToList();
+            return messages.Where(x => x.activateInSeconds < 0 && x.receiver == id).ToList();
         }
 
     }
