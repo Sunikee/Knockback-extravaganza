@@ -54,40 +54,20 @@ namespace ECS_Engine.Engine.Systems
                         color = menu.InactiveColor;
                         spacing += menu.MenuChoicesSpacing;
                     }
-                    currScene.SpriteBatch.End(); 
-                     //}
-                    //else
-                    //{
-                        //    var _rectangle = new Rectangle { Height = 80, Width = 400 };
-                        //    RasterizerState _rasterizerState = new RasterizerState() { ScissorTestEnable = true };
-                        //    var dummyTexture = new Texture2D(graphicsDevice, 1, 1);
-                        //    dummyTexture.SetData(new Color[] { Color.White });
-
-
-                        //    currScene.SpriteBatch.End();
-
-
-                        //    currScene.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
-                        //                      null, null, _rasterizerState);
-
-
-                        //    currScene.SpriteBatch.Draw(dummyTexture, _rectangle, Color.White);
-                        //    currScene.SpriteBatch.DrawString(currScene.Font, "Please insert your IP", Vector2.Zero, Color.Red);
-
-                        //    //End the spritebatch
-                        //    currScene.SpriteBatch.End();
-                        //}
-                        //currScene.SpriteBatch.Begin();
-                        //foreach (var choice in currScene.menuChoices)
-                        //{
-                        //    if (menu.ActiveChoice == currScene.menuChoices.FindIndex(i => i == choice))
-                        //        color = menu.ActiveColor;
-                        //    currScene.SpriteBatch.DrawString(currScene.Font, choice, new Vector2(graphicsDevice.PresentationParameters.BackBufferWidth * 0.5f - currScene.Font.MeasureString(choice).X * 0.5f, spacing), color);
-                        //    color = menu.InactiveColor;
-                        //    spacing += menu.MenuChoicesSpacing;
-                    //}
                     currScene.SpriteBatch.End();
-                
+                    graphicsDevice.DepthStencilState = DepthStencilState.Default;
+                    /*else
+                    {
+                        foreach (var choice in currScene.menuChoices)
+                        {
+                            if (menu.ActiveChoice == currScene.menuChoices.FindIndex(i => i == choice))
+                                color = menu.ActiveColor;
+                            currScene.SpriteBatch.DrawString(currScene.Font, choice, new Vector2(graphicsDevice.PresentationParameters.BackBufferWidth * 0.5f - currScene.Font.MeasureString(choice).X * 0.5f, spacing), color);
+                            color = menu.InactiveColor;
+                            spacing += menu.MenuChoicesSpacing;
+                        }
+                        
+                    }*/
                 }
             }
         }
