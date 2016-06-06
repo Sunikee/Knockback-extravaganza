@@ -8,9 +8,10 @@ using ECS_Engine.Engine.Managers;
 using Microsoft.Xna.Framework;
 using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Component;
+using ECS_Engine.Engine;
+using Game.Source.Components;
 
-namespace ECS_Engine.Engine.Systems
-{
+namespace Game.Source.Systems {
     public class MovementSystem : IUpdateSystem
     {
         public float DashTimer = 1;

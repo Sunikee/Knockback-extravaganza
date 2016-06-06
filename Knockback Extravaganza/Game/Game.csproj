@@ -42,8 +42,20 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Components\AI\AiComponent.cs" />
     <Compile Include="Source\Components\AI\AIManagerComponent.cs" />
+    <Compile Include="Source\Components\AnimationComponent.cs" />
+    <Compile Include="Source\Components\PlayerComponent.cs" />
+    <Compile Include="Source\Components\PlayerStateDefines.cs" />
+    <Compile Include="Source\Components\PowerUpComponent.cs" />
+    <Compile Include="Source\Components\PowerUpSettingsComponent.cs" />
     <Compile Include="Source\Systems\AI\AIManagerSystem.cs" />
+    <Compile Include="Source\Systems\AI\AISystem.cs" />
+    <Compile Include="Source\Systems\CollisionHandleSystem.cs" />
+    <Compile Include="Source\Systems\GameStateSystem.cs" />
+    <Compile Include="Source\Systems\MovementSystem.cs" />
+    <Compile Include="Source\Systems\PlayerAnimationSystem.cs" />
+    <Compile Include="Source\Systems\PowerUpSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

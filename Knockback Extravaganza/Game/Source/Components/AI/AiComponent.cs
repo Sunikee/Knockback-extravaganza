@@ -5,8 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECS_Engine.Engine
-{
+namespace Game.Source.Components.AI {
     public class AIComponent : IComponent
     {
         public int Target { get; set; }

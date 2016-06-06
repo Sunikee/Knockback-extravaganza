@@ -1,7 +1,9 @@
-﻿using ECS_Engine.Engine.Component;
+﻿using ECS_Engine.Engine;
+using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Managers;
 using ECS_Engine.Engine.Systems.Interfaces;
+using Game.Source.Components;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -18,8 +20,7 @@ using System.Threading.Tasks;
  * the player loses the power up.
  * */
 
-namespace ECS_Engine.Engine.Systems
-{
+namespace Game.Source.Systems {
     public class PowerUpSystem : IUpdateSystem
     {
         public ContentManager content;

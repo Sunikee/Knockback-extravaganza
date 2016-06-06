@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ECS_Engine.Engine.Component.Interfaces;
 
-namespace ECS_Engine.Engine.Component
+namespace Game.Source.Components
 {
     public class AnimationComponent : IComponent
     {

@@ -18,6 +18,8 @@ using ECS_Engine.Engine.Scenes;
 using ECS_Engine.Engine.Systems.ParticleSystems;
 using Game.Source.Components.AI;
 using Game.Source.Systems.AI;
+using Game.Source.Systems;
+using Game.Source.Components;
 
 namespace Game
 {
@@ -265,13 +267,14 @@ namespace Game
             Entity particleSystem = componentManager.MakeEntity();
             ParticleComponent particleComponent = new ParticleComponent(Content, graphics.GraphicsDevice);
 
+
             componentManager.AddComponent(particleSystem, particleComponent);
             ParticleComponent.ParticleSystemSettings smoke = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice, "smoke", "smoke");
             ParticleComponent.ParticleSystemSettings smoke2 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice, "smoke", "smoke");
-            ParticleComponent.ParticleSystemSettings smoke3 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice, "smoke", "smoke");
-            ParticleComponent.ParticleSystemSettings smoke4 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice, "smoke", "smoke");
-            ParticleComponent.ParticleSystemSettings smoke5 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice, "smoke", "smoke");
-            ParticleComponent.ParticleSystemSettings smoke6 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice, "smoke", "smoke");
+            ParticleComponent.ParticleSystemSettings smoke3 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice,  "smoke", "smoke");
+            ParticleComponent.ParticleSystemSettings smoke4 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice,  "smoke", "smoke");
+            ParticleComponent.ParticleSystemSettings smoke5 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice,  "smoke", "smoke");
+            ParticleComponent.ParticleSystemSettings smoke6 = new ParticleComponent.ParticleSystemSettings(Content, graphics.GraphicsDevice,  "smoke", "smoke");
 
             smoke.IsActive = true;
             smoke2.IsActive = true;

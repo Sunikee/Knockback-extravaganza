@@ -10,9 +10,10 @@ using ECS_Engine.Engine.Systems.Interfaces;
 using Microsoft.Xna.Framework;
 using ECS_Engine.Engine.Component.Interfaces;
 using Microsoft.Xna.Framework.Graphics;
+using ECS_Engine.Engine;
+using Game.Source.Components;
 
-namespace ECS_Engine.Engine.Systems
-{
+namespace Game.Source.Systems {
     public class PlayerAnimationSystem : IUpdateSystem
     {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)

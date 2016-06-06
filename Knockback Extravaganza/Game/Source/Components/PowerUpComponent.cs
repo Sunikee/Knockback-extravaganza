@@ -5,8 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECS_Engine.Engine.Component
-{
+namespace Game.Source.Components {
     public class PowerUpComponent : IComponent
     {
         public bool IsActive { get; set; }

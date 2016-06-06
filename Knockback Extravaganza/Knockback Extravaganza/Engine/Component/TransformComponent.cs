@@ -27,16 +27,6 @@ namespace ECS_Engine.Engine.Component {
             }
         }
 
-        
-        /*public Matrix World {
-            get {
-                return world[CurrentRenderBuffer];
-            }
-            set {
-                world[UpdateBuffer] = value;
-            }
-        }*/
-
         public Matrix GetWorld(int buffer) {
             return world[buffer];
         }

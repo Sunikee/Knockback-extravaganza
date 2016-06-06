@@ -8,9 +8,11 @@ using ECS_Engine.Engine.Managers;
 using Microsoft.Xna.Framework;
 using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Component;
+using Game.Source.Components.AI;
+using ECS_Engine.Engine;
+using Game.Source.Components;
 
-namespace ECS_Engine.Engine.Systems
-{
+namespace Game.Source.Systems.AI {
     public class AISystem : IUpdateSystem
     {
         public List<Entity> aiEntitiesToRemove = new List<Entity>();

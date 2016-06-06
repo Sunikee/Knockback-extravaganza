@@ -35,13 +35,20 @@ namespace ECS_Engine.Engine.Component
             ExplosionSmokeParticleSystemSettings = new ParticleSystemSettings(contentManager, graphicsDevice, "explosionsmoke", "smoke");
 
         }
+
+        /*
+        The emitter is a helper class for objects that wants to leave a trail of particles behind when moving.
+        The emitter has it's own ParticleSystem and keeps track of the moving objects previous position and it's velocity.
+        */
         public class ParticleEmitter
         {
+            
             public ParticleSystemSettings ParticleSystem { get; set; }
             public float TimeBetweenParticles { get; set; }
             public Vector3 PreviousPosition { get; set; }
             public float TimeLeftOver { get; set; }
-
+            //Constructor for ParticleEmitter, setting up its particlesystem, 
+            //the time between particles and sets the starting position of the object that particles are produces for.
             public ParticleEmitter(ParticleSystemSettings particleSystem, float particlesPerSecond, Vector3 initialPosition)
             {
                 ParticleSystem = particleSystem;
@@ -50,45 +57,59 @@ namespace ECS_Engine.Engine.Component
             }
         }
 
+        /*
+        The ParticleSystemSettings is what holds on to the particles and helps display them through the system
+        */
         public class ParticleSystemSettings
         {
+            //Setting up variables needed for the particlesystem,
+            //ParticleSettings are what is used to control the appearance of the particle system
             public ParticleSettings ParticleSettings;
             public ContentManager Content;
 
+            //Variables used to set the effect that should be used for the particle system
+            //The particle effect is used to copute the animation in the vertex shader.
             public Effect ParticleEffect;
-            public bool IsActive { get; set; } = true;
             public EffectParameter EffectViewParameter;
             public EffectParameter EffectProjectionParameter;
             public EffectParameter EffectViewportScaleParameter;
             public EffectParameter EffectTimeParameter;
-
+            //Array of particles
             public ParticleVertex[] Particles;
 
+            //vertextbuffer for holding onto particles in the same way as the particles array,
+            //but it is copied so that the GPU can access it.
             public DynamicVertexBuffer VertexBuffer;
-
+            
+            //IndexBuffer turn four vertices into particle quads
             public IndexBuffer IndexBuffer;
 
+            //Variables for keeping track of which particles to draw and which ones to retire back into the free list.
             public int FirstActiveParticle { get; set; }
             public int FirstNewParticle { get; set; }
             public int FirstFreeParticle { get; set; }
             public int FirstRetiredParticle { get; set; }
 
             public float CurrentTime { get; set; }
-
+            
+            //How many times draw has been called. Used to keep track of particles to retire.
             public int DrawCounter { get; set; }
+            public Random Random { get; set; }
 
-            public Random Random { get; set; } 
-
-            public ParticleSystemSettings(ContentManager contentManager, GraphicsDevice graphicsDevice, 
+            //A bool to check if the system is active and should be updated and drawn.
+            public bool IsActive { get; set; } = true;
+            public ParticleSystemSettings(ContentManager contentManager, GraphicsDevice graphicsDevice,
                                           string typeOfParticleSystem, string textureName)
             {
 
                 this.Content = contentManager;
                 
+                //Sets up the particle settings
                 ParticleSettings = new ParticleSettings(typeOfParticleSystem, textureName);
 
                 Random = new Random();
 
+                //Allocate the particle array and sets it's corners, since the corners won't change.
                 Particles = new ParticleVertex[ParticleSettings.MaxParticles * 4];
                 
                 for (int i = 0; i < ParticleSettings.MaxParticles; i++)
@@ -99,8 +120,8 @@ namespace ECS_Engine.Engine.Component
                     Particles[i * 4 + 3].Corner = new Vector2(-1, 1);
                 }
 
+                //Sets up the parameters of the effect
                 Effect effect = Content.Load<Effect>("ParticleEffect");
-
                 ParticleEffect = effect.Clone();
 
                 EffectParameterCollection parameters = ParticleEffect.Parameters;
@@ -130,10 +151,12 @@ namespace ECS_Engine.Engine.Component
 
                 parameters["Texture"].SetValue(texture);
 
+                //Creates the dynamic vertex buffer
                 VertexBuffer = new DynamicVertexBuffer(graphicsDevice, ParticleVertex.VertexDeclaration,
                                                        ParticleSettings.MaxParticles * 4, BufferUsage.WriteOnly);
 
 
+                //Create and sets the index buffer
                 ushort[] indices = new ushort[ParticleSettings.MaxParticles * 6];
 
                 for (int i = 0; i < ParticleSettings.MaxParticles; i++)
@@ -150,11 +173,10 @@ namespace ECS_Engine.Engine.Component
                 IndexBuffer = new IndexBuffer(graphicsDevice, typeof(ushort), indices.Length, BufferUsage.WriteOnly);
 
                 IndexBuffer.SetData(indices);
-
-
             }
         }
-
+        //Class for combining several particle systems and composite an effect from them.
+        //With the help of a particle emitter it leaves a trail of particles behind. 
         public class ParticleProjectile
         {
             public ParticleSystemSettings ExplosionParticles;

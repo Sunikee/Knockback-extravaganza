@@ -8,9 +8,9 @@ using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Managers;
 using ECS_Engine.Engine.Systems.Interfaces;
 using Microsoft.Xna.Framework;
+using ECS_Engine.Engine;
 
-namespace ECS_Engine.Engine.Systems
-{
+namespace Game.Source.Systems {
     public class CollisionHandlingSystem : IUpdateSystem
     {
         public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)

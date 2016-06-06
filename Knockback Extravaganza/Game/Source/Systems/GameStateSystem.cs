@@ -8,8 +8,10 @@ using ECS_Engine.Engine.Managers;
 using Microsoft.Xna.Framework;
 using ECS_Engine.Engine.Component;
 using ECS_Engine.Engine.Component.Interfaces;
+using Game.Source.Components;
+using ECS_Engine.Engine;
 
-namespace ECS_Engine.Engine.Systems {
+namespace Game.Source.Systems {
     public class GameStateSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
 

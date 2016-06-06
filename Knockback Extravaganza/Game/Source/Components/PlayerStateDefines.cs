@@ -1,5 +1,4 @@
-﻿namespace ECS_Engine.Engine.Component
-{
+﻿namespace Game.Source.Components {
     public enum PLAYER_STATE
     {
         START_MENU = 0,

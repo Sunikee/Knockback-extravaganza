@@ -41,8 +41,6 @@
   <ItemGroup>
     <Compile Include="Engine\Component\Abstract Classes\ThreadedComponent.cs" />
     <Compile Include="Engine\Component\ActiveCollisionComponent.cs" />
-    <Compile Include="Engine\Component\AiComponent.cs" />
-    <Compile Include="Engine\Component\AnimationComponent.cs" />
     <Compile Include="Engine\Component\CameraComponent.cs" />
     <Compile Include="Engine\Component\ChaseCameraComponent.cs" />
     <Compile Include="Engine\Component\CollisionComponent.cs" />
@@ -61,10 +59,6 @@
     <Compile Include="Engine\Component\ParticleComponents\ParticleComponent.cs" />
     <Compile Include="Engine\Component\PassiveCollisionComponent.cs" />
     <Compile Include="Engine\Component\PhysicsComponent.cs" />
-    <Compile Include="Engine\Component\PlayerComponent.cs" />
-    <Compile Include="Engine\Component\PlayerStateDefines.cs" />
-    <Compile Include="Engine\Component\PowerUpComponent.cs" />
-    <Compile Include="Engine\Component\PowerUpSettingsComponent.cs" />
     <Compile Include="Engine\Component\SongComponent.cs" />
     <Compile Include="Engine\Component\SoundComponent.cs" />
     <Compile Include="Engine\Component\SoundEffectComponent.cs" />
@@ -82,10 +76,7 @@
     <Compile Include="Engine\Scenes\Scene.cs" />
     <Compile Include="Engine\SongPiece.cs" />
     <Compile Include="Engine\SoundEffectPiece.cs" />
-    <Compile Include="Engine\Systems\AISystem.cs" />
-    <Compile Include="Engine\Systems\CollisionHandleSystem.cs" />
     <Compile Include="Engine\Systems\FreeCameraSystem.cs" />
-    <Compile Include="Engine\Systems\GameStateSystem.cs" />
     <Compile Include="Engine\Systems\MenuSystem.cs" />
     <Compile Include="Engine\Systems\Network\ClientNetworkSystem.cs" />
     <Compile Include="Engine\Systems\Network\INetworkSystem.cs" />
@@ -104,9 +95,6 @@
     <Compile Include="Engine\Systems\KeyBoardSystem.cs" />
     <Compile Include="Engine\Systems\ModelRenderSystem.cs" />
     <Compile Include="Engine\Systems\MouseSystem.cs" />
-    <Compile Include="Engine\Systems\MovementSystem.cs" />
-    <Compile Include="Engine\Systems\PlayerAnimationSystem.cs" />
-    <Compile Include="Engine\Systems\PowerUpSystem.cs" />
     <Compile Include="Engine\Systems\RenderSystem.cs" />
     <Compile Include="Engine\Systems\SoundSystem.cs" />
     <Compile Include="Engine\Systems\SpriteRender.cs" />
