@@ -15,7 +15,7 @@ namespace Game.Source.Systems.AI {
     /// Spawns new AI agents according to the time intervals given from the components and sets them to standards settings.
     /// </summary>
     class AIManagerSystem : IUpdateSystem {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager) {
             var components = componentManager.GetComponents<AIManagerComponent>();
             if(components != null) {
                 foreach(var component in components) {

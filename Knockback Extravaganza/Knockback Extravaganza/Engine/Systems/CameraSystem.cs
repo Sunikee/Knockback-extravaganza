@@ -15,7 +15,7 @@ namespace ECS_Engine.Engine.Systems {
     /// target and position.
     /// </summary>
     public class CameraSystem : IUpdateSystem {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager) {
             var components = componentManager.GetComponents<CameraComponent>();
             if (components != null) {
                 foreach (KeyValuePair<Entity, IComponent> cam in components) {

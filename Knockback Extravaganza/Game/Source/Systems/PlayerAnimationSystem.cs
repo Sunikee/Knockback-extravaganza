@@ -19,7 +19,7 @@ namespace Game.Source.Systems {
     /// </summary>
     public class PlayerAnimationSystem : IUpdateSystem
     {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
             var animationComponents = componentManager.GetComponents<AnimationComponent>();
 

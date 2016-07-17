@@ -17,8 +17,9 @@ namespace ECS_Engine.Engine.Systems {
     /// Render all menues and sprites
     /// </summary>
     public class SpriteRender{
-        public void RenderSprites(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) 
+        public void RenderSprites(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManagerFacade sceneManager) 
         {
+            /*
             Scene currScene = sceneManager.GetCurrentScene();
             var menuComponents = componentManager.GetComponents<MenuComponent>();
             if (menuComponents != null && sceneManager.GetCurrentScene().Name != "endScene") {
@@ -51,8 +52,7 @@ namespace ECS_Engine.Engine.Systems {
                 currScene.SpriteBatch.End();
                 graphicsDevice.DepthStencilState = DepthStencilState.Default;
             }
-
-
+            */
         }
     }
 }

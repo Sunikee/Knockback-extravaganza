@@ -16,41 +16,38 @@ namespace ECS_Engine.Engine.Systems
     /// </summary>
     public class PhysicsSystem : IUpdateSystem
     {
-        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
-            if (sceneManager.GetCurrentScene().Name == "singlePlayerScene")
+            var components = componentManager.GetComponents<PhysicsComponent>();
+            if (components != null)
             {
-                var components = componentManager.GetComponents<PhysicsComponent>();
-                if (components != null)
+                foreach (KeyValuePair<Entity, IComponent> comp in components)
                 {
-                    foreach (KeyValuePair<Entity, IComponent> comp in components)
-                    {
-                        var msg = messageManager.GetMessages(comp.Key.ID);
-                        float gameSpeed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                            ActiveCollisionComponent activeCollisionComponent = componentManager.GetComponent<ActiveCollisionComponent>(comp.Key);
-                            PhysicsComponent physicsComponent = componentManager.GetComponent<PhysicsComponent>(comp.Key);
-                            TransformComponent transformComponent = componentManager.GetComponent<TransformComponent>(comp.Key);
-                            MovementComponent movementComponent = componentManager.GetComponent<MovementComponent>(comp.Key);
-                            //PlayerComponent playerComponent = componentManager.GetComponent<PlayerComponent>(comp.Key);
+                    var msg = messageManager.GetMessages(comp.Key.ID);
+                    float gameSpeed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        ActiveCollisionComponent activeCollisionComponent = componentManager.GetComponent<ActiveCollisionComponent>(comp.Key);
+                        PhysicsComponent physicsComponent = componentManager.GetComponent<PhysicsComponent>(comp.Key);
+                        TransformComponent transformComponent = componentManager.GetComponent<TransformComponent>(comp.Key);
+                        MovementComponent movementComponent = componentManager.GetComponent<MovementComponent>(comp.Key);
+                        //PlayerComponent playerComponent = componentManager.GetComponent<PlayerComponent>(comp.Key);
 
-                            ApplyGravity(gameTime, physicsComponent, transformComponent, movementComponent);
+                        ApplyGravity(gameTime, physicsComponent, transformComponent, movementComponent);
                     
 
-                        transformComponent.Position += (physicsComponent.Velocity + movementComponent.Velocity) * gameSpeed;
+                    transformComponent.Position += (physicsComponent.Velocity + movementComponent.Velocity) * gameSpeed;
 
-                        physicsComponent.Velocity -= physicsComponent.Velocity * new Vector3(1,0,1) * gameSpeed;
+                    physicsComponent.Velocity -= physicsComponent.Velocity * new Vector3(1,0,1) * gameSpeed;
 
-                        foreach(var message in msg) {
-                            if(message.msg == "knockback") {
-                                var senderPhysics = componentManager.GetComponent<PhysicsComponent>(componentManager.GetEntity(message.sender));
-                                var senderMovement = componentManager.GetComponent<MovementComponent>(componentManager.GetEntity(message.sender));
-                                ApplyKnockback(physicsComponent, senderPhysics, movementComponent, senderMovement);
-                            }
+                    foreach(var message in msg) {
+                        if(message.msg == "knockback") {
+                            var senderPhysics = componentManager.GetComponent<PhysicsComponent>(componentManager.GetEntity(message.sender));
+                            var senderMovement = componentManager.GetComponent<MovementComponent>(componentManager.GetEntity(message.sender));
+                            ApplyKnockback(physicsComponent, senderPhysics, movementComponent, senderMovement);
                         }
                     }
-
                 }
             }
+            
         }
 
         /// <summary>

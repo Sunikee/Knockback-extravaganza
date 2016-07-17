@@ -18,10 +18,10 @@ namespace Game.Source.Systems
     /// </summary>
     public class MenuSystem : IUpdateSystem
     {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
             var menuComponents = componentManager.GetComponents<MenuComponent>();
-
+            /*
             var currScene = sceneManager.GetCurrentScene();
             if (menuComponents != null && currScene.Name != "singlePlayerScene")
             {
@@ -40,9 +40,11 @@ namespace Game.Source.Systems
                     }
                 }
             }
+            */
         }
         public void ChangeScene(SceneManager sceneManager, MenuComponent menu)
         {
+            /*
             var currScene = sceneManager.GetCurrentScene();
             if (currScene.Name == "startScene")
             {
@@ -92,6 +94,7 @@ namespace Game.Source.Systems
                         break;
                 }
             }
+            */
         }
     }
 }

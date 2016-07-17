@@ -18,8 +18,7 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
     /// </summary>
     public class ParticleSystem: IUpdateSystem
     {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager,
-            SceneManager sceneManager)
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
             if (gametime == null)
                 throw new ArgumentNullException("Gametime is null!");

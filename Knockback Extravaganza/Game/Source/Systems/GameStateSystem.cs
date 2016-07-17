@@ -16,14 +16,12 @@ namespace Game.Source.Systems {
     /// Handles the different states that game can end in.
     /// </summary>
     public class GameStateSystem : IUpdateSystem {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager) {
 
             var components = componentManager.GetComponents<PlayerComponent>();
             foreach (KeyValuePair<Entity, IComponent> component in components) {
                 var playerC = componentManager.GetComponent<TransformComponent>(component.Key);
-
-                if (playerC.Position.Y < -100)
-                    sceneManager.SetCurrentScene("endScene");
+                // TODO: Handle Game states.
             }
 
         }

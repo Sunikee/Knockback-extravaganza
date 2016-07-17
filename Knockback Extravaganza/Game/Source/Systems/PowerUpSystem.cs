@@ -27,7 +27,7 @@ namespace Game.Source.Systems {
         public ContentManager content;
         public List<Entity> powerUpsToRemove = new List<Entity>();
 
-        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
             var powerUpSettingsEntities = componentManager.GetComponents<PowerUpSettingsComponent>();
             var powerUpSettingsEntity = powerUpSettingsEntities.First().Key;

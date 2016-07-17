@@ -15,7 +15,7 @@ namespace ECS_Engine.Engine.Systems {
     /// but the set vales as well apply target offset if set.
     /// </summary>
     public class ChaseCameraSystem : IUpdateSystem {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManage, SceneManager sceneManager) {
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManage, SceneManagerFacade sceneManager) {
             var components = componentManager.GetComponents<CameraComponent>();
             if(components != null) {
                 foreach(KeyValuePair<Entity, IComponent> component in components) {

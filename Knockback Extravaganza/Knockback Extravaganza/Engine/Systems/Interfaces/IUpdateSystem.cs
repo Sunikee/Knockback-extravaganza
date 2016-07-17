@@ -11,6 +11,6 @@ namespace ECS_Engine.Engine.Systems.Interfaces {
     /// Interface for all update systems.
     /// </summary>
     public interface IUpdateSystem : ISystem{
-        void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager);
+        void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager);
     }
 }

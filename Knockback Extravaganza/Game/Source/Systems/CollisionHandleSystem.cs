@@ -16,14 +16,13 @@ namespace Game.Source.Systems {
     /// </summary>
     public class CollisionHandlingSystem : IUpdateSystem
     {
-        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
-            if (sceneManager.GetCurrentScene().Name == "singlePlayerScene")
-            {
-                //Make character moveback to prior frame when colliding
-                HandleCollision(gameTime, componentManager, messageManager);
-                //Implement type of collision and put on colliding units
-            }
+            
+            //Make character moveback to prior frame when colliding
+            HandleCollision(gameTime, componentManager, messageManager);
+            //Implement type of collision and put on colliding units
+            
         }
 
         public void HandleCollision(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager)

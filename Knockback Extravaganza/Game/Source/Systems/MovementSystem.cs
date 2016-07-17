@@ -20,13 +20,13 @@ namespace Game.Source.Systems {
         public float DashTimer = 1;
         public float DashTime = 1500;
         public float e = 0;
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
-            if(sceneManager.GetCurrentScene().Name == "singlePlayerScene")
+            //if(sceneManager.GetCurrentScene().Name == "singlePlayerScene")
             HandleInput(gametime, componentManager, messageManager, sceneManager);     
         }
 
-        public void HandleInput(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
+        public void HandleInput(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
             var kComponents = componentManager.GetComponents<KeyBoardComponent>();
 
@@ -63,7 +63,7 @@ namespace Game.Source.Systems {
                     }
                     else if (keyboardComp.GetActionState("Pause") != BUTTON_STATE.NOT_PRESSED)
                     {
-                        sceneManager.SetCurrentScene("pauseScene");
+                        //sceneManager.SetCurrentScene("pauseScene");
                     }
 
                     if(keyboardComp.GetActionState("Dash") == BUTTON_STATE.HELD) {

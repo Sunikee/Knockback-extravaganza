@@ -17,7 +17,7 @@ namespace ECS_Engine.Engine.Systems {
     /// </summary>
     /// <typeparam name="T">Is of type IVertexType</typeparam>
     public class VertexBufferRenderSystem<T> : IRenderSystem where T : struct, IVertexType{
-        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) {
+        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManagerFacade sceneManager) {
             var cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
 

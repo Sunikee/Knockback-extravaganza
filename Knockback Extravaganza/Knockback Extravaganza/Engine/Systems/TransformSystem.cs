@@ -15,10 +15,12 @@ namespace ECS_Engine.Engine.Systems {
     /// Updates all the transforms components their World and directional vectors.
     /// </summary>
     public class TransformSystem : IUpdateSystem {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager) {
 
+            
             var components = componentManager.GetComponents<TransformComponent>();
-            if(components != null && sceneManager.GetCurrentScene().Name == "singlePlayerScene")
+            
+            if(components != null)
             {
                 foreach(var component in components) {
                     var threadData = component.Value as ThreadedComponent;
@@ -32,6 +34,7 @@ namespace ECS_Engine.Engine.Systems {
                     transform.Up = GetLocalDir(Vector3.Up, rotation);
                 }
             }
+            
 
             var ModelComponents = componentManager.GetComponents<ModelTransformComponent>();
             if (components != null) {

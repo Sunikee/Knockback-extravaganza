@@ -14,9 +14,6 @@ namespace ECS_Engine {
     public abstract class ECSEngine : Game {
         protected GraphicsDeviceManager graphics;
         protected SpriteBatch spriteBatch;
-        protected SystemManager systemManager;
-        protected ComponentManager componentManager;
-        protected MessageManager messageManager;
         protected SceneManager sceneManager;
 
         Thread updateThread;
@@ -33,9 +30,6 @@ namespace ECS_Engine {
             //graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
             sceneManager = new SceneManager();
-            systemManager = new SystemManager();
-            componentManager = new ComponentManager();
-            messageManager = new MessageManager();
             
         }
 
@@ -47,13 +41,8 @@ namespace ECS_Engine {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-            systemManager.GraphicsDevice = GraphicsDevice;
-            systemManager.ComponentManager = componentManager;
-            systemManager.MessageManager = messageManager;
-            systemManager.SceneManager = sceneManager;
 
             
-
             graphics.SynchronizeWithVerticalRetrace = false;
             this.IsFixedTimeStep = false;
             graphics.ApplyChanges();
@@ -90,16 +79,17 @@ namespace ECS_Engine {
         bool runOnce = true;
         protected override void Update(GameTime gameTime) {
             // TODO: Add your update logic here
-            systemManager.GameTime = gameTime;
 
             // Display FPS
+            /*
             if (systemManager.EnableFrameCount) {
                 this.Window.Title = "Update fps: " + systemManager.frameRateUpdate + ", Render fps: " + systemManager.frameRateRender;
             }
+            */
 
             //systemManager.RunUpdateSystem();
             if (runOnce) {
-                updateThread = new Thread(systemManager.RunUpdateSystem);
+                updateThread = new Thread(sceneManager.RunSceneUpdateSystem);
                 updateThread.Start();
                 runOnce = false;
             }
@@ -115,7 +105,7 @@ namespace ECS_Engine {
             // TODO: Add your drawing code here
 
             graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
-            systemManager.RunRenderSystem();
+            sceneManager.RunSceneRenderSystem(GraphicsDevice, gameTime);
 
             base.Draw(gameTime);
         }

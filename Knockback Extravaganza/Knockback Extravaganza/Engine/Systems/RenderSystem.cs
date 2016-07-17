@@ -17,13 +17,11 @@ namespace ECS_Engine.Engine.Systems {
 
         ModelRenderSystem modelRender = new ModelRenderSystem();
         SpriteRender spriteRender = new SpriteRender();
-        void IRenderSystem.Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) {
-            Scene currScene = sceneManager.GetCurrentScene();
+        void IRenderSystem.Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManagerFacade sceneManager) {
 
-            if (currScene.Name == "singlePlayerScene")
-                modelRender.RenderModels(gameTime, graphicsDevice, componentManager, sceneManager);
-            else
-                spriteRender.RenderSprites(gameTime, graphicsDevice, componentManager, sceneManager);
+            modelRender.RenderModels(gameTime, graphicsDevice, componentManager, sceneManager);
+
+            spriteRender.RenderSprites(gameTime, graphicsDevice, componentManager, sceneManager);
         }
     }
 }

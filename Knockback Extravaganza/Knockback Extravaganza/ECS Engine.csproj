@@ -54,8 +54,8 @@
     <Compile Include="Engine\Component\ModelComponent.cs" />
     <Compile Include="Engine\Component\ModelTransformComponent.cs" />
     <Compile Include="Engine\Component\MouseComponent.cs" />
-    <Compile Include="Engine\Component\Interfaces\Network\ClientNetworkComponent.cs" />
-    <Compile Include="Engine\Component\Interfaces\Network\ServerNetworkComponent.cs" />
+    <Compile Include="Engine\Component\Network\ClientNetworkComponent.cs" />
+    <Compile Include="Engine\Component\Network\ServerNetworkComponent.cs" />
     <Compile Include="Engine\Component\ParticleComponents\ParticleComponent.cs" />
     <Compile Include="Engine\Component\PassiveCollisionComponent.cs" />
     <Compile Include="Engine\Component\PhysicsComponent.cs" />
@@ -71,6 +71,7 @@
     <Compile Include="Engine\Managers\ComponentManager.cs" />
     <Compile Include="Engine\Managers\MessageManager.cs" />
     <Compile Include="Engine\Managers\SceneManager.cs" />
+    <Compile Include="Engine\Managers\SceneManagerFacade.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
     <Compile Include="Engine\Component\MovementComponent.cs" />
     <Compile Include="Engine\Scenes\Scene.cs" />
@@ -120,7 +121,9 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Engine\Component\Interfaces\Network\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>

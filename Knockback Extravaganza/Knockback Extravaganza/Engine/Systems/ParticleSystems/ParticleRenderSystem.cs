@@ -19,25 +19,21 @@ namespace ECS_Engine.Engine.Systems.ParticleSystems
     public class ParticleRenderSystem : IRenderSystem
     {
 
-        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager)
+        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManagerFacade sceneManager)
         {
-            Scene currScene = sceneManager.GetCurrentScene();
-            if (currScene.Name == "singlePlayerScene") {
-                var particleComponents = componentManager.GetComponents<ParticleComponent>();
-                var cameraComponents = componentManager.GetComponents<CameraComponent>();
-                CameraComponent camera = (CameraComponent)cameraComponents.First().Value;
+            var particleComponents = componentManager.GetComponents<ParticleComponent>();
+            var cameraComponents = componentManager.GetComponents<CameraComponent>();
+            CameraComponent camera = (CameraComponent)cameraComponents.First().Value;
 
-                foreach (KeyValuePair<Entity, IComponent> component in particleComponents) {
-                    ParticleComponent particleComponent = (ParticleComponent)component.Value;
+            foreach (KeyValuePair<Entity, IComponent> component in particleComponents) {
+                ParticleComponent particleComponent = (ParticleComponent)component.Value;
 
-                    if (particleComponents != null) {
-                        SetCamera(camera.View, camera.Projection, particleComponent);
-                        DrawAllParticleSystems(gameTime, graphicsDevice, particleComponent);
+                if (particleComponents != null) {
+                    SetCamera(camera.View, camera.Projection, particleComponent);
+                    DrawAllParticleSystems(gameTime, graphicsDevice, particleComponent);
 
-                    }
                 }
             }
-            
         }
 
         public void SetCamera(Matrix view, Matrix projection, ParticleComponent particleComponent)

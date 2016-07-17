@@ -20,7 +20,7 @@ namespace ECS_Engine.Engine.Systems {
     ///direction using the mouse and keyboard.
     /// </summary>
     public class FreeCameraSystem : IUpdateSystem {
-        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager) {
             var components = componentManager.GetComponents<CameraComponent>();
             if(components != null) {
                 foreach (KeyValuePair<Entity, IComponent> component in components) {

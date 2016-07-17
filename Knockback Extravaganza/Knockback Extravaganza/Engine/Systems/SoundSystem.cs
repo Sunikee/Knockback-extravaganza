@@ -15,7 +15,7 @@ namespace ECS_Engine.Engine.Systems {
     /// Plays sounds stored in components using the message system to trigger them.
     /// </summary>
     public class SoundSystem : IUpdateSystem {
-        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager) {
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager) {
             var effectComponents = componentManager.GetComponents<SoundEffectComponent>();
             var songComponents = componentManager.GetComponents<SongComponent>();
             if (effectComponents != null) {

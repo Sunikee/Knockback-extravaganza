@@ -21,7 +21,7 @@ namespace ECS_Engine.Engine.Systems
     public class KeyBoardSystem : IUpdateSystem
     {
 
-        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
+        public void Update(GameTime gameTime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
             var components = componentManager.GetComponents<KeyBoardComponent>();
 

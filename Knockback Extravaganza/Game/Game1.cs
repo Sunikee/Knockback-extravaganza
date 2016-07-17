@@ -42,27 +42,7 @@ namespace Game
             //Initialise Scenes
 
             //Init startmenu
-            var startScene = new Scene { Name = "startScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Single Player", "Multiplayer"} };
-            sceneManager.AddScene(startScene);
 
-            //Init multiplayer
-            var multiplayerScene = new Scene { Name = "singlePlayerScene", Font = startFont, Background = startBackground, SpriteBatch = spriteBatch, TimePlayed = 0 };
-            sceneManager.AddScene(multiplayerScene);
-
-            //Init pause
-            var pauseScene = new Scene { Name = "pauseScene", Font = startFont, Background = pauseBackground, SpriteBatch = spriteBatch, menuChoices = new List<string> { "Continue", "Settings", "Exit to main menu" } };
-            sceneManager.AddScene(pauseScene);
-
-            //Init hostScene
-            var hostScene = new Scene { Name = "connectionScene", Background = pauseBackground, SpriteBatch = spriteBatch, Font = startFont, menuChoices = new List<string> { "Host Game", "Join Game", "Exit to main menu" }};
-            sceneManager.AddScene(hostScene);
-
-            //Set start scene
-            sceneManager.SetCurrentScene("startScene");
-
-            //set end scene
-            var endScene = new Scene { Name = "endScene", Background = pauseBackground, SpriteBatch = spriteBatch, Font = startFont };
-            sceneManager.AddScene(endScene);
         }
 
         protected override void LoadContent()
@@ -89,7 +69,7 @@ namespace Game
         /// </summary>
         public void CreateEntities()
         {
-
+            /*
             //Creates a menu entity
             Entity menuEntity = componentManager.MakeEntity();
             var menuC = new MenuComponent
@@ -296,10 +276,12 @@ namespace Game
             particleComponent.SmokeParticlesList.Add(smoke4);
             particleComponent.SmokeParticlesList.Add(smoke5);
             particleComponent.SmokeParticlesList.Add(smoke6);
+            */
         }
 
         public void InitializeSystems()
         {
+            /*
             var powerUpSystem = new PowerUpSystem();
             powerUpSystem.content = Content;
             systemManager.EnableFrameCount = true;
@@ -322,6 +304,7 @@ namespace Game
             systemManager.AddSystem(new GameStateSystem());
             systemManager.AddSystem(new ParticleSystem());
             systemManager.AddSystem(new ParticleRenderSystem());
+            */
         }
     }
 }

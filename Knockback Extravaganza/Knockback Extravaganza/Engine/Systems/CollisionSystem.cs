@@ -20,7 +20,7 @@ namespace ECS_Engine.Engine.Systems
     /// </summary>
     public class CollisionDetectionSystem : IUpdateSystem
     {
-        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManager sceneManager)
+        public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
             var activeComponents = componentManager.GetComponents<ActiveCollisionComponent>();
             var passiveComponents = componentManager.GetComponents<PassiveCollisionComponent>();

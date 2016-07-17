@@ -14,9 +14,7 @@ namespace ECS_Engine.Engine.Managers {
 
         public ComponentManager ComponentManager { get; set; }
         public MessageManager MessageManager { get; set; }
-        public SceneManager SceneManager { get; set; }
-        public GameTime GameTime { get; set; }
-        public GraphicsDevice GraphicsDevice { get; set; }
+        public SceneManagerFacade SceneManager { get; set; }
 
         private bool changeRenderBuffer = false;
 
@@ -97,11 +95,13 @@ namespace ECS_Engine.Engine.Managers {
                     }
                     MessageManager.End();
 
-                    var threadedComps = ComponentManager.GetThreadedComponents();
-                    Parallel.ForEach(threadedComps, comp => {
-                        comp.CopyThreadedData(comp.IdleRenderBuffer);
-                    });
-                    changeRenderBuffer = true;
+                    if (changeRenderBuffer == false) {
+                        var threadedComps = ComponentManager.GetThreadedComponents();
+                        Parallel.ForEach(threadedComps, comp => {
+                            comp.CopyThreadedData(comp.IdleRenderBuffer);
+                        });
+                        changeRenderBuffer = true;
+                    }
                 }
 
                 //Updates GameTime
@@ -111,11 +111,11 @@ namespace ECS_Engine.Engine.Managers {
             }
         }
 
-        public void RunRenderSystem() {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+        public void RunRenderSystem(GraphicsDevice graphicsDevice, GameTime gameTime) {
+            graphicsDevice.Clear(Color.CornflowerBlue);
             if (renderSystems.Count > 0) {
                 foreach (IRenderSystem system in renderSystems) {
-                    system.Render(GameTime, GraphicsDevice, ComponentManager, SceneManager);
+                    system.Render(gameTime, graphicsDevice, ComponentManager, SceneManager);
                 }
             }
 
@@ -129,7 +129,7 @@ namespace ECS_Engine.Engine.Managers {
 
             //FPS Counter
             if (EnableFrameCount) {
-                elapsedTimeRender += GameTime.ElapsedGameTime.TotalSeconds;
+                elapsedTimeRender += gameTime.ElapsedGameTime.TotalSeconds;
                 if (elapsedTimeRender > 1) {
                     elapsedTimeRender -= 1;
                     frameRateRender = frameCountRender;

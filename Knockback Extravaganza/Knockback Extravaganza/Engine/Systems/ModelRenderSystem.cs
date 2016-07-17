@@ -20,11 +20,12 @@ namespace ECS_Engine.Engine.Systems {
 
         public static float r = 0.1f;
 
-            public void RenderModels(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManager sceneManager) {
+            public void RenderModels(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManagerFacade sceneManager) {
             var cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
             BoundingFrustum frustum = new BoundingFrustum(camera.View * camera.Projection);
             var components = componentManager.GetComponents<ModelComponent>();
+
             foreach (KeyValuePair<Entity, IComponent> component in components) {
                 ModelComponent model = (ModelComponent)component.Value;
                 ModelTransformComponent MeshTransform = componentManager.GetComponent<ModelTransformComponent>(component.Key);
@@ -65,14 +66,6 @@ namespace ECS_Engine.Engine.Systems {
                         }
                     }
                 }
-            }
-            var currScene = sceneManager.GetCurrentScene();
-            if (sceneManager.GetCurrentScene().Name == "singlePlayerScene") {
-                currScene.TimePlayed += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                currScene.SpriteBatch.Begin();
-                currScene.SpriteBatch.DrawString(currScene.Font, "Time: " + (int)currScene.TimePlayed, new Vector2(10), Color.White);
-                currScene.SpriteBatch.End();
-                graphicsDevice.DepthStencilState = DepthStencilState.Default;
             }
         }
 
