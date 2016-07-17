@@ -29,12 +29,12 @@ namespace ECS_Engine.Engine.Managers
         }
 
         public void UnloadScene(string name) {
-            scenes.TryGetValue(name, out currentScene);
-            if (currentScene.IsSceneInitialised) {
-                currentScene.DestroyScene();
+            Scene tempScene;
+            scenes.TryGetValue(name, out tempScene);
+            if (tempScene != currentScene && tempScene.IsSceneInitialised) {
+                tempScene.DestroyScene();
             }
         }
-
 
         public void RunSceneUpdateSystem() {
             var scene = currentScene;

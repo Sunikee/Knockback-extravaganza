@@ -20,6 +20,7 @@ using Game.Source.Components.AI;
 using Game.Source.Systems.AI;
 using Game.Source.Systems;
 using Game.Source.Components;
+using Game.Source.Scenes;
 
 namespace Game
 {
@@ -53,8 +54,8 @@ namespace Game
             
 
             //Load Scene content
-             startBackground = Content.Load<Texture2D>("Scenes/startBackground2");
-             startFont = Content.Load<SpriteFont>("Scenes/Font1");
+            startBackground = Content.Load<Texture2D>("Scenes/startBackground2");
+            startFont = Content.Load<SpriteFont>("Scenes/Font1");
             pauseBackground = Content.Load<Texture2D>("Scenes/pauseBackground");
             CreateEntities();
         }
@@ -69,6 +70,11 @@ namespace Game
         /// </summary>
         public void CreateEntities()
         {
+            SinglePlayerScene scene = new SinglePlayerScene("SinglePlayer", Content, graphics);
+
+            sceneManager.AddScene(scene);
+            sceneManager.ChangeScene("SinglePlayer");
+
             /*
             //Creates a menu entity
             Entity menuEntity = componentManager.MakeEntity();

@@ -37,7 +37,7 @@ namespace ECS_Engine.Engine.Systems {
             
 
             var ModelComponents = componentManager.GetComponents<ModelTransformComponent>();
-            if (components != null) {
+            if (components != null && ModelComponents != null) {
                 foreach (var component in ModelComponents) {
                     ModelTransformComponent transform = componentManager.GetComponent<ModelTransformComponent>(component.Key);
                     foreach (MeshTransform mesh in transform.GetTransforms().Values) {

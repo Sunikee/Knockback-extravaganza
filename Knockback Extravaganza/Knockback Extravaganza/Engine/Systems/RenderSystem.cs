@@ -17,9 +17,9 @@ namespace ECS_Engine.Engine.Systems {
 
         ModelRenderSystem modelRender = new ModelRenderSystem();
         SpriteRender spriteRender = new SpriteRender();
-        void IRenderSystem.Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManagerFacade sceneManager) {
+        public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManagerFacade sceneManager) {
 
-            modelRender.RenderModels(gameTime, graphicsDevice, componentManager, sceneManager);
+            modelRender.Render(gameTime, graphicsDevice, componentManager, sceneManager);
 
             spriteRender.RenderSprites(gameTime, graphicsDevice, componentManager, sceneManager);
         }

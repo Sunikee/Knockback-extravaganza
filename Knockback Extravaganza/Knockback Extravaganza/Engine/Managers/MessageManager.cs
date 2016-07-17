@@ -41,6 +41,7 @@ namespace ECS_Engine.Engine.Managers {
                 messages[i].activateInSeconds -= (float)gametime.ElapsedGameTime.TotalSeconds;
             }
         }
+
         public void End() {
             for(int i = 0; i < messages.Length; ++i) {
                 if(messages[i].activateInSeconds < 0) {
@@ -48,6 +49,7 @@ namespace ECS_Engine.Engine.Managers {
                 }
             }
         }
+
         public void RegMessage(int sender, int receiver, float activateInSeconds, string msg) {
             for(int i = 0; i <= messages.Length; ++i) {
                 if(i == messages.Length) {
@@ -76,6 +78,10 @@ namespace ECS_Engine.Engine.Managers {
         }
         public List<Message> GetMessages(int id) {
             return messages.Where(x => x.activateInSeconds < 0 && x.receiver == id).ToList();
+        }
+
+        public void DestroyMessage(Message message) {
+            messages.First(x => x == message).Set(-1, -1, -1, "");
         }
 
     }

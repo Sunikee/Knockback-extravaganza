@@ -16,11 +16,11 @@ namespace ECS_Engine.Engine.Systems {
     /// <summary>
     /// Renders all object with models on them
     /// </summary>
-    public class ModelRenderSystem {
+    public class ModelRenderSystem : IRenderSystem{
 
         public static float r = 0.1f;
 
-            public void RenderModels(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManagerFacade sceneManager) {
+            public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManagerFacade sceneManager) {
             var cam = componentManager.GetComponents<CameraComponent>();
             CameraComponent camera = (CameraComponent)cam.First().Value;
             BoundingFrustum frustum = new BoundingFrustum(camera.View * camera.Projection);
