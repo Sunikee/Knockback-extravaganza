@@ -25,7 +25,7 @@ namespace Game.Source.Scenes {
         public SinglePlayerScene(string name, ContentManager content, GraphicsDeviceManager graphics) : base(name, content, graphics) { }
 
         public override void InitScene() {
-            base.InitScene();
+            
 
             #region Entity Initialisation
 
@@ -243,25 +243,23 @@ namespace Game.Source.Scenes {
 
             SystemManager.AddSystem(new TransformSystem());
             SystemManager.AddSystem(new CameraSystem());
-            SystemManager.AddSystem(new RenderSystem());
+            SystemManager.AddSystem(new ModelRenderSystem());
             SystemManager.AddSystem(new MovementSystem());
             SystemManager.AddSystem(new KeyBoardSystem());
             SystemManager.AddSystem(new ChaseCameraSystem());
             SystemManager.AddSystem(new CollisionDetectionSystem());
             SystemManager.AddSystem(new CollisionHandlingSystem());
             SystemManager.AddSystem(new PhysicsSystem());
-            //SystemManager.AddSystem(new MouseSystem());
-            //SystemManager.AddSystem(new FreeCameraSystem());
             SystemManager.AddSystem(powerUpSystem);
             SystemManager.AddSystem(new AIManagerSystem());
             SystemManager.AddSystem(new SoundSystem());
-            //SystemManager.AddSystem(new MenuSystem());
             SystemManager.AddSystem(new AISystem());
-            //SystemManager.AddSystem(new GameStateSystem());
             SystemManager.AddSystem(new ParticleSystem());
             SystemManager.AddSystem(new ParticleRenderSystem());
 
             #endregion
+
+            base.InitScene();
         }
 
         public override void ResetScene() {

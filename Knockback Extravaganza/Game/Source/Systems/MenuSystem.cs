@@ -21,6 +21,16 @@ namespace Game.Source.Systems
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
             var menuComponents = componentManager.GetComponents<MenuComponent>();
+
+            if(menuComponents != null) {
+                foreach (var comp in menuComponents) {
+                    var menu = comp.Value as MenuComponent;
+                    var keyboard = componentManager.GetComponent<KeyBoardComponent>(comp.Key);
+
+                    if (keyboard.GetActionState("Select") == BUTTON_STATE.PRESSED)
+                        sceneManager.ChangeScene("SinglePlayer");
+                }
+            }
             /*
             var currScene = sceneManager.GetCurrentScene();
             if (menuComponents != null && currScene.Name != "singlePlayerScene")

@@ -13,6 +13,7 @@ namespace ECS_Engine.Engine.Managers
     public class SceneManager
     {
         private Scene currentScene = null;
+        private bool changedScene = false;
         private Dictionary<string, Scene> scenes = new Dictionary<string, Scene>();
 
         public void AddScene(Scene scene) {
@@ -22,6 +23,9 @@ namespace ECS_Engine.Engine.Managers
 
         // todo: Make so it will not crash the threadings.
         public void ChangeScene(string name) {
+            if (currentScene != null)
+                changedScene = true;
+
             scenes.TryGetValue(name, out currentScene);
             if (currentScene.IsSceneInitialised == false) {
                 currentScene.InitScene();
@@ -37,15 +41,39 @@ namespace ECS_Engine.Engine.Managers
         }
 
         public void RunSceneUpdateSystem() {
-            var scene = currentScene;
-            if(scene != null)
-                scene.SystemManager.RunUpdateSystem();
+
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            GameTime updateGameTime = new GameTime();
+            TimeSpan start;
+
+            var runSteps = 1000.0 / 1000.0;
+            var currentSteps = 0.0;
+
+            while (true) {
+                start = watch.Elapsed;
+
+                if (currentSteps > runSteps) {
+                    updateGameTime.ElapsedGameTime = TimeSpan.FromMilliseconds(currentSteps);
+                    updateGameTime.TotalGameTime += TimeSpan.FromMilliseconds(currentSteps);
+                    currentSteps = 0;
+
+                    var scene = currentScene;
+                    if (scene != null && scene.IsSceneInitialised) {
+                        scene.SystemManager.RunUpdateSystem(updateGameTime);
+                    }
+                }
+                
+                TimeSpan elapsed = watch.Elapsed - start;
+                currentSteps += elapsed.TotalMilliseconds;
+            }
         }
 
         public void RunSceneRenderSystem(GraphicsDevice graphicsDevice, GameTime gameTime) {
             var scene = currentScene;
-            if(scene != null)
+            if (scene != null && scene.IsSceneInitialised) {
                 scene.SystemManager.RunRenderSystem(graphicsDevice, gameTime);
+            }
         }
         
     }

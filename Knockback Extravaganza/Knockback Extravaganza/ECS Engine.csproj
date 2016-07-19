@@ -39,6 +39,9 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\2D Components\Position2DComponent.cs" />
+    <Compile Include="Engine\2D Components\SpriteTextComponent.cs" />
+    <Compile Include="Engine\2D Components\Texture2DComponent.cs" />
     <Compile Include="Engine\Component\Abstract Classes\ThreadedComponent.cs" />
     <Compile Include="Engine\Component\ActiveCollisionComponent.cs" />
     <Compile Include="Engine\Component\CameraComponent.cs" />
@@ -97,7 +100,7 @@
     <Compile Include="Engine\Systems\MouseSystem.cs" />
     <Compile Include="Engine\Systems\RenderSystem.cs" />
     <Compile Include="Engine\Systems\SoundSystem.cs" />
-    <Compile Include="Engine\Systems\SpriteRender.cs" />
+    <Compile Include="Engine\Systems\SpriteRenderSystem.cs" />
     <Compile Include="Engine\Systems\TransformSystem.cs" />
     <Compile Include="Engine\Systems\VertexBufferRenderSystem.cs" />
     <Compile Include="Engine\Systems\VertexIndexBufferRenderSystem.cs" />

@@ -49,7 +49,7 @@
     <Compile Include="Source\Components\PlayerStateDefines.cs" />
     <Compile Include="Source\Components\PowerUpComponent.cs" />
     <Compile Include="Source\Components\PowerUpSettingsComponent.cs" />
-    <Compile Include="Source\Scenes\Menu.cs" />
+    <Compile Include="Source\Scenes\MainMenuScene.cs" />
     <Compile Include="Source\Scenes\SinglePlayerScene.cs" />
     <Compile Include="Source\Systems\AI\AIManagerSystem.cs" />
     <Compile Include="Source\Systems\AI\AISystem.cs" />

@@ -70,10 +70,13 @@ namespace Game
         /// </summary>
         public void CreateEntities()
         {
-            SinglePlayerScene scene = new SinglePlayerScene("SinglePlayer", Content, graphics);
+            SinglePlayerScene singelplayerScene = new SinglePlayerScene("SinglePlayer", Content, graphics);
+            MainMenuScene mainMenuScene = new MainMenuScene("MainMenu", Content, graphics);
 
-            sceneManager.AddScene(scene);
-            sceneManager.ChangeScene("SinglePlayer");
+            sceneManager.AddScene(singelplayerScene);
+            sceneManager.AddScene(mainMenuScene);
+
+            sceneManager.ChangeScene("MainMenu");
 
             /*
             //Creates a menu entity

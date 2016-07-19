@@ -16,12 +16,12 @@ namespace ECS_Engine.Engine.Systems {
     public class RenderSystem : IRenderSystem {
 
         ModelRenderSystem modelRender = new ModelRenderSystem();
-        SpriteRender spriteRender = new SpriteRender();
+        SpriteRenderSystem spriteRender = new SpriteRenderSystem();
         public void Render(GameTime gameTime, GraphicsDevice graphicsDevice, ComponentManager componentManager, SceneManagerFacade sceneManager) {
 
             modelRender.Render(gameTime, graphicsDevice, componentManager, sceneManager);
 
-            spriteRender.RenderSprites(gameTime, graphicsDevice, componentManager, sceneManager);
+            spriteRender.Render(gameTime, graphicsDevice, componentManager, sceneManager);
         }
     }
 }

@@ -58,57 +58,35 @@ namespace ECS_Engine.Engine.Managers {
 
         }
         
-        public void RunUpdateSystem() {
-            Stopwatch watch = new Stopwatch();
-            watch.Start();
-            GameTime updateGameTime = new GameTime();
-            TimeSpan start;
+        public void RunUpdateSystem(GameTime gameTime) {
 
-            var runSteps = 1000.0 / 1000.0;
-            var currentSteps = 0.0;
-
-            while (true) {
-                start = watch.Elapsed;
-                
-                if (currentSteps > runSteps) {
-                    //Console.WriteLine(currentSteps);
-                    updateGameTime.ElapsedGameTime = TimeSpan.FromMilliseconds(currentSteps);
-                    updateGameTime.TotalGameTime += TimeSpan.FromMilliseconds(currentSteps);
-                    currentSteps = 0;
-
-                    //FPS Counter
-                    if (EnableFrameCount) {
-                        elapsedTimeUpdate += updateGameTime.ElapsedGameTime.TotalSeconds;
-                        if (elapsedTimeUpdate > 1) {
-                            elapsedTimeUpdate -= 1;
-                            frameRateUpdate = frameCountUpdate;
-                            frameCountUpdate = 0;
-                        }
-                        frameCountUpdate++;
-                    }
-
-                    MessageManager.Begin(updateGameTime);
-                    if (updateSystems.Count > 0) {
-                        foreach (IUpdateSystem system in updateSystems) {
-                            system.Update(updateGameTime, ComponentManager, MessageManager, SceneManager);
-                        }
-                    }
-                    MessageManager.End();
-
-                    if (changeRenderBuffer == false) {
-                        var threadedComps = ComponentManager.GetThreadedComponents();
-                        Parallel.ForEach(threadedComps, comp => {
-                            comp.CopyThreadedData(comp.IdleRenderBuffer);
-                        });
-                        changeRenderBuffer = true;
-                    }
+            //FPS Counter
+            if (EnableFrameCount) {
+                elapsedTimeUpdate += gameTime.ElapsedGameTime.TotalSeconds;
+                if (elapsedTimeUpdate > 1) {
+                    elapsedTimeUpdate -= 1;
+                    frameRateUpdate = frameCountUpdate;
+                    frameCountUpdate = 0;
                 }
-
-                //Updates GameTime
-                TimeSpan elapsed = watch.Elapsed - start;
-                currentSteps += elapsed.TotalMilliseconds;
-  
+                frameCountUpdate++;
             }
+
+            MessageManager.Begin(gameTime);
+            if (updateSystems.Count > 0) {
+                foreach (IUpdateSystem system in updateSystems) {
+                    system.Update(gameTime, ComponentManager, MessageManager, SceneManager);
+                }
+            }
+            MessageManager.End();
+
+            if (changeRenderBuffer == false) {
+                var threadedComps = ComponentManager.GetThreadedComponents();
+                Parallel.ForEach(threadedComps, comp => {
+                    comp.CopyThreadedData(comp.IdleRenderBuffer);
+                });
+                changeRenderBuffer = true;
+            }
+
         }
 
         public void RunRenderSystem(GraphicsDevice graphicsDevice, GameTime gameTime) {
