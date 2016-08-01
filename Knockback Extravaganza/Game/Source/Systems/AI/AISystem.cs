@@ -30,24 +30,16 @@ namespace Game.Source.Systems.AI {
                     // Get AI data
                     var aiAiC = componentManager.GetComponent<AIComponent>(ai.Key);
                     var aiTransformC = componentManager.GetComponent<TransformComponent>(ai.Key);
-                    var aiModelTransC = componentManager.GetComponent<ModelTransformComponent>(ai.Key);
-                    var aiPhysicsC = componentManager.GetComponent<PhysicsComponent>(ai.Key);
                     var aiMovec = componentManager.GetComponent<MovementComponent>(ai.Key);
 
                     // Get target data
                     var playerEntities = componentManager.GetComponents<PlayerComponent>();
-                    //Random rand = new Random();
-                    //var targetEntity = playerEntities.Keys.ToArray()[rand.Next(0, playerEntities.Count())];
                     var targetEntity = playerEntities.First().Key;
                     var targetTransC = componentManager.GetComponent<TransformComponent>(targetEntity);
-                    var targetMoveC = componentManager.GetComponent<MovementComponent>(targetEntity);
                     aiAiC.Duration -= gametime.ElapsedGameTime.Milliseconds;
-                    //if (aiAiC.Duration <= 0)
-                    //    aiEntitiesToRemove.Add(ai.Key);
-
-
-                    //USE THIS WHEN VELOCITY WORKS!!!!!!!!!!!!!!
-                    float distance = Vector3.DistanceSquared(targetTransC.Position, aiTransformC.Position);
+                 
+                    // Update states leave 300 to 400 to avoid hysteria.
+                    var distance = Vector3.DistanceSquared(targetTransC.Position, aiTransformC.Position);
                     if ((distance > 400 * 400 && aiAiC.State == AiState.Follow)) {
                         aiAiC.State = AiState.Stop;
                     }
@@ -55,24 +47,29 @@ namespace Game.Source.Systems.AI {
                         aiAiC.State = AiState.Follow;
                     }
 
-                    if (aiAiC.State == AiState.Charge) {
-                        var diff = targetTransC.Position - aiTransformC.Position;
-                        diff.Normalize();
-                        aiMovec.Velocity += diff * new Vector3(2, 0, 2);
-                        //aiAiC.State = "follow";
-                    }
-                    else if (aiAiC.State == AiState.Stop) {
-                        aiMovec.Velocity = aiMovec.Velocity * 0.1f;
-                        aiAiC.State = AiState.Charge;
-                    }
-                    else if (aiAiC.State == AiState.Follow) {
-                        var diff = targetTransC.Position - aiTransformC.Position;
-                        diff.Normalize();
-                        aiMovec.Velocity += diff * new Vector3(1, 0, 1);
+                    switch (aiAiC.State)
+                    {
+                        case AiState.Charge:
+                        {
+                            var diff = targetTransC.Position - aiTransformC.Position;
+                            diff.Normalize();
+                            aiMovec.Velocity += diff * new Vector3(2, 0, 2);
+                        }
+                            break;
+                        case AiState.Stop:
+                            aiMovec.Velocity = aiMovec.Velocity * 0.1f;
+                            aiAiC.State = AiState.Charge;
+                            break;
+                        case AiState.Follow:
+                        {
+                            var diff = targetTransC.Position - aiTransformC.Position;
+                            diff.Normalize();
+                            aiMovec.Velocity += diff * new Vector3(1, 0, 1);
+                        }
+                            break;
                     }
                 }
             }
-            
             RemoveAIEntity(componentManager);
         }
         public void RemoveAIEntity(ComponentManager componentManager)
@@ -81,7 +78,6 @@ namespace Game.Source.Systems.AI {
             { 
             componentManager.RemoveEntity(e);
             }
-            //aiEntitiesToRemove.Clear();
         }
     }
 }
