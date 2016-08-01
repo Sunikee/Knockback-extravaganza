@@ -11,6 +11,14 @@ namespace Game.Source.Components.AI {
         public int Target { get; set; }
         public int Duration { get; set; }
 
-        public string State { get; set; } = "follow";
+        public AiState State { get; set; }
     }
+
+    public enum AiState
+    {
+        Follow,
+        Charge,
+        Stop
+    }
+
 }

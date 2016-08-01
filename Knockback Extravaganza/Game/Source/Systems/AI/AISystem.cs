@@ -48,24 +48,24 @@ namespace Game.Source.Systems.AI {
 
                     //USE THIS WHEN VELOCITY WORKS!!!!!!!!!!!!!!
                     float distance = Vector3.DistanceSquared(targetTransC.Position, aiTransformC.Position);
-                    if ((distance > 400 * 400 && aiAiC.State == "follow")) {
-                        aiAiC.State = "stop";
+                    if ((distance > 400 * 400 && aiAiC.State == AiState.Follow)) {
+                        aiAiC.State = AiState.Stop;
                     }
                     else if (distance < 300 * 300) {
-                        aiAiC.State = "follow";
+                        aiAiC.State = AiState.Follow;
                     }
 
-                    if (aiAiC.State == "charge") {
+                    if (aiAiC.State == AiState.Charge) {
                         var diff = targetTransC.Position - aiTransformC.Position;
                         diff.Normalize();
                         aiMovec.Velocity += diff * new Vector3(2, 0, 2);
                         //aiAiC.State = "follow";
                     }
-                    else if (aiAiC.State == "stop") {
+                    else if (aiAiC.State == AiState.Stop) {
                         aiMovec.Velocity = aiMovec.Velocity * 0.1f;
-                        aiAiC.State = "charge";
+                        aiAiC.State = AiState.Charge;
                     }
-                    else if (aiAiC.State == "follow") {
+                    else if (aiAiC.State == AiState.Follow) {
                         var diff = targetTransC.Position - aiTransformC.Position;
                         diff.Normalize();
                         aiMovec.Velocity += diff * new Vector3(1, 0, 1);
