@@ -146,14 +146,16 @@ namespace Game.Source.Scenes {
 
             #region AI Agent
 
-            AIManagerComponent AIManagerC = new AIManagerComponent() {
+            var rnd = new Random();
+            var aiManagerC = new AIManagerComponent() {
                 AIModel = Content.Load<Model>("albin_sphere"),
                 spawnAfterSeconds = 5,
                 spawnMin = passColl.BoundingBox.Min,
                 spawnMax = passColl.BoundingBox.Max,
-                spawnTimer = 0
+                spawnTimer = 0,
+           
             };
-            ComponentManager.AddComponent(AIManagerEntity, AIManagerC);
+            ComponentManager.AddComponent(AIManagerEntity, aiManagerC);
 
             #endregion
 

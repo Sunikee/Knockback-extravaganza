@@ -12,9 +12,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Game.Source.Components.AI;
 
 
-namespace Game.Source.Systems {
+namespace Game.Source.Systems
+{
     /// <summary>
     /// System Description
     /// This system handles all power ups. When a player picks up a power up, a message is saved.
@@ -53,6 +55,7 @@ namespace Game.Source.Systems {
                 var messages = messageManager.GetMessages(component.Key.ID);
                 var powerUp = componentManager.GetComponent<PowerUpComponent>(component.Key);
                 var movement = componentManager.GetComponent<MovementComponent>(component.Key);
+                var aiC = componentManager.GetComponent<AIComponent>(component.Key);
 
                 if (powerUp != null)
                 {
@@ -64,54 +67,62 @@ namespace Game.Source.Systems {
                         componentManager.RemoveComponent<PowerUpComponent>(component.Key);
                     }
                 }
+                #region Read Powerup messages
+
                 foreach (var msg in messages)
                 {
-                    if (msg.msg == "powerUp")
+                    if (msg.msg == "powerUp" && aiC == null)
                     {
                         var rnd = new Random();
                         var power = rnd.Next(1, 3);
 
                         //transform.Scale = new Vector3(transform.Scale.X * 2, transform.Scale.Y, transform.Scale.Z * 2);
-                        if (power == 1)
+                        switch (power)
                         {
-                            transform.Scale = new Vector3(2, 1, 2);
+                            case 1:
+                                {
+                                    transform.Scale = new Vector3(2, 1, 2);
 
-                            physics.Mass *= 2;
-                            if (physics.Mass >= 10)
-                                physics.Mass = 10;
+                                    physics.Mass *= 2;
+                                    if (physics.Mass >= 10)
+                                        physics.Mass = 10;
 
-                            var powerupC = new PowerUpComponent { ActiveTime = 10000, PowerUpType = power };
-                            componentManager.AddComponent(component.Key, powerupC);
+                                    var powerupC = new PowerUpComponent { ActiveTime = 10000, PowerUpType = power };
+                                    componentManager.AddComponent(component.Key, powerupC);
 
-                            var entity = componentManager.GetEntity(msg.sender);
-                            powerUpsToRemove.Add(entity);
-                        }
-                        else if (power == 2)
-                        {
-                            transform.Scale = new Vector3(0.5f);
+                                    var entity = componentManager.GetEntity(msg.sender);
+                                    powerUpsToRemove.Add(entity);
+                                }
+                                break;
+                            case 2:
+                                {
+                                    transform.Scale = new Vector3(0.5f);
 
-                            physics.Mass *= 0.5f;
-                            if (physics.Mass >= 2.5f)
-                                physics.Mass = 2.5f;
+                                    physics.Mass *= 0.5f;
+                                    if (physics.Mass >= 2.5f)
+                                        physics.Mass = 2.5f;
 
-                            var powerupC = new PowerUpComponent { ActiveTime = 10000, PowerUpType = power };
-                            componentManager.AddComponent(component.Key, powerupC);
+                                    var powerupC = new PowerUpComponent { ActiveTime = 10000, PowerUpType = power };
+                                    componentManager.AddComponent(component.Key, powerupC);
 
-                            var entity = componentManager.GetEntity(msg.sender);
-                            powerUpsToRemove.Add(entity);
-                            //also make him faster
+                                    var entity = componentManager.GetEntity(msg.sender);
+                                    powerUpsToRemove.Add(entity);
+                                    //also make him faster
+                                }
+                                break;
                         }
                     }
                 }
+                #endregion
             }
-            RemovePowerUps(componentManager,messageManager);
+            RemovePowerUps(componentManager, messageManager);
         }
         public void SpawnPowerUp(ComponentManager componentManager, PowerUpSettingsComponent powerUpSettingsComponent, MessageManager messageManager)
         {
 
-            Random rnd = new Random();
-            float X = (rnd.Next((int)powerUpSettingsComponent.minCoordX, (int)powerUpSettingsComponent.maxCoordX));
-            float Z = (rnd.Next((int)powerUpSettingsComponent.minCoordZ, (int)powerUpSettingsComponent.maxCoordZ));
+            var rnd = new Random();
+            var X = (rnd.Next((int)powerUpSettingsComponent.minCoordX, (int)powerUpSettingsComponent.maxCoordX));
+            var Z = (rnd.Next((int)powerUpSettingsComponent.minCoordZ, (int)powerUpSettingsComponent.maxCoordZ));
 
             /*float newSpawnCoordinateX = powerUpSettingsComponent.randomSpawnTimerInt * multiplier;
             float newSpawnCoordinateZ = powerUpSettingsComponent.randomSpawnTimerInt * multiplier;
@@ -165,7 +176,7 @@ namespace Game.Source.Systems {
             {
                 componentManager.RemoveAllComponents(entity);
                 componentManager.RemoveEntity(entity);
-                
+
             }
         }
     }

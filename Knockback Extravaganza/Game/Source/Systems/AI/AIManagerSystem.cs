@@ -14,47 +14,53 @@ namespace Game.Source.Systems.AI {
     /// <summary>
     /// Spawns new AI agents according to the time intervals given from the components and sets them to standards settings.
     /// </summary>
+    
     class AIManagerSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager) {
             var components = componentManager.GetComponents<AIManagerComponent>();
-            if(components != null) {
-                foreach(var component in components) {
-                    AIManagerComponent aiManager = component.Value as AIManagerComponent;
-                    aiManager.spawnTimer += (float)gametime.ElapsedGameTime.TotalSeconds;
+            if (components == null) return;
 
-                    if(aiManager.spawnAfterSeconds < aiManager.spawnTimer) {
-                        aiManager.spawnTimer -= aiManager.spawnAfterSeconds;
+            foreach(var component in components) {
+                var aiManager = component.Value as AIManagerComponent;
+                aiManager.spawnTimer += (float)gametime.ElapsedGameTime.TotalSeconds;
 
-                        Entity newAIAgent = componentManager.MakeEntity();
-                        newAIAgent.Tag = "player";
-                        var aiAiC = new AIComponent();
+                if (!(aiManager.spawnAfterSeconds < aiManager.spawnTimer)) continue;
+                aiManager.spawnTimer -= aiManager.spawnAfterSeconds;
 
-                        Random rnd = new Random((int)gametime.TotalGameTime.TotalSeconds);
+                var newAIAgent = componentManager.MakeEntity();
+                newAIAgent.Tag = "player";
+                var aiAiC = new AIComponent();
 
-                        Vector3 pos = Vector3.Zero;
-                        pos.X += rnd.Next((int)aiManager.spawnMin.X, (int)aiManager.spawnMax.X);
-                        pos.Y += 15;
-                        pos.Z += rnd.Next((int)aiManager.spawnMin.Z, (int)aiManager.spawnMax.Z);
+                var rnd = new Random((int)gametime.TotalGameTime.TotalSeconds);
+                var rndscale = new Random();
+                var scale = new Vector3(rndscale.Next(1, 3));
+                var tmpPos = scale == new Vector3(1) ? 15 : 25;
+                var tmpMass = scale == new Vector3(1) ? 5 : 10;
 
-                        var aiTransformC = new TransformComponent {
-                            Position = pos,
-                        };
-                        var aimodelC = new ModelComponent {
-                            Model = aiManager.AIModel
-                        };
-                        var aiPhysicsC = new PhysicsComponent {
-                            GravityStrength = 0,
-                            Mass = 5,
-                            InAir = false
-                        };
-                        var aimoveC = new MovementComponent();
 
-                        var aiActiveCompC = new ActiveCollisionComponent(aimodelC.Model,
-                            aiTransformC.GetWorld(aiTransformC.UpdateBuffer));
+                var pos = Vector3.Zero;
+                pos.X += rnd.Next((int)aiManager.spawnMin.X, (int)aiManager.spawnMax.X);
+                pos.Y += tmpPos;
+                pos.Z += rnd.Next((int)aiManager.spawnMin.Z, (int)aiManager.spawnMax.Z);
 
-                        componentManager.AddComponent(newAIAgent, aiAiC, aiActiveCompC, aiTransformC, aimoveC, aimodelC, aiPhysicsC);
-                    }
-                }
+                var aiTransformC = new TransformComponent {
+                    Position = pos,
+                    Scale = scale
+                };
+                var aimodelC = new ModelComponent {
+                    Model = aiManager.AIModel
+                };
+                var aiPhysicsC = new PhysicsComponent {
+                    GravityStrength = 0,
+                    Mass = tmpMass,
+                    InAir = false
+                };
+                var aimoveC = new MovementComponent();
+
+                var aiActiveCompC = new ActiveCollisionComponent(aimodelC.Model,
+                    aiTransformC.GetWorld(aiTransformC.UpdateBuffer));
+
+                componentManager.AddComponent(newAIAgent, aiAiC, aiActiveCompC, aiTransformC, aimoveC, aimodelC, aiPhysicsC);
             }
         }
     }

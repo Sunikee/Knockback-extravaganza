@@ -11,8 +11,10 @@ using ECS_Engine.Engine.Component;
 using Game.Source.Components.AI;
 using ECS_Engine.Engine;
 using Game.Source.Components;
+using Game.Source.Systems.AI.AIStates;
 
-namespace Game.Source.Systems.AI {
+namespace Game.Source.Systems.AI
+{
     /// <summary>
     /// Updates the AI and their states to follow the players around.
     /// </summary>
@@ -21,12 +23,22 @@ namespace Game.Source.Systems.AI {
         public List<Entity> aiEntitiesToRemove = new List<Entity>();
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager)
         {
-
             var aiEntities = componentManager.GetComponents<AIComponent>();
 
-            if (aiEntities != null) {
-                foreach (KeyValuePair<Entity, IComponent> ai in aiEntities) {
+            #region Initialize states
 
+            var chargeState = new AICharge();
+            var stopState = new AIStop();
+            var followState = new AIFollow();
+
+            IAiStates currentState = followState;
+
+            #endregion
+
+            if (aiEntities != null)
+            {
+                foreach (var ai in aiEntities)
+                {
                     // Get AI data
                     var aiAiC = componentManager.GetComponent<AIComponent>(ai.Key);
                     var aiTransformC = componentManager.GetComponent<TransformComponent>(ai.Key);
@@ -37,47 +49,35 @@ namespace Game.Source.Systems.AI {
                     var targetEntity = playerEntities.First().Key;
                     var targetTransC = componentManager.GetComponent<TransformComponent>(targetEntity);
                     aiAiC.Duration -= gametime.ElapsedGameTime.Milliseconds;
-                 
+
                     // Update states leave 300 to 400 to avoid hysteria.
                     var distance = Vector3.DistanceSquared(targetTransC.Position, aiTransformC.Position);
-                    if ((distance > 400 * 400 && aiAiC.State == AiState.Follow)) {
-                        aiAiC.State = AiState.Stop;
-                    }
-                    else if (distance < 300 * 300) {
-                        aiAiC.State = AiState.Follow;
-                    }
 
-                    switch (aiAiC.State)
-                    {
-                        case AiState.Charge:
-                        {
-                            var diff = targetTransC.Position - aiTransformC.Position;
-                            diff.Normalize();
-                            aiMovec.Velocity += diff * new Vector3(2, 0, 2);
-                        }
-                            break;
-                        case AiState.Stop:
-                            aiMovec.Velocity = aiMovec.Velocity * 0.1f;
-                            aiAiC.State = AiState.Charge;
-                            break;
-                        case AiState.Follow:
-                        {
-                            var diff = targetTransC.Position - aiTransformC.Position;
-                            diff.Normalize();
-                            aiMovec.Velocity += diff * new Vector3(1, 0, 1);
-                        }
-                            break;
-                    }
+                    if ((distance > 400 * 400 && currentState == followState))
+                        currentState = stopState;
+
+                    else if (distance < 300 * 300)
+                        currentState = followState;
+
+                    if (currentState == stopState)
+                        currentState = chargeState;
+
+                    currentState?.Run(targetTransC, aiTransformC, aiMovec);
                 }
             }
             RemoveAIEntity(componentManager);
         }
+
+        #region helpers
+
         public void RemoveAIEntity(ComponentManager componentManager)
         {
-            foreach( var e in aiEntitiesToRemove)
-            { 
-            componentManager.RemoveEntity(e);
+            foreach (var e in aiEntitiesToRemove)
+            {
+                componentManager.RemoveEntity(e);
             }
         }
+
+        #endregion
     }
 }

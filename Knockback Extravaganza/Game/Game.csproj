@@ -52,6 +52,10 @@
     <Compile Include="Source\Scenes\MainMenuScene.cs" />
     <Compile Include="Source\Scenes\SinglePlayerScene.cs" />
     <Compile Include="Source\Systems\AI\AIManagerSystem.cs" />
+    <Compile Include="Source\Systems\AI\AIStates\AICharge.cs" />
+    <Compile Include="Source\Systems\AI\AIStates\AIFollow.cs" />
+    <Compile Include="Source\Systems\AI\AIStates\AIStop.cs" />
+    <Compile Include="Source\Systems\AI\AIStates\IAiStates.cs" />
     <Compile Include="Source\Systems\AI\AISystem.cs" />
     <Compile Include="Source\Systems\CollisionHandleSystem.cs" />
     <Compile Include="Source\Systems\GameStateSystem.cs" />
