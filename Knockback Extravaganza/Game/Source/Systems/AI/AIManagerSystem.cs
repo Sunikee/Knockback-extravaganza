@@ -37,7 +37,6 @@ namespace Game.Source.Systems.AI {
                 var tmpPos = scale == new Vector3(1) ? 15 : 25;
                 var tmpMass = scale == new Vector3(1) ? 5 : 10;
 
-
                 var pos = Vector3.Zero;
                 pos.X += rnd.Next((int)aiManager.spawnMin.X, (int)aiManager.spawnMax.X);
                 pos.Y += tmpPos;

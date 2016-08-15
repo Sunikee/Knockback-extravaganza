@@ -50,19 +50,23 @@ namespace Game.Source.Systems.AI
                     var targetTransC = componentManager.GetComponent<TransformComponent>(targetEntity);
                     aiAiC.Duration -= gametime.ElapsedGameTime.Milliseconds;
 
-                    // Update states leave 300 to 400 to avoid hysteria.
+                    #region Update states
+
+                    // Update states leave 200 to 400 to avoid hysteria.
                     var distance = Vector3.DistanceSquared(targetTransC.Position, aiTransformC.Position);
 
-                    if ((distance > 400 * 400 && currentState == followState))
+                    if ((distance > 400 * 400))
                         currentState = stopState;
 
-                    else if (distance < 300 * 300)
+                    else if (distance < 200 * 200)
                         currentState = followState;
 
                     if (currentState == stopState)
                         currentState = chargeState;
 
                     currentState?.Run(targetTransC, aiTransformC, aiMovec);
+
+                    #endregion
                 }
             }
             RemoveAIEntity(componentManager);
