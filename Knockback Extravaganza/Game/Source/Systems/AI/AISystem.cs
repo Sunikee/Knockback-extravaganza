@@ -71,7 +71,6 @@ namespace Game.Source.Systems.AI
             }
             RemoveAIEntity(componentManager);
         }
-
         #region helpers
 
         public void RemoveAIEntity(ComponentManager componentManager)
