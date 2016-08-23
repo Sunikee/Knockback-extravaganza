@@ -20,22 +20,21 @@ namespace ECS_Engine.Engine.Component
             world = Matrix.Identity;
             Minimum = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
             Maximum = new Vector3(float.MinValue, float.MinValue, float.MinValue);
-            Matrix[] transforms = new Matrix[model.Bones.Count()];
+            var transforms = new Matrix[model.Bones.Count()];
             model.CopyAbsoluteBoneTransformsTo(transforms);
-            foreach (ModelMesh mesh in model.Meshes)
+            foreach (var mesh in model.Meshes)
             {
-
-                foreach (ModelMeshPart meshPart in mesh.MeshParts)
+                foreach (var meshPart in mesh.MeshParts)
                 {
-                    int vertexStride = meshPart.VertexBuffer.VertexDeclaration.VertexStride;
-                    int vertexBufferSize = meshPart.NumVertices * vertexStride;
+                    var vertexStride = meshPart.VertexBuffer.VertexDeclaration.VertexStride;
+                    var vertexBufferSize = meshPart.NumVertices * vertexStride;
 
-                    float[] vertexData = new float[vertexBufferSize / sizeof(float)];
+                    var vertexData = new float[vertexBufferSize / sizeof(float)];
                     meshPart.VertexBuffer.GetData<float>(vertexData);
 
-                    for (int i = 0; i < vertexBufferSize / sizeof(float); i += vertexStride / sizeof(float))
+                    for (var i = 0; i < vertexBufferSize / sizeof(float); i += vertexStride / sizeof(float))
                     {
-                        Vector3 transformedPosition = Vector3.Transform(new Vector3(vertexData[i], vertexData[i + 1], vertexData[i + 2]), transforms[mesh.ParentBone.Index] * world);
+                        var transformedPosition = Vector3.Transform(new Vector3(vertexData[i], vertexData[i + 1], vertexData[i + 2]), transforms[mesh.ParentBone.Index] * world);
 
                         Minimum = Vector3.Min(Minimum, transformedPosition);
                         Maximum = Vector3.Max(Maximum, transformedPosition);
