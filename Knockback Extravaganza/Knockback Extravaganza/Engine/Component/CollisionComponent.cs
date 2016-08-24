@@ -15,6 +15,8 @@ namespace ECS_Engine.Engine.Component
         public Vector3 Maximum { get; set; }
         public Vector3 Minimum { get; set; }
 
+        public Dictionary<int, BoundingSphere> CollisionList { get; set; } = new Dictionary<int, BoundingSphere>();
+
         protected CollisionComponent(Model model, Matrix world)
         {
             world = Matrix.Identity;
@@ -22,11 +24,12 @@ namespace ECS_Engine.Engine.Component
             Maximum = new Vector3(float.MinValue, float.MinValue, float.MinValue);
             Matrix[] transforms = new Matrix[model.Bones.Count()];
             model.CopyAbsoluteBoneTransformsTo(transforms);
-            foreach (ModelMesh mesh in model.Meshes)
-            {
 
+            foreach (ModelMesh mesh in model.Meshes)
+            {    
                 foreach (ModelMeshPart meshPart in mesh.MeshParts)
                 {
+                    CollisionList.Add(mesh.GetHashCode(), mesh.BoundingSphere);
                     int vertexStride = meshPart.VertexBuffer.VertexDeclaration.VertexStride;
                     int vertexBufferSize = meshPart.NumVertices * vertexStride;
 

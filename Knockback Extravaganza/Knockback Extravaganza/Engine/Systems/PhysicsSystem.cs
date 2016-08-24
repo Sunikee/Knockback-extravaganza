@@ -65,7 +65,7 @@ namespace ECS_Engine.Engine.Systems
             float gravity = 0;
             if (physicsComponent.InAir) {
                 gravity = physicsComponent.Gravity * physicsComponent.GravityStrength;
-                physicsComponent.Velocity += new Vector3(0, -gravity * (float)gameTime.ElapsedGameTime.TotalSeconds * 2, 0);
+                physicsComponent.Velocity += new Vector3(0, -gravity * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
             }
             else {
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, physicsComponent.Velocity.Z);
@@ -84,11 +84,8 @@ namespace ECS_Engine.Engine.Systems
         /// <param name="movementComponent2"></param>
         private void ApplyKnockback(PhysicsComponent physicsComponent1, PhysicsComponent physicsComponent2, MovementComponent movementComponent1, MovementComponent movementComponent2) {
             
-            physicsComponent1.Velocity = (movementComponent1.Velocity * (physicsComponent1.Mass - physicsComponent2.Mass) + 2 * physicsComponent2.Mass * movementComponent2.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
-            physicsComponent2.Velocity = (movementComponent2.Velocity * (physicsComponent2.Mass - physicsComponent1.Mass) + 2 * physicsComponent1.Mass * movementComponent1.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
-            //physicsComponent1.Velocity *= 2;
-            //physicsComponent2.Velocity *= 2;
-            
+            physicsComponent1.Velocity = (movementComponent1.Velocity * (physicsComponent1.Mass - physicsComponent2.Mass) + physicsComponent2.Mass * movementComponent2.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
+            physicsComponent2.Velocity = (movementComponent2.Velocity * (physicsComponent2.Mass - physicsComponent1.Mass) + physicsComponent1.Mass * movementComponent1.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
         }
 
     }
