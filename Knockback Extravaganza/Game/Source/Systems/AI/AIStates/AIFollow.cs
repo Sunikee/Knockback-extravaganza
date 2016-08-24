@@ -4,6 +4,9 @@ using Microsoft.Xna.Framework;
 
 namespace Game.Source.Systems.AI.AIStates
 {
+    /// <summary>
+    /// A state where the AI follows the player
+    /// </summary>
     public class AIFollow : IAiStates
     {
         public void Run(TransformComponent playerTransC, TransformComponent aiTransC, MovementComponent moveC)

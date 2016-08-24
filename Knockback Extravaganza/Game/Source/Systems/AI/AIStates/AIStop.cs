@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework;
 
 namespace Game.Source.Systems.AI.AIStates
 {
+    /// <summary>
+    /// A state where the AI slows down when to far away from a player
+    /// </summary>
     public class AIStop : IAiStates
     {
         public void Run(TransformComponent playerTransC, TransformComponent aiTransC, MovementComponent moveC)

@@ -1,25 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ECS_Engine;
-using ECS_Engine.Engine.Managers;
-using ECS_Engine.Engine.Systems.Interfaces;
-using ECS_Engine.Engine;
-using ECS_Engine.Engine.Component;
-using ECS_Engine.Engine.Systems;
-using System.Collections.Generic;
-using ECS_Engine.Engine.Component.Interfaces;
-using System;
-using GameEngine;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
-
-using ECS_Engine.Engine.Scenes;
-using ECS_Engine.Engine.Systems.ParticleSystems;
-using Game.Source.Components.AI;
-using Game.Source.Systems.AI;
-using Game.Source.Systems;
-using Game.Source.Components;
 using Game.Source.Scenes;
 
 namespace Game
@@ -49,9 +29,9 @@ namespace Game
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
 
             //Load Scene content
             startBackground = Content.Load<Texture2D>("Scenes/startBackground2");
@@ -78,6 +58,7 @@ namespace Game
 
             sceneManager.ChangeScene("MainMenu");
 
+            #region old initialization
             /*
             //Creates a menu entity
             Entity menuEntity = componentManager.MakeEntity();
@@ -315,5 +296,6 @@ namespace Game
             systemManager.AddSystem(new ParticleRenderSystem());
             */
         }
+        #endregion
     }
 }
