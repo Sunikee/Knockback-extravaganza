@@ -60,7 +60,13 @@ namespace Game.Source.Systems {
                         if (collidedWith.Tag.ToLower() == "player")
                         {
                             messageManager.RegMessage(message.sender, message.receiver, 0, "knockback");
-                            transform.Position -= (physics.Velocity + movement.Velocity) * new Vector3(1, 0, 1) * (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
+                            Entity collision2 = componentManager.GetEntity(message.receiver);
+                            TransformComponent transform2 = componentManager.GetComponent<TransformComponent>(collision2);
+                            MovementComponent movement2 = componentManager.GetComponent<MovementComponent>(collision2);
+                            PhysicsComponent physics2 = componentManager.GetComponent<PhysicsComponent>(collision2);
+
+                            transform2.Position -= (physics2.Velocity + movement2.Velocity) * new Vector3(1, 0, 1) * (float)gameTime.ElapsedGameTime.TotalSeconds * 2;
+                            transform.Position -= (physics.Velocity + movement.Velocity) * new Vector3(1, 0, 1) * (float)gameTime.ElapsedGameTime.TotalSeconds *2;
                         }
                     }
                 }

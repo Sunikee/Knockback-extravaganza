@@ -41,6 +41,12 @@ namespace ECS_Engine.Engine.Systems
                     var senderPhysics = componentManager.GetComponent<PhysicsComponent>(componentManager.GetEntity(message.sender));
                     var senderMovement = componentManager.GetComponent<MovementComponent>(componentManager.GetEntity(message.sender));
                     ApplyKnockback(physicsComponent, senderPhysics, movementComponent, senderMovement);
+                    var recieversMessages = messageManager.GetMessages(message.receiver);
+                    foreach(var messageRec in recieversMessages)
+                    {
+                        if (message.msg != "knockback") continue;
+                        messageManager.DestroyMessage(messageRec);
+                    }
                     messageManager.DestroyMessage(message);
                 }
             }
@@ -78,11 +84,27 @@ namespace ECS_Engine.Engine.Systems
         /// <param name="movementComponent1"></param>
         /// <param name="movementComponent2"></param>
         private static void ApplyKnockback(PhysicsComponent physicsComponent1, PhysicsComponent physicsComponent2, MovementComponent movementComponent1, MovementComponent movementComponent2) {
-            
-            physicsComponent1.Velocity = (movementComponent1.Velocity * (physicsComponent1.Mass - physicsComponent2.Mass) + physicsComponent2.Mass * movementComponent2.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
-            physicsComponent2.Velocity = (movementComponent2.Velocity * (physicsComponent2.Mass - physicsComponent1.Mass) + physicsComponent1.Mass * movementComponent1.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
-            //physicsComponent1.Velocity *= 2;
-            //physicsComponent2.Velocity *= 2;
+
+            if(physicsComponent1.Mass > physicsComponent2.Mass)
+            {
+                physicsComponent1.Velocity = (movementComponent1.Velocity * (physicsComponent1.Mass - physicsComponent2.Mass) + physicsComponent2.Mass * movementComponent2.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
+                physicsComponent2.Velocity = -(movementComponent2.Velocity * (physicsComponent2.Mass - physicsComponent1.Mass) + physicsComponent1.Mass * movementComponent1.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
+            }
+            else if(physicsComponent1.Mass == physicsComponent2.Mass)
+            {
+                Random random = new Random(5);
+                int randomRedirect = random.Next() * 250;
+                physicsComponent1.Velocity = (movementComponent1.Velocity * (physicsComponent1.Mass + randomRedirect - physicsComponent2.Mass) + physicsComponent2.Mass * movementComponent2.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
+                physicsComponent2.Velocity = -(movementComponent2.Velocity * (physicsComponent2.Mass - physicsComponent1.Mass) + physicsComponent1.Mass * movementComponent1.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
+            }else
+            {
+                physicsComponent1.Velocity = (movementComponent1.Velocity * (physicsComponent1.Mass - physicsComponent2.Mass) + physicsComponent2.Mass * movementComponent2.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
+                physicsComponent2.Velocity = -(movementComponent2.Velocity * (physicsComponent2.Mass - physicsComponent1.Mass) + physicsComponent1.Mass * movementComponent1.Velocity) / (physicsComponent1.Mass + physicsComponent2.Mass);
+            }
+
+            movementComponent1.Velocity += physicsComponent1.Velocity/2;
+            movementComponent2.Velocity += physicsComponent2.Velocity/2;
+
         }
     }
 }

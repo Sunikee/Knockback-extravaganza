@@ -50,7 +50,6 @@
     <Compile Include="Source\Components\PowerUpComponent.cs" />
     <Compile Include="Source\Components\PowerUpSettingsComponent.cs" />
     <Compile Include="Source\Scenes\MainMenuScene.cs" />
-    <Compile Include="Source\Scenes\MultiPlayerScene.cs" />
     <Compile Include="Source\Scenes\SinglePlayerScene.cs" />
     <Compile Include="Source\Systems\AI\AIManagerSystem.cs" />
     <Compile Include="Source\Systems\AI\AIStates\AICharge.cs" />

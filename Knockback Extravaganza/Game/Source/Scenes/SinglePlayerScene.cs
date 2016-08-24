@@ -115,7 +115,7 @@ namespace Game.Source.Scenes {
             PhysicsComponent pc1 = new PhysicsComponent {
                 InAir = true,
                 GravityStrength = 4,
-                Mass = 5
+                Mass = 150
             };
 
             MovementComponent moveC1 = new MovementComponent {

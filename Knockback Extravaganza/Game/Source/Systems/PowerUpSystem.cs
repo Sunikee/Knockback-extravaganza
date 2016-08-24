@@ -61,7 +61,7 @@ namespace Game.Source.Systems
                     if (powerUp.ActiveTime <= 0)
                     {
                         transform.Scale = new Vector3(1, 1, 1);
-                        physics.Mass = 5;
+                        physics.Mass = 15;
                         componentManager.RemoveComponent<PowerUpComponent>(component.Key);
                     }
                 }

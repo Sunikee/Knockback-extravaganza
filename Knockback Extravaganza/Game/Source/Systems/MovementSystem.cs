@@ -44,7 +44,7 @@ namespace Game.Source.Systems {
 
                     Vector3 MoveDir = Vector3.Zero;
 
-                    float tickAcc = mc.Acceleration;//1f * (float)Math.Pow((1 - 0.15), mc.Speed);
+                    float tickAcc = mc.Acceleration;
                     if (keyboardComp.GetActionState("Forward") != BUTTON_STATE.NOT_PRESSED) {
                         MoveDir += tc.Forward;
                         mc.Velocity += tc.Forward * tickAcc;
@@ -92,15 +92,10 @@ namespace Game.Source.Systems {
                     float timeStep = 0.1f;
                     if (e > timeStep) {
                         e -= timeStep;
-                        //Console.WriteLine(mc.Velocity);
                     }
                 }
 
             }
-        }
-        public void HandleCollision(GameTime gameTime, ComponentManager componentManager)
-        {
-
         }
     }
 }
