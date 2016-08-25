@@ -23,6 +23,11 @@ namespace Game.Source.Scenes {
 
             ComponentManager.AddComponent(clientEntiry, client);
 
+            var dataEntity = ComponentManager.MakeEntity();
+
+            var data = new NetworkDataComponent();
+            ComponentManager.AddComponent(dataEntity, data);
+
             SystemManager.AddSystem(new NetworkClientSystem());
 
             base.InitScene();

@@ -133,6 +133,17 @@ namespace ECS_Engine.Engine.Managers {
             return null;
         }
 
+        public Entity GetEntity(IComponent component) {
+            foreach(var componentTypes in componentList) {
+                foreach(var componentType in componentTypes.Value) {
+                    if(componentType.Value == component) {
+                        return componentType.Key;
+                    }
+                }
+            }
+            return null;
+        }
+
         public ConcurrentDictionary<Entity, IComponent> GetComponents<T>() where T : IComponent{
             Type type = typeof(T);
             if (componentList.ContainsKey(type)) {
@@ -153,6 +164,22 @@ namespace ECS_Engine.Engine.Managers {
                     typeList.TryGetValue(components, out comp);
                     if(comp is ThreadedComponent) {
                         result.Add(comp as ThreadedComponent);
+                    }
+                }
+            }
+            return result;
+        }
+
+        public List<T> GetComponentsOfType<T>() where T : class {
+            List<T> result = new List<T>();
+            foreach (var type in componentList.Keys) {
+                ConcurrentDictionary<Entity, IComponent> typeList;
+                componentList.TryGetValue(type, out typeList);
+                foreach (var components in typeList.Keys) {
+                    IComponent comp;
+                    typeList.TryGetValue(components, out comp);
+                    if (comp is T) {
+                        result.Add(comp as T);
                     }
                 }
             }

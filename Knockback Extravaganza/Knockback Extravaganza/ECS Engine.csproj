@@ -52,13 +52,14 @@
     <Compile Include="Engine\Component\GameSceneComponent.cs" />
     <Compile Include="Engine\Component\InputDefines.cs" />
     <Compile Include="Engine\Component\Interfaces\IComponent.cs" />
+    <Compile Include="Engine\Component\Interfaces\Network\INetworkRecieve.cs" />
+    <Compile Include="Engine\Component\Interfaces\Network\INetworkSend.cs" />
     <Compile Include="Engine\Component\KeyBoardComponent.cs" />
     <Compile Include="Engine\Component\MenuComponent.cs" />
     <Compile Include="Engine\Component\ModelComponent.cs" />
     <Compile Include="Engine\Component\ModelTransformComponent.cs" />
     <Compile Include="Engine\Component\MouseComponent.cs" />
-    <Compile Include="Engine\Component\Network\ClientNetworkComponent.cs" />
-    <Compile Include="Engine\Component\Network\ServerNetworkComponent.cs" />
+    <Compile Include="Engine\Component\Network\NetworkTransformComponent.cs" />
     <Compile Include="Engine\Component\ParticleComponents\ParticleComponent.cs" />
     <Compile Include="Engine\Component\PassiveCollisionComponent.cs" />
     <Compile Include="Engine\Component\PhysicsComponent.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Engine\SongPiece.cs" />
     <Compile Include="Engine\SoundEffectPiece.cs" />
     <Compile Include="Engine\Systems\FreeCameraSystem.cs" />
+    <Compile Include="Engine\Systems\Network\NetworkTransformSystem.cs" />
     <Compile Include="Engine\Systems\ParticleSystems\ParticleRenderSystem.cs" />
     <Compile Include="Engine\Systems\ParticleSystems\ParticleSystem.cs" />
     <Compile Include="Engine\Systems\PhysicsSystem.cs" />
@@ -111,6 +113,7 @@
     <Compile Include="Engine\VertexPositionColorNormal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XNAExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Lidgren.Network, Version=3.5.1.1679, Culture=neutral, processorArchitecture=MSIL" />
@@ -125,9 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Engine\Component\Interfaces\Network\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

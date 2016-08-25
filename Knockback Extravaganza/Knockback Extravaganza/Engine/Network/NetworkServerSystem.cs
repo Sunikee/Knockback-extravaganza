@@ -20,11 +20,11 @@ namespace ECS_Engine.Engine.Network {
             }
         }
 
-        private void RecieveMsg(NetServer netClient) {
-            if (netClient.ConnectionsCount > 0) {
+        private void RecieveMsg(NetServer netServer) {
+            if (netServer.ConnectionsCount > 0) {
                 NetIncomingMessage inc;
 
-                while ((inc = netClient.ReadMessage()) != null) {
+                while ((inc = netServer.ReadMessage()) != null) {
                     switch (inc.MessageType) {
                         case NetIncomingMessageType.VerboseDebugMessage:
                         case NetIncomingMessageType.DebugMessage:
@@ -34,10 +34,16 @@ namespace ECS_Engine.Engine.Network {
                             break;
                         case NetIncomingMessageType.Data:
                             // Master Server
-                            Console.WriteLine(inc.ReadString());
+                            List<NetConnection> connections = netServer.Connections;
+                            connections.Remove(inc.SenderConnection);
+                            if (connections.Count > 0) {
+                                var msg = netServer.CreateMessage();
+                                msg.Write(inc.Data);
+                                netServer.SendMessage(msg, connections.First(), NetDeliveryMethod.ReliableOrdered, 0);
+                            }
                             break;
                     }
-                    netClient.Recycle(inc);
+                    netServer.Recycle(inc);
                 }
             }
         }

@@ -7,21 +7,29 @@ using System.Threading.Tasks;
 using ECS_Engine.Engine.Managers;
 using Microsoft.Xna.Framework;
 using Lidgren.Network;
+using ECS_Engine.Engine.Component.Interfaces.Network;
+using ECS_Engine.Engine.Component.Interfaces;
 
 namespace ECS_Engine.Engine.Network {
     public class NetworkClientSystem : IUpdateSystem {
 
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager) {
             NetworkClientComponent networkClient = componentManager.GetComponents<NetworkClientComponent>().First().Value as NetworkClientComponent;
+            var networkData = componentManager.GetComponents<NetworkDataComponent>().First().Value as NetworkDataComponent;
 
-            if(networkClient != null) {
-                RecieveMsg(networkClient.Client);
+            if(networkClient != null && networkData != null) {
+                RecieveMsg(networkClient.Client, networkData);
 
-                SendMsg(networkClient.Client);
+
+                var sendComp = componentManager.GetComponentsOfType<INetworkSend>();
+
+                foreach (var comp in sendComp) {
+                    networkClient.Client.SendMessage(comp.PackMessage(componentManager.GetEntity(comp as IComponent).ID, networkClient.Client), NetDeliveryMethod.ReliableOrdered);
+                }
             }
         }
 
-        private void RecieveMsg(NetClient netClient) {
+        private void RecieveMsg(NetClient netClient, NetworkDataComponent networkData) {
             NetIncomingMessage inc;
 
             while ((inc = netClient.ReadMessage()) != null) {
@@ -34,17 +42,16 @@ namespace ECS_Engine.Engine.Network {
                         break;
                     case NetIncomingMessageType.Data:
                         // Master Server
-                        Console.WriteLine(inc.ReadString());
+                        
+                        int id = inc.ReadInt32();
+                        inc = networkData.Update(id, inc);
                         break;
                 }
-                netClient.Recycle(inc);
+                if (inc != null) {
+                    netClient.Recycle(inc);
+                }
             }
             
-        }
-
-        private void SendMsg(NetClient netClient) {
-            NetOutgoingMessage msg = netClient.CreateMessage("Test");
-            netClient.SendMessage(msg, NetDeliveryMethod.ReliableOrdered);
         }
     }
 }

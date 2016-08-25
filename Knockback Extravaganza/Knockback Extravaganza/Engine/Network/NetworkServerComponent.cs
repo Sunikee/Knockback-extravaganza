@@ -12,7 +12,7 @@ namespace ECS_Engine.Engine.Network {
 
         public NetworkServerComponent() {
             NetPeerConfiguration config = new NetPeerConfiguration("game");
-            config.MaximumConnections = 100;
+            config.MaximumConnections = 2;
             config.Port = 14242;
             Server = new NetServer(config);
             Server.Start();
