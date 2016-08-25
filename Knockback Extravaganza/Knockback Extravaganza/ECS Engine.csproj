@@ -77,11 +77,11 @@
     <Compile Include="Engine\Managers\SceneManagerFacade.cs" />
     <Compile Include="Engine\Managers\SystemManager.cs" />
     <Compile Include="Engine\Component\MovementComponent.cs" />
-    <Compile Include="Engine\Network\Component\NetworkConnectionComponent.cs" />
-    <Compile Include="Engine\Network\Interface\INetworkReveiveComponent.cs" />
-    <Compile Include="Engine\Network\Interface\INetworkSendComponent.cs" />
-    <Compile Include="Engine\Network\Systems\NetworkReceiveSystem.cs" />
-    <Compile Include="Engine\Network\Systems\NetworkSendSystem.cs" />
+    <Compile Include="Engine\Network\NetworkClientComponent.cs" />
+    <Compile Include="Engine\Network\NetworkClientSystem.cs" />
+    <Compile Include="Engine\Network\NetworkDataComponent.cs" />
+    <Compile Include="Engine\Network\NetworkServerComponent.cs" />
+    <Compile Include="Engine\Network\NetworkServerSystem.cs" />
     <Compile Include="Engine\Scenes\Scene.cs" />
     <Compile Include="Engine\SongPiece.cs" />
     <Compile Include="Engine\SoundEffectPiece.cs" />

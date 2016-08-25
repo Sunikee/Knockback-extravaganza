@@ -29,6 +29,10 @@ namespace Game.Source.Systems
 
                     if (keyboard.GetActionState("Select") == BUTTON_STATE.PRESSED)
                         sceneManager.ChangeScene("SinglePlayer");
+                    else if (keyboard.GetActionState("Up") == BUTTON_STATE.PRESSED)
+                        sceneManager.ChangeScene("MPClient");
+                    else if (keyboard.GetActionState("Down") == BUTTON_STATE.PRESSED)
+                        sceneManager.ChangeScene("MPHost");
                 }
             }
             /*
