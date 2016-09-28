@@ -150,8 +150,8 @@ namespace Game.Source.Scenes {
             var aiManagerC = new AIManagerComponent() {
                 AIModel = Content.Load<Model>("albin_sphere"),
                 spawnAfterSeconds = 5,
-                spawnMin = passColl.BoundingBox.Min,
-                spawnMax = passColl.BoundingBox.Max,
+                spawnMin = passColl.BoundingBox.Min *4,
+                spawnMax = passColl.BoundingBox.Max * 4,
                 spawnTimer = 0,
            
             };

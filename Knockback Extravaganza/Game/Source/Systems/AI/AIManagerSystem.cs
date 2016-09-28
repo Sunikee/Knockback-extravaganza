@@ -18,6 +18,7 @@ namespace Game.Source.Systems.AI {
     class AIManagerSystem : IUpdateSystem {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager) {
             var components = componentManager.GetComponents<AIManagerComponent>();
+        
             if (components == null) return;
 
             foreach(var component in components) {
@@ -34,7 +35,7 @@ namespace Game.Source.Systems.AI {
                 var rnd = new Random((int)gametime.TotalGameTime.TotalSeconds);
                 var rndscale = new Random();
                 var scale = new Vector3(rndscale.Next(1, 3));
-                var tmpPos = scale == new Vector3(1) ? 15 : 25;
+                var tmpPos = scale == new Vector3(1) ? 13 : 23;
                 var tmpMass = scale == new Vector3(1) ? 165 : 250;
 
                 var pos = Vector3.Zero;
@@ -59,7 +60,7 @@ namespace Game.Source.Systems.AI {
                 var aiActiveCompC = new ActiveCollisionComponent(aimodelC.Model,
                     aiTransformC.GetWorld(aiTransformC.UpdateBuffer));
 
-                componentManager.AddComponent(newAIAgent, aiAiC, aiActiveCompC, aiTransformC, aimoveC, aimodelC, aiPhysicsC);
+                componentManager.AddComponent(newAIAgent, aiAiC, aiActiveCompC, aiTransformC, aimoveC, aimodelC, aiPhysicsC, aiManager);
             }
         }
     }

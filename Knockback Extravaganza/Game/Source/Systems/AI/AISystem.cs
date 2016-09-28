@@ -35,38 +35,55 @@ namespace Game.Source.Systems.AI
 
             #endregion
 
-            if (aiEntities != null)
+            var platformComponents = componentManager.GetComponents<PassiveCollisionComponent>();
+
+            foreach (var p in platformComponents)
             {
-                foreach (var ai in aiEntities)
+
+                var platformPassiveC = componentManager.GetComponent<PassiveCollisionComponent>(p.Key);
+
+                if (aiEntities != null)
                 {
-                    // Get AI data
-                    var aiAiC = componentManager.GetComponent<AIComponent>(ai.Key);
-                    var aiTransformC = componentManager.GetComponent<TransformComponent>(ai.Key);
-                    var aiMovec = componentManager.GetComponent<MovementComponent>(ai.Key);
+                    foreach (var ai in aiEntities)
+                    {
+                        // Get AI data
+                        var aiAiC = componentManager.GetComponent<AIComponent>(ai.Key);
+                        var aiTransformC = componentManager.GetComponent<TransformComponent>(ai.Key);
+                        var aiMovec = componentManager.GetComponent<MovementComponent>(ai.Key);
+                        var aiMC = componentManager.GetComponent<AIManagerComponent>(ai.Key);
+                        var aiActiveC = componentManager.GetComponent<ActiveCollisionComponent>(ai.Key);
 
-                    // Get target data
-                    var playerEntities = componentManager.GetComponents<PlayerComponent>();
-                    var targetEntity = playerEntities.First().Key;
-                    var targetTransC = componentManager.GetComponent<TransformComponent>(targetEntity);
-                    aiAiC.Duration -= gametime.ElapsedGameTime.Milliseconds;
+                        // Get target data
+                        var playerEntities = componentManager.GetComponents<PlayerComponent>();
+                        var targetEntity = playerEntities.First().Key;
+                        var targetTransC = componentManager.GetComponent<TransformComponent>(targetEntity);
+                        aiAiC.Duration -= gametime.ElapsedGameTime.Milliseconds;
 
-                    #region Update states
+                        #region Update states
 
-                    // Update states leave 200 to 400 to avoid hysteria.
-                    var distance = Vector3.DistanceSquared(targetTransC.Position, aiTransformC.Position);
+                        // Update states leave 200 to 400 to avoid hysteria.
+                        var distance = Vector3.DistanceSquared(targetTransC.Position, aiTransformC.Position);
 
-                    if ((distance > 400 * 400))
-                        currentState = stopState;
+                        if ((distance > 400 * 400))
+                            currentState = stopState;
 
-                    else if (distance < 200 * 200)
-                        currentState = followState;
+                        else if (distance < 200 * 200)
+                            currentState = followState;
 
-                    if (currentState == stopState)
-                        currentState = chargeState;
+                        if (currentState == stopState)
+                            currentState = chargeState;
 
-                    currentState?.Run(targetTransC, aiTransformC, aiMovec);
+                        if ((aiMC != null && aiTransformC != null) && (aiTransformC.Position.X < aiMC.spawnMin.X || aiTransformC.Position.X > aiMC.spawnMax.X || aiTransformC.Position.Z < aiMC.spawnMin.Z || aiTransformC.Position.Z > aiMC.spawnMax.X))
+                        {
 
-                    #endregion
+                            aiMovec.Velocity = Vector3.Zero;
+                            currentState = followState;
+                        }
+                        currentState?.Run(targetTransC, aiTransformC, aiMovec);
+
+
+                        #endregion
+                    }
                 }
             }
             RemoveAIEntity(componentManager);
