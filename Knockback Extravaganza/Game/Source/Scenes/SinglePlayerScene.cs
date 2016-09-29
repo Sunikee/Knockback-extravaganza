@@ -267,7 +267,7 @@ namespace Game.Source.Scenes {
             SystemManager.AddSystem(new ChaseCameraSystem());
             SystemManager.AddSystem(new CollisionDetectionSystem());
             SystemManager.AddSystem(new CollisionHandlingSystem());
-            //SystemManager.AddSystem(new PhysicsSystem());
+            SystemManager.AddSystem(new PhysicsSystem());
             SystemManager.AddSystem(powerUpSystem);
             SystemManager.AddSystem(new AIManagerSystem());
             SystemManager.AddSystem(new SoundSystem());
