@@ -49,6 +49,7 @@
     <Compile Include="Source\Components\PlayerStateDefines.cs" />
     <Compile Include="Source\Components\PowerUpComponent.cs" />
     <Compile Include="Source\Components\PowerUpSettingsComponent.cs" />
+    <Compile Include="Source\Scenes\GameOverScene.cs" />
     <Compile Include="Source\Scenes\MainMenuScene.cs" />
     <Compile Include="Source\Scenes\MPClientScene.cs" />
     <Compile Include="Source\Scenes\MPHostScene.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Source\Systems\AI\AIStates\IAiStates.cs" />
     <Compile Include="Source\Systems\AI\AISystem.cs" />
     <Compile Include="Source\Systems\CollisionHandleSystem.cs" />
+    <Compile Include="Source\Systems\GameOverSystem.cs" />
     <Compile Include="Source\Systems\GameStateSystem.cs" />
     <Compile Include="Source\Systems\MenuSystem.cs" />
     <Compile Include="Source\Systems\MovementSystem.cs" />

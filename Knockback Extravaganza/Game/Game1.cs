@@ -51,11 +51,13 @@ namespace Game
             MainMenuScene mainMenuScene = new MainMenuScene("MainMenu", Content, graphics);
             MPHostScene mpHostScene = new MPHostScene("MPHost", Content, graphics);
             MPClientScene mpClientScene = new MPClientScene("MPClient", Content, graphics);
+            GameOverScene gameOverScene = new GameOverScene("GameOver", Content, graphics);
 
             sceneManager.AddScene(singelplayerScene);
             sceneManager.AddScene(mainMenuScene);
             sceneManager.AddScene(mpHostScene);
             sceneManager.AddScene(mpClientScene);
+            sceneManager.AddScene(gameOverScene);
 
             sceneManager.ChangeScene("MainMenu");
         }

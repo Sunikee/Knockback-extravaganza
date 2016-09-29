@@ -19,9 +19,15 @@ namespace Game.Source.Systems {
         public void Update(GameTime gametime, ComponentManager componentManager, MessageManager messageManager, SceneManagerFacade sceneManager) {
 
             var components = componentManager.GetComponents<PlayerComponent>();
+            var platformComponents = componentManager.GetComponents<ModelComponent>();
+            
             foreach (KeyValuePair<Entity, IComponent> component in components) {
                 var playerC = componentManager.GetComponent<TransformComponent>(component.Key);
                 // TODO: Handle Game states.
+                if(playerC.Position.Y < -60)
+                {
+                    sceneManager.ChangeScene("GameOver");
+                }
             }
 
         }

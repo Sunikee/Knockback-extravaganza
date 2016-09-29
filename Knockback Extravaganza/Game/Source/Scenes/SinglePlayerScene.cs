@@ -243,6 +243,8 @@ namespace Game.Source.Scenes {
             powerUpSystem.content = Content;
             SystemManager.EnableFrameCount = true;
 
+            SystemManager.AddSystem(new GameStateSystem());
+            SystemManager.AddSystem(new GameOverSystem());
             SystemManager.AddSystem(new TransformSystem());
             SystemManager.AddSystem(new CameraSystem());
             SystemManager.AddSystem(new ModelRenderSystem());

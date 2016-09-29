@@ -48,6 +48,7 @@
     <Compile Include="Engine\Component\ChaseCameraComponent.cs" />
     <Compile Include="Engine\Component\CollisionComponent.cs" />
     <Compile Include="Engine\Component\FreeCameraComponent.cs" />
+    <Compile Include="Engine\Component\GameOverComponent.cs" />
     <Compile Include="Engine\Component\GamePadComponent.cs" />
     <Compile Include="Engine\Component\GameSceneComponent.cs" />
     <Compile Include="Engine\Component\InputDefines.cs" />
