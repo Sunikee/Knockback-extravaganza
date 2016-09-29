@@ -52,36 +52,24 @@ namespace Game.Source.Scenes
             };
             ComponentManager.AddComponent(background, bgSprite, pos);
 
-            Entity text1 = ComponentManager.MakeEntity();
-            var txt = new SpriteTextComponent()
+            var goTextEntity = ComponentManager.MakeEntity();
+            var goText = new SpriteTextComponent()
             {
                 SpriteFont = Content.Load<SpriteFont>("Scenes\\Font1"),
-                Text = "Press Enter to Restart Game",
-                Color = Color.Red,
+                Text = "Game over, your score is: ",
+                Color = Color.Red
             };
-            var postext = new Position2DComponent()
-            {
-                Postion = new Vector2(200, 100),
-            };
+            var goPosText = new Position2DComponent { Postion = new Vector2 (200, 100) };
 
-            Entity text2 = ComponentManager.MakeEntity();
-            var txt2 = new SpriteTextComponent()
-            {
-                SpriteFont = Content.Load<SpriteFont>("Scenes\\Font1"),
-                Text = "Press Escape to Quit Game",
-                Color = Color.Red,
-            };
-            var postext2 = new Position2DComponent()
-            {
-                Postion = new Vector2(200, 200),
-            };
+            ComponentManager.AddComponent(goTextEntity, goText, goPosText);
 
-            ComponentManager.AddComponent(text1, txt, postext);
-            ComponentManager.AddComponent(text2, txt2, postext2);
+       
+
 
             SystemManager.AddSystem(new SpriteRenderSystem());
             SystemManager.AddSystem(new KeyBoardSystem());
             SystemManager.AddSystem(new MenuSystem());
+            SystemManager.AddSystem(new GameOverSystem());
 
             base.InitScene();
         }

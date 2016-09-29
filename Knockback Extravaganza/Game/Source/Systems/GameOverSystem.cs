@@ -26,8 +26,7 @@ namespace Game.Source.Systems
                         var keyboard = componentManager.GetComponent<KeyBoardComponent>(comp.Key);
 
                         if (keyboard.GetActionState("Restart") == BUTTON_STATE.PRESSED)
-                            sceneManager.ChangeScene("MainMenu");
-                        //else if (keyboard.GetActionState("Quit") == BUTTON_STATE.PRESSED)
+                            sceneManager.ChangeScene("MainMenu");                            
                     }
                 }
             }
