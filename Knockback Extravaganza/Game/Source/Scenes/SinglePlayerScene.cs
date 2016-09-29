@@ -269,7 +269,8 @@ namespace Game.Source.Scenes {
             SystemManager.AddSystem(new PhysicsSystem());
             SystemManager.AddSystem(powerUpSystem);
             SystemManager.AddSystem(new AIManagerSystem());
-            SystemManager.AddSystem(new SoundSystem());
+            //SystemManager.AddSystem(new SoundSystem());
+            SystemManager.AddSystem(new SpriteRenderSystem());
             SystemManager.AddSystem(new AISystem());
             SystemManager.AddSystem(new ParticleSystem());
             SystemManager.AddSystem(new ParticleRenderSystem());

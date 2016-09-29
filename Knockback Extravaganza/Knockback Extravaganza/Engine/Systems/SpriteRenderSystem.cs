@@ -51,6 +51,16 @@ namespace ECS_Engine.Engine.Systems {
                 }
             }
 
+            var scoreTimeComps = componentManager.GetComponents<ScoreTimeComponent>();
+            if (scoreTimeComps != null)
+            {
+                foreach (var comp in scoreTimeComps)
+                {
+                    ScoreTimeComponent scoreTimeComp = componentManager.GetComponent<ScoreTimeComponent>(comp.Key);
+                    spriteBatch.DrawString(scoreTimeComp.spriteFont, "Score: " + scoreTimeComp.TotalScore, new Vector2(25, 25), Color.Black);
+                }
+            }
+
             spriteBatch.End();
             graphicsDevice.DepthStencilState = DepthStencilState.Default;
 
