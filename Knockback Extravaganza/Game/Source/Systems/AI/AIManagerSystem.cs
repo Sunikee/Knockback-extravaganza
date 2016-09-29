@@ -51,7 +51,7 @@ namespace Game.Source.Systems.AI {
                     Model = aiManager.AIModel
                 };
                 var aiPhysicsC = new PhysicsComponent {
-                    GravityStrength = 0,
+                    GravityStrength = 9.82f,
                     Mass = tmpMass,
                     InAir = false
                 };

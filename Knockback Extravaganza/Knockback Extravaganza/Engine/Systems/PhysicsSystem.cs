@@ -66,7 +66,7 @@ namespace ECS_Engine.Engine.Systems
             if (physicsComponent.InAir)
             {
                 var gravity = physicsComponent.Gravity * physicsComponent.GravityStrength;
-                physicsComponent.Velocity += new Vector3(0, -gravity * (float)gameTime.ElapsedGameTime.TotalSeconds * 2, 0);
+                physicsComponent.Velocity += new Vector3(0, -gravity * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
             }
             else {
                 physicsComponent.Velocity = new Vector3(physicsComponent.Velocity.X, 0, physicsComponent.Velocity.Z);

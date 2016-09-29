@@ -64,6 +64,7 @@
     <Compile Include="Engine\Component\ParticleComponents\ParticleComponent.cs" />
     <Compile Include="Engine\Component\PassiveCollisionComponent.cs" />
     <Compile Include="Engine\Component\PhysicsComponent.cs" />
+    <Compile Include="Engine\Component\ScoreTimeComponent.cs" />
     <Compile Include="Engine\Component\SongComponent.cs" />
     <Compile Include="Engine\Component\SoundComponent.cs" />
     <Compile Include="Engine\Component\SoundEffectComponent.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Engine\Systems\ModelRenderSystem.cs" />
     <Compile Include="Engine\Systems\MouseSystem.cs" />
     <Compile Include="Engine\Systems\RenderSystem.cs" />
+    <Compile Include="Engine\Systems\ScoreTimeSystem.cs" />
     <Compile Include="Engine\Systems\SoundSystem.cs" />
     <Compile Include="Engine\Systems\SpriteRenderSystem.cs" />
     <Compile Include="Engine\Systems\TransformSystem.cs" />

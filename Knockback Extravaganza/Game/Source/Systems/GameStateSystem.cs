@@ -23,6 +23,8 @@ namespace Game.Source.Systems {
             
             foreach (KeyValuePair<Entity, IComponent> component in components) {
                 var playerC = componentManager.GetComponent<TransformComponent>(component.Key);
+
+                
                 // TODO: Handle Game states.
                 if(playerC.Position.Y < -60)
                 {

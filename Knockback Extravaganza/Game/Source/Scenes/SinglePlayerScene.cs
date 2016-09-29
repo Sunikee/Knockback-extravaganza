@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -101,6 +102,18 @@ namespace Game.Source.Scenes {
                 Scale = Vector3.One
             };
 
+            ScoreTimeComponent st1 = new ScoreTimeComponent()
+            {
+                Score = 0,
+                ElapsedTime = 0f,
+                spriteBatch = new SpriteBatch(Graphics.GraphicsDevice),
+                spriteFont = Content.Load<SpriteFont>("score"),
+                stopWatch = new Stopwatch(),
+                texture = Content.Load<Texture2D>("lava_texture"),
+                TimerDuration = 1f,
+            };
+            st1.stopWatch.Start();
+
             KeyBoardComponent kbc1 = new KeyBoardComponent();
             kbc1.AddKeyToAction("Forward", Keys.W);
             kbc1.AddKeyToAction("Left", Keys.A);
@@ -133,6 +146,7 @@ namespace Game.Source.Scenes {
 
             var player1C = new PlayerComponent { knockBackResistance = 100 };
 
+            ComponentManager.AddComponent(playerEntity1, st1);
             ComponentManager.AddComponent(playerEntity1, moveC1);
             ComponentManager.AddComponent(playerEntity1, pc1);
             ComponentManager.AddComponent(playerEntity1, kbc1);
@@ -146,10 +160,9 @@ namespace Game.Source.Scenes {
 
             #region AI Agent
 
-            var rnd = new Random();
             var aiManagerC = new AIManagerComponent() {
                 AIModel = Content.Load<Model>("albin_sphere"),
-                spawnAfterSeconds = 5,
+                spawnAfterSeconds = 3,
                 spawnMin = passColl.BoundingBox.Min *4,
                 spawnMax = passColl.BoundingBox.Max * 4,
                 spawnTimer = 0,
@@ -245,6 +258,7 @@ namespace Game.Source.Scenes {
 
             SystemManager.AddSystem(new GameStateSystem());
             SystemManager.AddSystem(new GameOverSystem());
+            SystemManager.AddSystem(new ScoreTimeSystem());
             SystemManager.AddSystem(new TransformSystem());
             SystemManager.AddSystem(new CameraSystem());
             SystemManager.AddSystem(new ModelRenderSystem());
