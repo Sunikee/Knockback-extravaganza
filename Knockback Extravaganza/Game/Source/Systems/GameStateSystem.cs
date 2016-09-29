@@ -28,7 +28,7 @@ namespace Game.Source.Systems {
                 if (playerC.Position.Y < -60 && keyboardC != null)
                     sceneManager.ChangeScene("GameOver");
 
-                else if (playerC.Position.Y < -60 && keyboardC == null)
+                if (playerC.Position.Y < -60 && keyboardC == null)
                     sceneManager.ChangeScene("Winner");
             }
         }

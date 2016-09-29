@@ -66,15 +66,15 @@ namespace Game.Source.Systems.Network {
             ModelTransformComponent t1 = new ModelTransformComponent(player1.Model);
 
             TransformComponent tc1 = new TransformComponent() {
-                Position = new Vector3(0, 0, 0),
+                Position = new Vector3(0, 10, 0),
                 Rotation = new Vector3(0, 0, 0),
                 Scale = Vector3.One
             };
 
             PhysicsComponent pc1 = new PhysicsComponent {
-                InAir = false,
+                InAir = true,
                 GravityStrength = 4,
-                Mass = 150
+                Mass = 10
             };
 
             MovementComponent moveC1 = new MovementComponent {
@@ -84,7 +84,7 @@ namespace Game.Source.Systems.Network {
                 AirTime = 0f
             };
 
-            ActiveCollisionComponent actColl = new ActiveCollisionComponent(player1.Model,
+            var actColl = new ActiveCollisionComponent(player1.Model,
                 tc1.GetWorld(tc1.UpdateBuffer));
 
             var player1C = new PlayerComponent { knockBackResistance = 100 };

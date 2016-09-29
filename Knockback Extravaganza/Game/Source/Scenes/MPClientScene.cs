@@ -68,9 +68,9 @@ namespace Game.Source.Scenes {
             kbc1.AddKeyToAction("Pause", Keys.Escape);
 
             PhysicsComponent pc1 = new PhysicsComponent {
-                InAir = false,
+                InAir = true,
                 GravityStrength = 4,
-                Mass = 150
+                Mass = 10
             };
 
             MovementComponent moveC1 = new MovementComponent {
@@ -80,7 +80,7 @@ namespace Game.Source.Scenes {
                 AirTime = 0f
             };
 
-            ActiveCollisionComponent actColl = new ActiveCollisionComponent(player1.Model,
+            var actColl = new ActiveCollisionComponent(player1.Model,
                 tc1.GetWorld(tc1.UpdateBuffer));
 
             var player1C = new PlayerComponent { knockBackResistance = 100 };
@@ -146,8 +146,8 @@ namespace Game.Source.Scenes {
             SystemManager.AddSystem(new MovementSystem());
             SystemManager.AddSystem(new KeyBoardSystem());
             SystemManager.AddSystem(new ChaseCameraSystem());
-            //SystemManager.AddSystem(new CollisionDetectionSystem());
-            //SystemManager.AddSystem(new CollisionHandlingSystem());
+            SystemManager.AddSystem(new CollisionDetectionSystem());
+            SystemManager.AddSystem(new CollisionHandlingSystem());
             SystemManager.AddSystem(new PhysicsSystem());
             //SystemManager.AddSystem(powerUpSystem);
             //SystemManager.AddSystem(new AIManagerSystem());
@@ -155,6 +155,7 @@ namespace Game.Source.Scenes {
             //SystemManager.AddSystem(new AISystem());
             //SystemManager.AddSystem(new ParticleSystem());
             //SystemManager.AddSystem(new ParticleRenderSystem());
+            SystemManager.AddSystem(new GameStateSystem());
             
             SystemManager.AddSystem(new NetworkHandelerSystem());
             SystemManager.AddSystem(new NetworkTransformSystem());

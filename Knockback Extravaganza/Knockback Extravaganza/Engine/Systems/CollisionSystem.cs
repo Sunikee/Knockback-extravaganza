@@ -42,7 +42,7 @@ namespace ECS_Engine.Engine.Systems
                         TransformComponent activeTrans2 = componentManager.GetComponent<TransformComponent>(activeComp2.Key);
                         PhysicsComponent activePC2 = componentManager.GetComponent<PhysicsComponent>(activeComp2.Key);
                         ActiveCollisionComponent aColl2 = componentManager.GetComponent<ActiveCollisionComponent>(activeComp2.Key);
-                        UpdateCollisionComponent(aColl2, activeTrans2.GetWorld(activeTrans1.UpdateBuffer), activeModel2.Model);
+                        UpdateCollisionComponent(aColl2, activeTrans2.GetWorld(activeTrans2.UpdateBuffer), activeModel2.Model);
                         UpdateCollisionComponent(aColl1, activeTrans1.GetWorld(activeTrans1.UpdateBuffer), activeModel1.Model);
                         if (activeModel1 != activeModel2)
                         {

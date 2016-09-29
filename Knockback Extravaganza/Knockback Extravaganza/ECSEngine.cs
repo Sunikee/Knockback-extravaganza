@@ -43,8 +43,8 @@ namespace ECS_Engine {
             // TODO: Add your initialization logic here
 
             
-            graphics.SynchronizeWithVerticalRetrace = false;
-            this.IsFixedTimeStep = false;
+            graphics.SynchronizeWithVerticalRetrace = true;
+            this.IsFixedTimeStep = true;
             graphics.ApplyChanges();
 
             
