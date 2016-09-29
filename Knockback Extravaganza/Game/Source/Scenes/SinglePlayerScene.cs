@@ -160,7 +160,6 @@ namespace Game.Source.Scenes {
 
             #region AI Agent
 
-            var rnd = new Random();
             var aiManagerC = new AIManagerComponent() {
                 AIModel = Content.Load<Model>("albin_sphere"),
                 spawnAfterSeconds = 3,
