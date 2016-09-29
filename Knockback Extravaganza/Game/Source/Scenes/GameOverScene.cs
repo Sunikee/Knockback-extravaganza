@@ -1,6 +1,7 @@
 ﻿using ECS_Engine.Engine;
 using ECS_Engine.Engine._2D_Components;
 using ECS_Engine.Engine.Component;
+using ECS_Engine.Engine.Component.Interfaces;
 using ECS_Engine.Engine.Scenes;
 using ECS_Engine.Engine.Systems;
 using Game.Source.Systems;
@@ -22,24 +23,6 @@ namespace Game.Source.Scenes
 
         public override void InitScene()
         {
-
-            Entity gameOverEntity = ComponentManager.MakeEntity();
-            var menuC = new GameOverComponent
-            {
-                ActiveChoice = 0,
-                ActiveColor = Color.Red,
-                InactiveColor = Color.White,
-                MenuChoicesSpacing = 150
-            };
-            gameOverEntity.Tag = "gameover";
-
-            KeyBoardComponent menukeysC = new KeyBoardComponent();
-            menukeysC.AddKeyToAction("Quit", Keys.Escape);
-            menukeysC.AddKeyToAction("Restart", Keys.Enter);
-            ComponentManager.AddComponent(gameOverEntity, menuC);
-            ComponentManager.AddComponent(gameOverEntity, menukeysC);
-
-
             Entity background = ComponentManager.MakeEntity();
             var bgSprite = new Texture2DComponent()
             {
@@ -53,18 +36,16 @@ namespace Game.Source.Scenes
             ComponentManager.AddComponent(background, bgSprite, pos);
 
             var goTextEntity = ComponentManager.MakeEntity();
+          
             var goText = new SpriteTextComponent()
             {
                 SpriteFont = Content.Load<SpriteFont>("Scenes\\Font1"),
-                Text = "Game over, your score is: ",
+                Text = "Game over",
                 Color = Color.Red
             };
-            var goPosText = new Position2DComponent { Postion = new Vector2 (200, 100) };
+            var goPosText = new Position2DComponent { Postion = new Vector2 (400, 300) };
 
             ComponentManager.AddComponent(goTextEntity, goText, goPosText);
-
-       
-
 
             SystemManager.AddSystem(new SpriteRenderSystem());
             SystemManager.AddSystem(new KeyBoardSystem());
