@@ -49,7 +49,7 @@ namespace Game.Source.Scenes {
             Entity text = ComponentManager.MakeEntity();
             var txt = new SpriteTextComponent() {
                 SpriteFont = Content.Load<SpriteFont>("Scenes\\Font1"),
-                Text = "Press Enter To Start",
+                Text = "Press Enter To Play Singleplayer",
                 Color = Color.Red,
             };
             var postext = new Position2DComponent() {
@@ -57,6 +57,34 @@ namespace Game.Source.Scenes {
             };
 
             ComponentManager.AddComponent(text, txt, postext);
+
+            Entity text2 = ComponentManager.MakeEntity();
+            var txt2 = new SpriteTextComponent()
+            {
+                SpriteFont = Content.Load<SpriteFont>("Scenes\\Font1"),
+                Text = "Press UpArrow To Play Multiplayer",
+                Color = Color.Red,
+            };
+            var postext2 = new Position2DComponent()
+            {
+                Postion = new Vector2(200, 200),
+            };
+
+            ComponentManager.AddComponent(text2, txt2, postext2);
+
+            Entity text3 = ComponentManager.MakeEntity();
+            var txt3 = new SpriteTextComponent()
+            {
+                SpriteFont = Content.Load<SpriteFont>("Scenes\\Font1"),
+                Text = "Press DownArrow To Host Game",
+                Color = Color.Red,
+            };
+            var postext3 = new Position2DComponent()
+            {
+                Postion = new Vector2(200, 300),
+            };
+
+            ComponentManager.AddComponent(text3, txt3, postext3);
 
             SystemManager.AddSystem(new SpriteRenderSystem());
             SystemManager.AddSystem(new KeyBoardSystem());
