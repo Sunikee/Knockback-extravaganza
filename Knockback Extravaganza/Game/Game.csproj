@@ -54,6 +54,7 @@
     <Compile Include="Source\Scenes\MPClientScene.cs" />
     <Compile Include="Source\Scenes\MPHostScene.cs" />
     <Compile Include="Source\Scenes\SinglePlayerScene.cs" />
+    <Compile Include="Source\Scenes\WonGameScene.cs" />
     <Compile Include="Source\Systems\AI\AIManagerSystem.cs" />
     <Compile Include="Source\Systems\AI\AIStates\AICharge.cs" />
     <Compile Include="Source\Systems\AI\AIStates\AIFollow.cs" />

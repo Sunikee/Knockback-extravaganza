@@ -26,9 +26,9 @@ namespace Game.Source.Systems {
 
                 
                 // TODO: Handle Game states.
-                if(playerC.Position.Y < -60)
+                if(playerC.Position.Y < -30)
                 {
-                    sceneManager.ChangeScene("GameOver");
+                    sceneManager.ChangeScene("Winner");
                 }
             }
 
