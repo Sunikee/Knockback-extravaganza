@@ -21,6 +21,8 @@ namespace Game.Source.Systems {
             var components = componentManager.GetComponents<PlayerComponent>();
             foreach (KeyValuePair<Entity, IComponent> component in components) {
                 var playerC = componentManager.GetComponent<TransformComponent>(component.Key);
+
+                
                 // TODO: Handle Game states.
             }
 

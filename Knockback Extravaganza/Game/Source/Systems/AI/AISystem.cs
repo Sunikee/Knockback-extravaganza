@@ -73,13 +73,15 @@ namespace Game.Source.Systems.AI
                         if (currentState == stopState)
                             currentState = chargeState;
 
-                        if ((aiMC != null && aiTransformC != null) && (aiTransformC.Position.X < aiMC.spawnMin.X || aiTransformC.Position.X > aiMC.spawnMax.X || aiTransformC.Position.Z < aiMC.spawnMin.Z || aiTransformC.Position.Z > aiMC.spawnMax.X))
-                        {
-
-                            aiMovec.Velocity = Vector3.Zero;
-                            currentState = followState;
-                        }
+                        //if ((aiMC != null && aiTransformC != null) && (aiTransformC.Position.X < aiMC.spawnMin.X || aiTransformC.Position.X > aiMC.spawnMax.X || aiTransformC.Position.Z < aiMC.spawnMin.Z || aiTransformC.Position.Z > aiMC.spawnMax.X))
+                        //{
+                        //    aiMovec.Velocity = Vector3.Zero;
+                        //    currentState = followState;
+                        //}
                         currentState?.Run(targetTransC, aiTransformC, aiMovec);
+                        // remove ai entity if it has fallen of platform
+                        if (aiTransformC.Position.Y < -100)
+                            componentManager.RemoveEntity(ai.Key);
 
 
                         #endregion
