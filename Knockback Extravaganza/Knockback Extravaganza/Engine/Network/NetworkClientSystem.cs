@@ -24,7 +24,9 @@ namespace ECS_Engine.Engine.Network {
                 var sendComp = componentManager.GetComponentsOfType<INetworkSend>();
 
                 foreach (var comp in sendComp) {
-                    networkClient.Client.SendMessage(comp.PackMessage(componentManager.GetEntity(comp as IComponent).ID, networkClient.Client), NetDeliveryMethod.ReliableOrdered);
+                    var entity = componentManager.GetEntity(comp as IComponent);
+                    var id = string.Format("{0},{1},{2},{3}", networkClient.Client.UniqueIdentifier, entity.Tag, entity.ID, comp.ToString());
+                    networkClient.Client.SendMessage(comp.PackMessage(id, networkClient.Client), NetDeliveryMethod.ReliableOrdered);
                 }
             }
         }
@@ -42,9 +44,11 @@ namespace ECS_Engine.Engine.Network {
                         break;
                     case NetIncomingMessageType.Data:
                         // Master Server
-                        
-                        int id = inc.ReadInt32();
-                        inc = networkData.Update(id, inc);
+
+                        if (inc.PositionInBytes == 0 && inc.LengthBytes > 0) {
+                            string id = inc.ReadString();
+                            inc = networkData.Update(id, inc);
+                        }
                         break;
                 }
                 if (inc != null) {

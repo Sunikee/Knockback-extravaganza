@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Component.Interfaces.Network {
     interface INetworkSend {
-        NetOutgoingMessage PackMessage(int entityID, NetClient client);
+        NetOutgoingMessage PackMessage(string identifies, NetClient client);
     }
 }

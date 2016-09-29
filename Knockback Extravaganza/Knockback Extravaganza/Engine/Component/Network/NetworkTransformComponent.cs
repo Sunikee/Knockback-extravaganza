@@ -19,7 +19,7 @@ namespace ECS_Engine.Engine.Component.Network {
             Position = XNAExtensions.ReadVector3(msg);
             Scale = XNAExtensions.ReadVector3(msg);
             Rotation = XNAExtensions.ReadVector3(msg);
-        }
+        }   
     }
 
     public class NetworkSendTransformComponent : IComponent , INetworkSend{
@@ -27,13 +27,16 @@ namespace ECS_Engine.Engine.Component.Network {
         public Vector3 Scale { get; set; }
         public Vector3 Rotation { get; set; }
 
-        public NetOutgoingMessage PackMessage(int entityID, NetClient client) {
+        public NetOutgoingMessage PackMessage(string identifier, NetClient client) {
             var msg = client.CreateMessage();
-            msg.Write(entityID);
+            msg.Write(identifier);
             XNAExtensions.Write(msg, Position);
             XNAExtensions.Write(msg, Scale);
             XNAExtensions.Write(msg, Rotation);
             return msg;
+        }
+        public override string ToString() {
+            return "TransformComponent";
         }
     }
 }

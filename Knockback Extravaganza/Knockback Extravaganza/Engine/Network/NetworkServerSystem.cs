@@ -39,7 +39,10 @@ namespace ECS_Engine.Engine.Network {
                             if (connections.Count > 0) {
                                 var msg = netServer.CreateMessage();
                                 msg.Write(inc.Data);
-                                netServer.SendMessage(msg, connections.First(), NetDeliveryMethod.ReliableOrdered, 0);
+                                foreach (var connection in connections) {
+                                    netServer.SendMessage(msg, connection, NetDeliveryMethod.ReliableOrdered, 0);
+                                }
+                                
                             }
                             break;
                     }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ECS_Engine.Engine.Component.Interfaces.Network {
-    interface INetworkRecieve {
+    public interface INetworkRecieve {
         void UnpackMessage(NetIncomingMessage msg);
     }
 }

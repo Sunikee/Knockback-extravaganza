@@ -80,12 +80,14 @@ namespace ECS_Engine.Engine.Systems {
         public void DrawScore(GraphicsDevice graphicsDevice, ComponentManager componentManager)
         {
             var scoreTimeComponents = componentManager.GetComponents<ScoreTimeComponent>();
-            foreach(KeyValuePair<Entity, IComponent> scoreValuePair in scoreTimeComponents)
-            {
-                ScoreTimeComponent scoreTComponent = componentManager.GetComponent<ScoreTimeComponent>(scoreValuePair.Key);
-                scoreTComponent.spriteBatch.Begin();
-                scoreTComponent.spriteBatch.DrawString(scoreTComponent.spriteFont, "Score: " + scoreTComponent.TotalScore, new Vector2(25, 25), Color.Black);
-                scoreTComponent.spriteBatch.End();
+            if (scoreTimeComponents != null) {
+                foreach (KeyValuePair<Entity, IComponent> scoreValuePair in scoreTimeComponents) {
+                    ScoreTimeComponent scoreTComponent = componentManager.GetComponent<ScoreTimeComponent>(scoreValuePair.Key);
+                    scoreTComponent.spriteBatch.Begin();
+                    scoreTComponent.spriteBatch.DrawString(scoreTComponent.spriteFont, "Score: " + scoreTComponent.TotalScore, new Vector2(25, 25), Color.Black);
+                    scoreTComponent.spriteBatch.End();
+                    graphicsDevice.DepthStencilState = DepthStencilState.Default;
+                }
             }
         }
 
