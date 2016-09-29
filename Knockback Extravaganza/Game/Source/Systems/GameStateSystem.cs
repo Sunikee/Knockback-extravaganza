@@ -23,15 +23,14 @@ namespace Game.Source.Systems {
             
             foreach (KeyValuePair<Entity, IComponent> component in components) {
                 var playerC = componentManager.GetComponent<TransformComponent>(component.Key);
+                var keyboardC = componentManager.GetComponent<KeyBoardComponent>(component.Key);
 
-                
-                // TODO: Handle Game states.
-                if(playerC.Position.Y < -30)
-                {
+                if (playerC.Position.Y < -60 && keyboardC != null)
+                    sceneManager.ChangeScene("GameOver");
+
+                else if (playerC.Position.Y < -60 && keyboardC == null)
                     sceneManager.ChangeScene("Winner");
-                }
             }
-
         }
     }
 }

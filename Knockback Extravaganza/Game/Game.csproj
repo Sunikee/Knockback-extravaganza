@@ -62,7 +62,6 @@
     <Compile Include="Source\Systems\AI\AIStates\IAiStates.cs" />
     <Compile Include="Source\Systems\AI\AISystem.cs" />
     <Compile Include="Source\Systems\CollisionHandleSystem.cs" />
-    <Compile Include="Source\Systems\GameOverSystem.cs" />
     <Compile Include="Source\Systems\GameStateSystem.cs" />
     <Compile Include="Source\Systems\MenuSystem.cs" />
     <Compile Include="Source\Systems\MovementSystem.cs" />

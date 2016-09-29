@@ -26,10 +26,7 @@ namespace Game.Source.Scenes {
 
         public MPClientScene(string name, ContentManager content, GraphicsDeviceManager graphics) : base(name, content, graphics) { }
 
-        public override void InitScene() {
-
-            
-
+        public override void InitScene() {      
 
             var clientEntiry = ComponentManager.MakeEntity();
 

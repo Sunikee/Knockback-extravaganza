@@ -257,7 +257,6 @@ namespace Game.Source.Scenes {
             SystemManager.EnableFrameCount = true;
 
             SystemManager.AddSystem(new GameStateSystem());
-            SystemManager.AddSystem(new GameOverSystem());
             SystemManager.AddSystem(new ScoreTimeSystem());
             SystemManager.AddSystem(new TransformSystem());
             SystemManager.AddSystem(new CameraSystem());
